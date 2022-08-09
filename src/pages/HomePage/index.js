@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
-import { View } from 'react-native';
-import { UserContext } from '../../context/User.js'
+import { View, Text } from 'react-native';
+import {UserContext} from '../../context/User'
 
 export default function Homepage() {
-    const { userName } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     return (
     <View>
-        <Text>{userName ? `Olá, ${userName}!` : 'Olá!'}</Text>
+        <Text>{user ? `Olá, ${user.username}` : `Olá, stranger`}</Text>
+        <Text>{user ? `Olá, ${user.password}` : `Olá, stranger`}</Text>
+
     </View>
     );
 }

@@ -7,6 +7,16 @@ export const Container = styled.View`
     background-color: white;
 `;
 
+export const Button = styled.TouchableOpacity`
+width: 100px;
+height: 42px;
+margin-top: 5px;
+border-radius: 5px;
+background-color: #0A0092;
+align-items: center;
+justify-content: center;
+`;
+
 export const Field = styled.TextInput.attrs({
     placeholderTextColor:'#B2B2B2'
 })`

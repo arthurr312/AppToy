@@ -1,14 +1,22 @@
-import React, { createContext, useState } from "react";
+import React from "react";
+import { createContext, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+export const UserContext = createContext({});
 
-export const UserContext = createContext();
+export const UserProvider = ({ children }) => {
+    const navigation = useNavigation();
+    const [user, setUser] = useState({});
 
-export const UserProvider = ({children}) => {
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
+    function signIn(userName, passWord) {
+        if (userName !== '' && passWord !== '') {
+            setUser({username: userName, password: passWord})
+        }
+        navigation.navigate("Listing")
+    }
 
-    return(
+    return (
         <>
-            <UserContext.Provider value={{userName, setUserName, password, setPassword}}>
+            <UserContext.Provider value={{ user, signIn }}>
                 {children}
             </UserContext.Provider>
         </>
