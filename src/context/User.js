@@ -11,7 +11,7 @@ export const UserProvider = ({ children }) => {
         if (userName !== '' && passWord !== '') {
             setUser({username: userName, password: passWord})
         }
-        navigation.navigate("Listing")
+        navigation.navigate("Sidebar")
     }
 
     return (

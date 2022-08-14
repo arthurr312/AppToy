@@ -21,19 +21,20 @@ export default function Listing() {
   return (
     <ScrollView>
       {data.map(item => {
+        let formattedField = item.total_price.replace(/,/g, '.');
         return (
-          <View>
-            <S.DataContainer>
+          <View key={item.id}>
+            <S.DataContainer >
              <S.MainView>
              <S.DataView >
-              <S.NameClient key={item.id}>
+              <S.NameClient >
                 {item.name_client}
               </S.NameClient>
               <S.TimeValue>{item.time}</S.TimeValue>
               </S.DataView>
               <S.ValueView>
               <S.ValueText>
-                R$ 10,00
+                R$ {formattedField}
               </S.ValueText>
               </S.ValueView>
              </S.MainView>
