@@ -1,6 +1,5 @@
 import React, {useState, useContext} from "react";
-import { View, Text } from "react-native";
-import { Button } from 'react-native-paper';
+import { View, Text, Image } from "react-native";
 import {UserContext}  from '../../context/User'
 import { useNavigation } from "@react-navigation/native";
 import axios from 'axios';
@@ -8,10 +7,14 @@ import * as S from './styles';
 
 export default function Login(){ 
 
-  // async function login(values) {
-  //   await axios.post(`https://app-toy-vinic.herokuapp.com/api/login`, values);
-  //   alert('deu bom'); 
-  // }
+  async function login() {
+    try{
+        await axios.post(`https://app-toy-vinic.herokuapp.com/api/login`, {email: userName, password: password });
+        handleLogin();
+    }catch(error){
+      alert(error);
+    }
+}
 
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -22,10 +25,11 @@ export default function Login(){
   }
   return(
     <S.Container>
+      <Image source={require('../../assets/app_logo.png')} style={{width: 200,height:200}} />
      <S.Field placeholder="Nome" value={userName} onChangeText={(e) => setUserName(e)}/>
-     <S.Field placeholder="Senha" value={password} onChangeText={(e) => setPassword(e)}/>
+     <S.Field secureTextEntry={true} placeholder="Senha" value={password} onChangeText={(e) => setPassword(e)}/>
      <View style={{justifyContent: 'center'}} >
-     <S.Button onPress={handleLogin}>
+     <S.Button onPress={login}>
     <S.Text>Entrar</S.Text>
   </S.Button>
      </View>
