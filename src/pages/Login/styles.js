@@ -26,7 +26,6 @@ export const Field = styled.TextInput.attrs({
   placeholderTextColor: '#B2B2B2',
 })`
   width: 60%;
-  height: 6%;
   border: none;
   background: white;
   border-radius: 5px;
