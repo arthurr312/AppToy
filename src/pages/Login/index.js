@@ -1,49 +1,105 @@
-import React, {useState, useContext} from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import { TextInput } from 'react-native-paper';
-import {UserContext}  from '../../context/User'
-import { useNavigation } from "@react-navigation/native";
+import React, {useState, useContext} from 'react';
+import {View, Image, ActivityIndicator} from 'react-native';
+import {UserContext} from '../../context/User';
 import axios from 'axios';
 import * as S from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {Snackbar} from 'react-native-paper';
 
-export default function Login(){ 
-
-  async function login() {
-    try{
-        await axios.post(`https://app-toy-vinic.herokuapp.com/api/login`, {email: userName, password: password });
-        handleLogin();
-    }catch(error){
-      alert(error);
-    }
-}
-
+export default function Login() {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const [visiblePassword, setVisiblePassword] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [visible, setVisible] = useState(false);
+
   const {signIn} = useContext(UserContext);
 
-  function handleLogin(){
-    signIn(userName, password)
+  async function login() {
+    setLoading(prevState => !prevState);
+    try {
+      await axios.post(`https://app-toy-vinic.herokuapp.com/api/login`, {
+        name: userName,
+        password: password,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      handleLogin();
+    } catch (error) {
+      setErrorMessage('Dados inválidos, tente novamente.');
+      setVisible(true);
+    }
+    setLoading(prevState => !prevState);
   }
-  return(
-    <S.Container>
-      <Image source={require('../../assets/app_logo.png')} style={{width: 200,height:200}} />
-     <S.Field placeholder="Nome" value={userName} onChangeText={(e) => setUserName(e)}/>
-     <View style={{flexDirection: 'row'}}>
-     <S.Field secureTextEntry={visiblePassword} placeholder="Senha" value={password} onChangeText={(e) => setPassword(e)} />
-     {visiblePassword ? (
-      <Icon name="eye-off-outline" size={25} color="grey" style={{position:'absolute', right:15, top: 20}} onPress={() => setVisiblePassword(prevState => !prevState)}/>
-     ) : (
-      <Icon name="eye-outline" size={25} color="grey" style={{position:'absolute', right:15, top: 20}} onPress={() => setVisiblePassword(prevState => !prevState)}/>  
-     )}
-     </View>
 
-     <View style={{justifyContent: 'center'}} >
-     <S.Button onPress={login}>
-    <S.Text>Entrar</S.Text>
-  </S.Button>
-     </View>
+  const closeSnackbar = () => setVisible(false);
+
+  function handleLogin() {
+    signIn(userName, password);
+  }
+  return (
+    <S.Container>
+      <Image
+        source={require('../../assets/app_logo.png')}
+        style={{width: 200, height: 200}}
+      />
+      <S.Field
+        placeholder="Nome"
+        value={userName}
+        onChangeText={e => setUserName(e)}
+      />
+      <View style={{flexDirection: 'row'}}>
+        <S.Field
+          secureTextEntry={visiblePassword}
+          placeholder="Senha"
+          value={password}
+          onChangeText={e => setPassword(e)}
+        />
+        {visiblePassword ? (
+          <Icon
+            name="eye-off-outline"
+            size={25}
+            color="grey"
+            style={{position: 'absolute', right: 15, top: 20}}
+            onPress={() => setVisiblePassword(prevState => !prevState)}
+          />
+        ) : (
+          <Icon
+            name="eye-outline"
+            size={25}
+            color="grey"
+            style={{position: 'absolute', right: 15, top: 20}}
+            onPress={() => setVisiblePassword(prevState => !prevState)}
+          />
+        )}
+      </View>
+
+      <View style={{justifyContent: 'center'}}>
+        <S.Button onPress={login}>
+          {loading ? (
+            <View>
+              <ActivityIndicator size="small" color="#fff" />
+            </View>
+          ) : (
+            <View>
+              <S.Text>Entrar</S.Text>
+            </View>
+          )}
+        </S.Button>
+      </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={closeSnackbar}
+        action={{
+          label: <Icon name="ios-close-outline" color='#fff' size={25} />,
+        }}
+        style={{backgroundColor: '#010E3F'}}
+        duration={3000}
+        >
+        {errorMessage}
+      </Snackbar>
     </S.Container>
-  )
+  );
 }
