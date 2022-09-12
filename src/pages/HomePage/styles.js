@@ -19,7 +19,6 @@ export const AlignTitleAndIcon = styled.View`
   flex-direction: row;
   justify-content: center;
   margin-top: 10%;
-
 `;
 
 export const TimerTextTitle = styled.Text`
@@ -66,4 +65,8 @@ export const AlignTimerItens = styled.View`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+`;
+
+export const AlignIcons = styled.View`
+  display: flex; flex-direction: row; justify-content: space-around; width: 50%; margin: 0 auto;
 `;

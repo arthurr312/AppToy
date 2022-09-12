@@ -1,7 +1,10 @@
 import React, {useContext} from 'react';
-import {View, ScrollView, TouchableOpacity} from 'react-native';
+import {View, ScrollView, TouchableOpacity, Text} from 'react-native';
 import {UserContext} from '../../context/User';
+import Icon from 'react-native-vector-icons/Ionicons';
+import RestoreIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as S from './styles';
+
 export default function Homepage() {
   const {user} = useContext(UserContext);
   return (
@@ -11,10 +14,11 @@ export default function Homepage() {
         <View style={{display: 'flex'}}>
           <S.AlignTitleAndIcon>
             <S.TimerTextTitle>Adicionar um cronômetro</S.TimerTextTitle>
-            <TouchableOpacity style={{
+            <TouchableOpacity
+              style={{
                 marginLeft: '5%',
               }}>
-            <S.PlusIcon />
+              <S.PlusIcon />
             </TouchableOpacity>
           </S.AlignTitleAndIcon>
           <S.TimerContainer>
@@ -26,6 +30,12 @@ export default function Homepage() {
               </View>
             </S.AlignTimerItens>
           </S.TimerContainer>
+          <S.AlignIcons>
+            <Icon name="ios-play" color="black" size={45} />
+            <Icon name="ios-pause-outline" color="black" size={45} />
+            <RestoreIcon name="restore" color="black" size={45} />
+            <Icon name="ios-stop" color="black" size={45} />
+          </S.AlignIcons>
         </View>
       </ScrollView>
     </S.MainContainer>

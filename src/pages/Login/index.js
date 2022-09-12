@@ -1,6 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {View, Image, ActivityIndicator} from 'react-native';
 import {UserContext} from '../../context/User';
+import { AsyncStorageContext } from '../../context/ManageAsyncStorage';
 import axios from 'axios';
 import * as S from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -13,13 +14,13 @@ export default function Login() {
   const [visiblePassword, setVisiblePassword] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [visible, setVisible] = useState(false);
-
   const {signIn} = useContext(UserContext);
+  const {setAsyncStorage} = useContext(AsyncStorageContext);
 
   async function login() {
     setLoading(prevState => !prevState);
     try {
-      await axios.post(`https://app-toy-vinic.herokuapp.com/api/login`, {
+      const response  = await axios.post(`https://app-toy-vinic.herokuapp.com/api/login`, {
         name: userName,
         password: password,
         headers: {
@@ -27,13 +28,14 @@ export default function Login() {
         },
       });
       handleLogin();
+      setAsyncStorage(response.data.access_token);
     } catch (error) {
       setErrorMessage('Dados inválidos, tente novamente.');
       setVisible(true);
     }
     setLoading(prevState => !prevState);
   }
-
+  
   const closeSnackbar = () => setVisible(false);
 
   function handleLogin() {
