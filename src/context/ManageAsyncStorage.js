@@ -4,28 +4,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const AsyncStorageContext = createContext({});
 
 export const AsyncStorageProvider = ({children}) => {
-  async function setAsyncStorage(token) {
-    try {
-      await AsyncStorage.setItem('@token', token);
-    } catch (e) {
-      alert(e);
-    }
+  async function setAsyncStorage(key, value) {
+    const setAsync = await AsyncStorage.setItem(key, value);
+    return setAsync;
   }
 
-  async function getAsyncStorage() {
-    try {
-      await AsyncStorage.getItem('@token');
-    } catch (e) {
-      alert(e);
-    }
+  async function getAsyncStorage(keyName) {
+    const getAsync = await AsyncStorage.getItem(keyName);
+    return getAsync;
   }
 
-  async function removeAsyncStorage() {
-    try {
-      await AsyncStorage.removeItem('@token');
-    } catch (e) {
-      alert(e);
-    }
+  async function removeAsyncStorage(keyName) {
+    const removeAsync = await AsyncStorage.removeItem(keyName);
+    return removeAsync;
   }
 
   return (

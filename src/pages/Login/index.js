@@ -1,11 +1,12 @@
 import React, {useState, useContext} from 'react';
 import {View, Image, ActivityIndicator} from 'react-native';
 import {UserContext} from '../../context/User';
-import { AsyncStorageContext } from '../../context/ManageAsyncStorage';
+import { useNavigation } from "@react-navigation/native";
 import axios from 'axios';
 import * as S from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Snackbar} from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
   const [userName, setUserName] = useState('');
@@ -15,8 +16,7 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState('');
   const [visible, setVisible] = useState(false);
   const {signIn} = useContext(UserContext);
-  const {setAsyncStorage} = useContext(AsyncStorageContext);
-
+  const navigation = useNavigation();
   async function login() {
     setLoading(prevState => !prevState);
     try {
@@ -28,7 +28,10 @@ export default function Login() {
         },
       });
       handleLogin();
-      setAsyncStorage(response.data.access_token);
+       await AsyncStorage.setItem("@token", response.data.access_token);
+      navigation.navigate("Sidebar");
+      setUserName('');
+      setPassword('');
     } catch (error) {
       setErrorMessage('Dados inválidos, tente novamente.');
       setVisible(true);

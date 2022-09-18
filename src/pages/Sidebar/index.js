@@ -1,34 +1,38 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Homepage from '../HomePage';
 import Listing from '../Listing';
-import {UserContext} from '../../context/User'
-import {Text} from 'react-native';
-import CustomSidebar from './CustomSidebar';
+import {UserContext} from '../../context/User';
+import Icon from 'react-native-vector-icons/Ionicons';
+import CustomDrawer from './CustomDrawer';
 export default function Sidebar() {
   const Drawer = createDrawerNavigator();
-  const { user } = useContext(UserContext);
+  const {user} = useContext(UserContext);
   return (
-    <NavigationContainer  independent={true}>
       <Drawer.Navigator
+        drawerContent={props => <CustomDrawer {...props} />}
         initialRouteName="HomePage"
         drawerStyle={{
           backgroundColor: '#313131',
           paddingVertical: 20,
         }}
         screenOptions={{
-          activeBackgroundColor: '#fff',
-          inactiveTintColor: '#fff',
-        }}>   
+          drawerActiveBackgroundColor: '#010E3F',
+          drawerActiveTintColor: '#fff',
+          drawerInactiveTintColor: '#333',
+          drawerLabelStyle: {
+            marginLeft: -25,
+            fontFamily: 'Roboto-Medium',
+            fontSize: 15,
+          },
+        }}>
         <Drawer.Screen
           name="Tela Inicial"
           component={Homepage}
           options={{
-            drawerLabel: () => (
-              <Text style={{color:'#313131'}}>
-                Tela Inicial
-              </Text>
+            drawerIcon: ({color}) => (
+              <Icon name="home-outline" size={22} color={color} />
             ),
           }}
         />
@@ -36,14 +40,11 @@ export default function Sidebar() {
           name="Listagem"
           component={Listing}
           options={{
-            drawerLabel: () => (
-              <Text style={{color:'#313131'}}>
-                Listagem
-              </Text>
+            drawerIcon: ({color}) => (
+              <Icon name="ios-list-outline" size={22} color={color} />
             ),
           }}
         />
       </Drawer.Navigator>
-    </NavigationContainer>
   );
 }

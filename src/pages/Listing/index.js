@@ -3,6 +3,7 @@ import {Text, View, ScrollView, SafeAreaView} from 'react-native';
 import { AsyncStorageContext } from '../../context/ManageAsyncStorage';
 import * as S from './styles';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Listing() {
   const {getAsyncStorage} = useContext(AsyncStorageContext);
   const [data, setData] = useState([]);
@@ -10,7 +11,7 @@ export default function Listing() {
     try {
       const response = await axios.get(
         `http://app-toy-vinic.herokuapp.com/api/timer/clients`, {
-          headers: {Authorization: 'Bearer' + getAsyncStorage()},
+          headers: {Authorization: 'Bearer' + await AsyncStorage.getItem("@token")},
       });
       setData(response.data.times_owner);
     } catch (error) {
