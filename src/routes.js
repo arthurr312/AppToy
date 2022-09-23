@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import HomePage from './pages/HomePage';
 import Listing from './pages/Listing';
 import Sidebar from './pages/Sidebar';
+import Profile from './pages/Profile';
 const Stack = createNativeStackNavigator();
 
 function Routes() {
@@ -30,6 +31,11 @@ function Routes() {
         options={{headerShown: false}}
         name="Sidebar"
         component={Sidebar}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="Perfil"
+        component={Profile}
       />
     </Stack.Navigator>
   );

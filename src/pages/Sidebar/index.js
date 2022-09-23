@@ -6,6 +6,7 @@ import Listing from '../Listing';
 import {UserContext} from '../../context/User';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomDrawer from './CustomDrawer';
+import Profile from '../Profile';
 export default function Sidebar() {
   const Drawer = createDrawerNavigator();
   const {user} = useContext(UserContext);
@@ -27,6 +28,15 @@ export default function Sidebar() {
             fontSize: 15,
           },
         }}>
+          <Drawer.Screen
+          name="Perfil"
+          component={Profile}
+          options={{
+            drawerIcon: ({color}) => (
+              <Icon name="person" size={22} color={color} />
+            ),
+          }}
+        />
         <Drawer.Screen
           name="Tela Inicial"
           component={Homepage}
