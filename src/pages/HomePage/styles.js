@@ -1,10 +1,18 @@
 import styled from 'styled-components';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-
+import { TouchableOpacity } from 'react-native';
 export const MainContainer = styled.View`
   background-color: #d9d9d9;
-  width: 100%;
-  height: 100%;
+`;
+
+export const Button = styled.TouchableOpacity`
+  width: 100px;
+  height: 40px;
+  margin-top: 5px;
+  border-radius: 5px;
+  background-color: #003E9B;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const MainTitle = styled.Text`
@@ -31,7 +39,7 @@ export const TimerContainer = styled.View`
   margin: 0 auto;
   margin-top: 5%;
   margin-bottom: 5%;
-  min-height: 100px;
+  height: 100px;
   width: 90%;
   background-color: #d9d9d9;
   border-radius: 5px;
@@ -48,6 +56,11 @@ export const GenericText = styled.Text`
   font-size: 20px;
 `;
 
+export const ButtonsText = styled.Text`
+  color: white;
+  font-size: 20px;
+`;
+
 export const IconContainer = styled.View`
   width: 90%;
   margin: 0 auto;
@@ -60,7 +73,7 @@ export const PlusIcon = styled(Icon).attrs({
 })``;
 
 export const AlignTimerItens = styled.View`
-  min-height: 45%;
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -68,5 +81,10 @@ export const AlignTimerItens = styled.View`
 `;
 
 export const AlignIcons = styled.View`
-  display: flex; flex-direction: row; justify-content: space-around; width: 50%; margin: 0 auto;
+  display: flex;
+  flex-direction: row; 
+  justify-content: space-around; 
+  width: 90%; 
+  margin: 0 auto;
+  padding-bottom: 20px;
 `;
