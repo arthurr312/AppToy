@@ -1,3 +1,6 @@
+if (__DEV__) {
+  import('./src/config/ReactotronConfig').then(() => console.log('Reactotron Configured'));
+}
 /**
  * @format
  */

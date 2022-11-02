@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {View, Image, ActivityIndicator} from 'react-native';
 import {UserContext} from '../../context/User';
-import { useNavigation } from "@react-navigation/native";
+import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import * as S from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -15,21 +15,27 @@ export default function Login() {
   const [visiblePassword, setVisiblePassword] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [visible, setVisible] = useState(false);
-  const {signIn} = useContext(UserContext);
+  const {signIn, setInitialScreen, initialScreen} = useContext(UserContext);
   const navigation = useNavigation();
+
   async function login() {
     setLoading(prevState => !prevState);
     try {
-      const response  = await axios.post(`https://app-toy-vinic.herokuapp.com/api/login`, {
-        name: userName,
-        password: password,
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await axios.post(
+        `https://app-toy-vinic.herokuapp.com/api/login`,
+        {
+          name: userName,
+          password: password,
+          headers: {
+            'Content-Type': 'application/json',
+          },
         },
-      });
+      );
       handleLogin();
-       await AsyncStorage.setItem("@token", response.data.access_token);
-      navigation.navigate("Sidebar");
+      await AsyncStorage.setItem('@token', response.data.access_token);
+      await AsyncStorage.setItem('@username', userName);
+      await AsyncStorage.setItem('@initial_screen', 'Sidebar');
+      navigation.navigate('Sidebar');
       setUserName('');
       setPassword('');
     } catch (error) {
@@ -38,7 +44,7 @@ export default function Login() {
     }
     setLoading(prevState => !prevState);
   }
-  
+
   const closeSnackbar = () => setVisible(false);
 
   function handleLogin() {
@@ -93,16 +99,18 @@ export default function Login() {
             </View>
           )}
         </S.Button>
+        <S.Button onPress={() => alert(JSON.stringify(initialScreen))}>
+          <S.Text>oi</S.Text>
+        </S.Button>
       </View>
       <Snackbar
         visible={visible}
         onDismiss={closeSnackbar}
         action={{
-          label: <Icon name="ios-close-outline" color='#fff' size={25} />,
+          label: <Icon name="ios-close-outline" color="#fff" size={25} />,
         }}
         style={{backgroundColor: '#010E3F'}}
-        duration={3000}
-        >
+        duration={3000}>
         {errorMessage}
       </Snackbar>
     </S.Container>

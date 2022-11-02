@@ -1,11 +1,9 @@
 import React from "react";
 import { createContext, useState } from "react";
-
-import axios from "axios";
 export const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
-   
+    const [initialScreen, setInitialScreen] = useState();
     const [user, setUser] = useState({});
 
     function signIn(userName, passWord) {
@@ -17,7 +15,7 @@ export const UserProvider = ({ children }) => {
 
     return (
         <>
-            <UserContext.Provider value={{ user, signIn }}>
+            <UserContext.Provider value={{ user, signIn, initialScreen, setInitialScreen }}>
                 {children}
             </UserContext.Provider>
         </>

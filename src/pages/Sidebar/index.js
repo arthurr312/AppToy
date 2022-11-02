@@ -13,7 +13,7 @@ export default function Sidebar() {
   return (
       <Drawer.Navigator
         drawerContent={props => <CustomDrawer {...props} />}
-        initialRouteName="HomePage"
+        initialRouteName="Tela Inicial"
         drawerStyle={{
           backgroundColor: '#313131',
           paddingVertical: 20,

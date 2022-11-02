@@ -88,3 +88,15 @@ export const AlignIcons = styled.View`
   margin: 0 auto;
   padding-bottom: 20px;
 `;
+
+export const Field = styled.TextInput.attrs({
+  placeholderTextColor: '#B2B2B2',
+})`
+  width: 60%;
+  border: none;
+  background: white;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  color: black;
+`;

@@ -24,8 +24,7 @@ export default function Listing() {
   }, []);
   return (
     <ScrollView>
-      {data.map(item => {
-        let formattedField = item.total_price.replace(/,/g, '.');
+      {data.map(item => { 
         return (
           <View key={item.id}>
             <S.DataContainer>
@@ -35,7 +34,7 @@ export default function Listing() {
                   <S.TimeValue>{item.time}</S.TimeValue>
                 </S.DataView>
                 <S.ValueView>
-                  <S.ValueText>R$ {formattedField}</S.ValueText>
+                  <S.ValueText>R$ {item.total_price}</S.ValueText>
                 </S.ValueView>
               </S.MainView>
             </S.DataContainer>
