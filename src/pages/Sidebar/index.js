@@ -47,7 +47,7 @@ export default function Sidebar() {
           }}
         />
         <Drawer.Screen
-          name="Listagem"
+          name="Listagem de cronômetros"
           component={Listing}
           options={{
             drawerIcon: ({color}) => (

@@ -99,9 +99,6 @@ export default function Login() {
             </View>
           )}
         </S.Button>
-        <S.Button onPress={() => alert(JSON.stringify(initialScreen))}>
-          <S.Text>oi</S.Text>
-        </S.Button>
       </View>
       <Snackbar
         visible={visible}

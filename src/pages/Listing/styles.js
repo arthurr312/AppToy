@@ -12,13 +12,21 @@ export const DataContainer = styled.View`
   gap: 10px;
 `;
 
+// export const Title = styled.Text`
+//   color: black;
+//   font-size: 24px;
+//   font-weight: bold;
+//   text-align: center;
+//   padding: 10px;
+// `;
+
 export const NameClient = styled.Text`
   color: black;
   font-size: 18px;
 `;
 
 export const TimeValue = styled(NameClient)`
-    font-size: 14px;
+    font-size: 16px;
 `;
 export const ValueText = styled(NameClient)`
     margin-top: 10px;
