@@ -12,6 +12,15 @@ export const DataContainer = styled.View`
   gap: 10px;
 `;
 
+export const Button = styled.TouchableOpacity`
+  height: 40px;
+  margin-top: 5px;
+  border-radius: 5px;
+  background-color: #003e9b;
+  align-items: center;
+  justify-content: center;
+`;
+
 // export const Title = styled.Text`
 //   color: black;
 //   font-size: 24px;
@@ -26,10 +35,19 @@ export const NameClient = styled.Text`
 `;
 
 export const TimeValue = styled(NameClient)`
-    font-size: 16px;
+  font-size: 16px;
 `;
 export const ValueText = styled(NameClient)`
-    margin-top: 10px;
+  margin-top: 10px;
+`;
+
+export const AlignButtons = styled.View`
+width: 70%;
+margin: 0 auto;
+flex-direction: row;
+justify-content: space-around;
+flex: 1;
+align-items: center;
 `;
 
 export const MainView = styled.View`

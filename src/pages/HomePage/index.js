@@ -154,9 +154,6 @@ export default function Homepage() {
                 <S.Button onPress={clear}>
                   <S.ButtonsText>Resetar</S.ButtonsText>
                 </S.Button>
-                <S.Button onPress={getToken}>
-                  <S.ButtonsText>aperta</S.ButtonsText>
-                </S.Button>
               </S.AlignIcons>
             </View>
           )}
