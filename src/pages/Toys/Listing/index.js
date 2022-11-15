@@ -13,7 +13,7 @@ import * as S from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-export default function Listing() {
+export default function ToyListing() {
   const window = useWindowDimensions();
   const [data, setData] = useState([]);
   const [updateTable, setUpdateTable] = useState(false);
@@ -23,14 +23,14 @@ export default function Listing() {
   async function listagem() {
     try {
       const response = await axios.get(
-        `http://app-toy-vinic.herokuapp.com/api/timer`,
+        `http://app-toy-vinic.herokuapp.com/api/brinquedo`,
         {
           headers: {
             Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
           },
         },
       );
-      setData(response.data.timers);
+      setData(response.data.brinquedos);
     } catch (error) {
       alert(error);
     }
@@ -38,7 +38,7 @@ export default function Listing() {
 
   async function remocao(id) {
     try {
-      await axios.delete(`http://app-toy-vinic.herokuapp.com/api/timer/${id}`, {
+      await axios.delete(`http://app-toy-vinic.herokuapp.com/api/brinquedo/${id}`, {
         headers: {
           Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
         },
@@ -61,30 +61,35 @@ export default function Listing() {
   return (
     <ScrollView>
       {data.length === 0 ? (
-        <View style={{height: window.height/1.25, justifyContent: 'center', }}>
+        <View style={{height: window.height / 1.25, justifyContent: 'center'}}>
           <Image
-            source={require('../../assets/lupa.png')}
-            style={{width: 200, height: 200, alignSelf:'center'}}
+            source={require('../../../assets/lupa.png')}
+            style={{width: 200, height: 200, alignSelf: 'center'}}
           />
-          <Text style={{fontSize: 21, color: '#192d4b', textAlign: 'center', fontWeight:'bold', paddingTop: 10 }}>
+          <Text
+            style={{
+              fontSize: 21,
+              color: '#192d4b',
+              textAlign: 'center',
+              fontWeight: 'bold',
+              paddingTop: 10,
+            }}>
             Ops, nenhum resultado encontrado :(
           </Text>
-          <Text style={{fontSize: 17, color: '#838383', textAlign: 'center' }}>
-            Parece que não há nenhum cronômetro cadastrado.
+          <Text style={{fontSize: 17, color: '#838383', textAlign: 'center'}}>
+            Parece que não há nenhum brinquedo cadastrado.
           </Text>
         </View>
       ) : (
         data.map(item => {
-          let formattedTime = item.time.substring(0, 5);
-          let formattedPrice = item.total_price.replace('.', ',');
           return (
             <View key={item.id}>
               <S.DataContainer>
                 <S.MainView>
                   <S.DataView>
-                    <S.NameClient>{item.name_client}</S.NameClient>
-                    <S.TimeValue>{formattedTime}</S.TimeValue>
-                    <S.ValueText>R$ {formattedPrice}</S.ValueText>
+                    <S.NameClient>{item.name}</S.NameClient>
+                    <S.ValueText>R$ {item.price_per_minute},00</S.ValueText>
+                    <S.TimeValue>{item.minutes_price} minutos</S.TimeValue>
                   </S.DataView>
                   <TouchableOpacity
                   style={{justifyContent: 'center'}}
@@ -106,7 +111,9 @@ export default function Listing() {
             <View
               style={{
                 backgroundColor: 'white',
-                margin: 50,
+                width: '80%',
+                alignSelf: 'center',
+                marginTop: 70,
                 height: '20%',
                 borderRadius: 10,
               }}>
@@ -145,7 +152,7 @@ export default function Listing() {
                           textAlign: 'center',
                           color: 'white',
                         }}>
-                        Não
+                        Cancelar
                       </Text>
                     </S.Button>
                   </View>
@@ -163,7 +170,7 @@ export default function Listing() {
         }}
         style={{backgroundColor: '#04B01B'}}
         duration={3000}>
-        Cronômetro removido com sucesso!
+        Brinquedo removido com sucesso!
       </Snackbar>
     </ScrollView>
   );

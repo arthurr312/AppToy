@@ -7,6 +7,8 @@ import HomePage from './pages/HomePage';
 import Listing from './pages/Listing';
 import Sidebar from './pages/Sidebar';
 import Profile from './pages/Profile';
+import Registering from './pages/Toys/Registering';
+import ToyListing from './pages/Toys/Listing';
 const Stack = createNativeStackNavigator();
 
 function Routes() {
@@ -44,6 +46,16 @@ function Routes() {
         options={{headerShown: false}}
         name="Perfil"
         component={Profile}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="Registering"
+        component={Registering}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="ToyListing"
+        component={ToyListing}
       />
     </Stack.Navigator>
   );
