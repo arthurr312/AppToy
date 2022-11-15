@@ -7,6 +7,7 @@ import {
   Modal,
   Image,
   useWindowDimensions,
+  ActivityIndicator,
 } from 'react-native';
 import {Snackbar} from 'react-native-paper';
 import * as S from './styles';
@@ -17,10 +18,12 @@ export default function ToyListing() {
   const window = useWindowDimensions();
   const [data, setData] = useState([]);
   const [updateTable, setUpdateTable] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [id, setId] = useState();
   async function listagem() {
+    setLoading(prevState => !prevState);
     try {
       const response = await axios.get(
         `http://app-toy-vinic.herokuapp.com/api/brinquedo`,
@@ -34,15 +37,19 @@ export default function ToyListing() {
     } catch (error) {
       alert(error);
     }
+    setLoading(prevState => !prevState);
   }
 
   async function remocao(id) {
     try {
-      await axios.delete(`http://app-toy-vinic.herokuapp.com/api/brinquedo/${id}`, {
-        headers: {
-          Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
+      await axios.delete(
+        `http://app-toy-vinic.herokuapp.com/api/brinquedo/${id}`,
+        {
+          headers: {
+            Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
+          },
         },
-      });
+      );
       setUpdateTable(prevState => !prevState);
       setOpenModal(false);
       setVisible(true);
@@ -60,7 +67,18 @@ export default function ToyListing() {
   }, [updateTable]);
   return (
     <ScrollView>
-      {data.length === 0 ? (
+      {loading ? (
+        <ActivityIndicator
+          size={'large'}
+          color="#003e9b"
+          style={{
+            height: window.height/1.25,
+            transform: [{scaleX: 4}, {scaleY: 4}],
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        />
+      ) : data.length === 0 ? (
         <View style={{height: window.height / 1.25, justifyContent: 'center'}}>
           <Image
             source={require('../../../assets/lupa.png')}
@@ -92,7 +110,7 @@ export default function ToyListing() {
                     <S.TimeValue>{item.minutes_price} minutos</S.TimeValue>
                   </S.DataView>
                   <TouchableOpacity
-                  style={{justifyContent: 'center'}}
+                    style={{justifyContent: 'center'}}
                     onPress={() => {
                       setOpenModal(true);
                       setId(item.id);

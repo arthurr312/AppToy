@@ -7,6 +7,7 @@ import {
   Modal,
   Image,
   useWindowDimensions,
+  ActivityIndicator,
 } from 'react-native';
 import {Snackbar} from 'react-native-paper';
 import * as S from './styles';
@@ -15,12 +16,14 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Listing() {
   const window = useWindowDimensions();
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [updateTable, setUpdateTable] = useState(false);
   const [visible, setVisible] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [id, setId] = useState();
   async function listagem() {
+    setLoading(prevState => !prevState);
     try {
       const response = await axios.get(
         `http://app-toy-vinic.herokuapp.com/api/timer`,
@@ -34,6 +37,7 @@ export default function Listing() {
     } catch (error) {
       alert(error);
     }
+    setLoading(prevState => !prevState);
   }
 
   async function remocao(id) {
@@ -60,16 +64,34 @@ export default function Listing() {
   }, [updateTable]);
   return (
     <ScrollView>
-      {data.length === 0 ? (
-        <View style={{height: window.height/1.25, justifyContent: 'center', }}>
+      {loading ? (
+        <ActivityIndicator
+          size={'large'}
+          color="#003e9b"
+          style={{
+            height: window.height / 1.25,
+            transform: [{scaleX: 4}, {scaleY: 4}],
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        />
+      ) : data.length === 0 ? (
+        <View style={{height: window.height / 1.25, justifyContent: 'center'}}>
           <Image
             source={require('../../assets/lupa.png')}
-            style={{width: 200, height: 200, alignSelf:'center'}}
+            style={{width: 200, height: 200, alignSelf: 'center'}}
           />
-          <Text style={{fontSize: 21, color: '#192d4b', textAlign: 'center', fontWeight:'bold', paddingTop: 10 }}>
+          <Text
+            style={{
+              fontSize: 21,
+              color: '#192d4b',
+              textAlign: 'center',
+              fontWeight: 'bold',
+              paddingTop: 10,
+            }}>
             Ops, nenhum resultado encontrado :(
           </Text>
-          <Text style={{fontSize: 17, color: '#838383', textAlign: 'center' }}>
+          <Text style={{fontSize: 17, color: '#838383', textAlign: 'center'}}>
             Parece que não há nenhum cronômetro cadastrado.
           </Text>
         </View>
@@ -87,7 +109,7 @@ export default function Listing() {
                     <S.ValueText>R$ {formattedPrice}</S.ValueText>
                   </S.DataView>
                   <TouchableOpacity
-                  style={{justifyContent: 'center'}}
+                    style={{justifyContent: 'center'}}
                     onPress={() => {
                       setOpenModal(true);
                       setId(item.id);
