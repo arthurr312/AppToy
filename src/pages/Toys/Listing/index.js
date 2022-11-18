@@ -12,6 +12,7 @@ import {
 import {Snackbar} from 'react-native-paper';
 import * as S from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
+import PencilIcon from 'react-native-vector-icons/EvilIcons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function ToyListing() {
@@ -21,7 +22,14 @@ export default function ToyListing() {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [enableEdition, setEnableEdition] = useState(false);
+  const [selectedRowId, setSelectedRowId] = useState();
   const [id, setId] = useState();
+  const [price_per_minute, setPricePerMinute] = useState(`${0}, 00`);
+  const [name, setName] = useState('');
+  const [minutes, setMinutes] = useState('');
+  let formatted = price_per_minute.replace('R$', '');
+  let formattedPrice = formatted.replace(',', '.');
   async function listagem() {
     setLoading(prevState => !prevState);
     try {
@@ -58,6 +66,24 @@ export default function ToyListing() {
     }
   }
 
+  async function edicao(id, values) {
+    try {
+      await axios.put(
+        `http://app-toy-vinic.herokuapp.com/api/brinquedo/${id}`,
+        values, {
+          headers: {
+            Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
+          },
+        }
+      );
+      setUpdateTable(prevState => !prevState);
+      //alert('deubom aqui')
+      setEnableEdition(false);
+    } catch (error) {
+      alert(error);
+    }
+  }
+
   const closeSnackbar = () => {
     setVisible(false);
   };
@@ -72,10 +98,10 @@ export default function ToyListing() {
           size={'large'}
           color="#003e9b"
           style={{
-            height: window.height/1.25,
+            height: window.height / 1.25,
             transform: [{scaleX: 4}, {scaleY: 4}],
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
           }}
         />
       ) : data.length === 0 ? (
@@ -100,23 +126,81 @@ export default function ToyListing() {
         </View>
       ) : (
         data.map(item => {
+          const formValues = {
+            name: name ? name : item.name,
+            price_per_minute: price_per_minute ? formattedPrice : item.price_per_minute,
+            minutes_price: minutes ? minutes : item.minutes_price,
+          };
           return (
             <View key={item.id}>
               <S.DataContainer>
                 <S.MainView>
-                  <S.DataView>
-                    <S.NameClient>{item.name}</S.NameClient>
-                    <S.ValueText>R$ {item.price_per_minute},00</S.ValueText>
-                    <S.TimeValue>{item.minutes_price} minutos</S.TimeValue>
-                  </S.DataView>
-                  <TouchableOpacity
-                    style={{justifyContent: 'center'}}
-                    onPress={() => {
-                      setOpenModal(true);
-                      setId(item.id);
-                    }}>
-                    <Icon name="ios-trash-outline" size={25} color="grey" />
-                  </TouchableOpacity>
+                  {selectedRowId === item.id && enableEdition ? (
+                    <>
+                      <View>
+                        <S.Field
+                          defaultValue={item.name}
+                          onChangeText={e => setName(e)}
+                        />
+                        <S.Field
+                          defaultValue={`${item.price_per_minute},00`}
+                          onChangeText={e => setPricePerMinute(e)}
+                        />
+                        <S.Field
+                          defaultValue={`${item.minutes_price} minutos`}
+                          onChangeText={e => setMinutes(e)}
+                        />
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => setEnableEdition(false)}
+                          style={{justifyContent: 'center'}}>
+                          <Icon name="close-outline" size={35} color="grey" />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{justifyContent: 'center'}} onPress={() => edicao(selectedRowId, formValues)}>
+                          <Icon name="checkmark" size={30} color="grey" />
+                        </TouchableOpacity>
+                      </View>
+                    </>
+                  ) : (
+                    <>
+                      <S.DataView>
+                        <S.NameClient>{item.name}</S.NameClient>
+                        <S.ValueText>R$ {item.price_per_minute},00</S.ValueText>
+                        <S.TimeValue>{item.minutes_price} minutos</S.TimeValue>
+                      </S.DataView>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                        }}>
+                        <TouchableOpacity
+                          style={{justifyContent: 'center'}}
+                          onPress={() => {
+                            setOpenModal(true);
+                            setId(item.id);
+                          }}>
+                          <Icon
+                            name="ios-trash-outline"
+                            size={25}
+                            color="grey"
+                          />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => {
+                            setEnableEdition(true);
+                            setSelectedRowId(item.id);
+                          }}
+                          style={{justifyContent: 'center'}}>
+                          <PencilIcon name="pencil" size={35} color="grey" />
+                        </TouchableOpacity>
+                      </View>
+                    </>
+                  )}
                 </S.MainView>
               </S.DataContainer>
             </View>
