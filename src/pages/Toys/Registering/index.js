@@ -71,14 +71,9 @@ export default function Registering() {
 
       <S.AlignButtons>
         <S.AlignButtons>
-          <View style={{width: '30%'}}>
+          <View style={{width: '50%'}}>
             <S.Button onPress={() => create(formValues)}>
               <S.ButtonText>Cadastrar</S.ButtonText>
-            </S.Button>
-          </View>
-          <View style={{width: '30%'}}>
-            <S.Button onPress={() => clearFields()}>
-              <S.ButtonText>Limpar campos</S.ButtonText>
             </S.Button>
           </View>
         </S.AlignButtons>

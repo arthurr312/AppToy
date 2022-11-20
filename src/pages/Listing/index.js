@@ -35,7 +35,7 @@ export default function Listing() {
       );
       setData(response.data.timers);
     } catch (error) {
-      alert(error);
+      alert('Ocorreu um erro inesperado, tente novamente.');
     }
     setLoading(prevState => !prevState);
   }

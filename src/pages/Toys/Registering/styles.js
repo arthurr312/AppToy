@@ -35,7 +35,7 @@ export const Field = styled.TextInput.attrs({
   name: 'name',
 })`
   width: 100%;
-  border: none;
+  border: 1px solid gray;
   background: white;
   border-radius: 5px;
   padding: 10px;
@@ -48,10 +48,10 @@ export const PriceMaskField = styled(TextInputMask).attrs({
   name: 'price_per_minute',
 })`
   width: 100%;
-  border: none;
-  background-color: white;
+  border: 1px solid gray;
+  background: white;
   border-radius: 5px;
-  padding: 11px;
+  padding: 10px;
   margin: 0 auto;
   color: black;
 `;
@@ -61,16 +61,15 @@ export const MinutesMaskField = styled(TextInputMask).attrs({
   name: 'minutes_price',
 })`
   width: 100%;
-  border: none;
-  background-color: white;
+  border: 1px solid gray;
+  background: white;
   border-radius: 5px;
-  padding: 11px;
+  padding: 10px;
   margin: 0 auto;
   color: black;
 `;
 
 export const AlignButtons = styled.View`
-  width: 75%;
   margin: 0 auto;
   flex-direction: row;
   justify-content: space-around;

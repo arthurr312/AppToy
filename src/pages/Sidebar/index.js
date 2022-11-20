@@ -5,6 +5,7 @@ import Homepage from '../HomePage';
 import Listing from '../Listing';
 import {UserContext} from '../../context/User';
 import Icon from 'react-native-vector-icons/Ionicons';
+import TimerIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import PlusIcon from 'react-native-vector-icons/FontAwesome5';
 import CustomDrawer from './CustomDrawer';
 import Profile from '../Profile';
@@ -72,7 +73,7 @@ export default function Sidebar() {
         component={Listing}
         options={{
           drawerIcon: ({color}) => (
-            <Icon name="ios-list-outline" size={22} color={color} />
+            <TimerIcons name="timer-outline" size={22} color={color} />
           ),
         }}
       />

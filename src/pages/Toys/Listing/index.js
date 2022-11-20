@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import * as S from './styles';
 import {
   Text,
   View,
@@ -10,7 +11,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {Snackbar} from 'react-native-paper';
-import * as S from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PencilIcon from 'react-native-vector-icons/EvilIcons';
 import axios from 'axios';
@@ -47,9 +47,8 @@ export default function ToyListing() {
         },
       );
       setData(response.data.brinquedos);
-      console.log(response.data.brinquedos);
     } catch (error) {
-      alert(error);
+      alert('Ocorreu um erro inesperado, tente novamente.');
     }
     setLoading(prevState => !prevState);
   }
@@ -68,7 +67,7 @@ export default function ToyListing() {
       setOpenModal(false);
       setVisible(true);
     } catch (error) {
-      alert('ta dando ruim');
+      alert('Ocorreu um erro inesperado, tente novamente.');
     }
   }
 
@@ -86,8 +85,9 @@ export default function ToyListing() {
       setUpdateTable(prevState => !prevState);
       clearFields();
       setEnableEdition(false);
+      setChangeField(false);
     } catch (error) {
-      alert(error);
+      alert('Ocorreu um erro inesperado, tente novamente.');
     }
   }
 

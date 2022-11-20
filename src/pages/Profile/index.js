@@ -16,7 +16,7 @@ export default function Profile() {
       );
       alert(JSON.stringify(response.data));
     } catch (error) {
-      alert(error);
+      alert('Ocorreu um erro inesperado, tente novamente.');
     }
   }
 
