@@ -26,10 +26,15 @@ export default function ToyListing() {
   const [selectedRowId, setSelectedRowId] = useState();
   const [id, setId] = useState();
   const [price_per_minute, setPricePerMinute] = useState(`${0}, 00`);
+  const [changeField, setChangeField] = useState(false);
   const [name, setName] = useState('');
   const [minutes, setMinutes] = useState('');
-  let formatted = price_per_minute.replace('R$', '');
-  let formattedPrice = formatted.replace(',', '.');
+
+  const clearFields = () => {
+    setPricePerMinute(`${0}, 00`);
+    setName('');
+    setMinutes('');
+  };
   async function listagem() {
     setLoading(prevState => !prevState);
     try {
@@ -42,6 +47,7 @@ export default function ToyListing() {
         },
       );
       setData(response.data.brinquedos);
+      console.log(response.data.brinquedos);
     } catch (error) {
       alert(error);
     }
@@ -69,15 +75,16 @@ export default function ToyListing() {
   async function edicao(id, values) {
     try {
       await axios.put(
-        `http://app-toy-vinic.herokuapp.com/api/brinquedo/${id}`,
-        values, {
+        `http://app-toy-vinic.herokuapp.com/api/update/brinquedo/${id}`,
+        values,
+        {
           headers: {
             Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
           },
-        }
+        },
       );
       setUpdateTable(prevState => !prevState);
-      //alert('deubom aqui')
+      clearFields();
       setEnableEdition(false);
     } catch (error) {
       alert(error);
@@ -126,9 +133,13 @@ export default function ToyListing() {
         </View>
       ) : (
         data.map(item => {
+          let formatted = price_per_minute.replace('R$', '');
+          let formattedPrice = formatted.replace(',', '.');
           const formValues = {
             name: name ? name : item.name,
-            price_per_minute: price_per_minute ? formattedPrice : item.price_per_minute,
+            price_per_minute: changeField
+              ? formattedPrice
+              : item.price_per_minute,
             minutes_price: minutes ? minutes : item.minutes_price,
           };
           return (
@@ -136,36 +147,39 @@ export default function ToyListing() {
               <S.DataContainer>
                 <S.MainView>
                   {selectedRowId === item.id && enableEdition ? (
-                    <>
-                      <View>
-                        <S.Field
-                          defaultValue={item.name}
-                          onChangeText={e => setName(e)}
-                        />
-                        <S.Field
-                          defaultValue={`${item.price_per_minute},00`}
-                          onChangeText={e => setPricePerMinute(e)}
-                        />
-                        <S.Field
-                          defaultValue={`${item.minutes_price} minutos`}
-                          onChangeText={e => setMinutes(e)}
-                        />
-                      </View>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'center',
-                        }}>
-                        <TouchableOpacity
+                    <View style={{width: '100%'}}>
+                      <S.Field
+                        defaultValue={item.name}
+                        onChangeText={e => setName(e)}
+                      />
+                      <S.PriceMaskField
+                        value={`${item.price_per_minute},00`}
+                        onChangeText={e => {
+                          setPricePerMinute(e);
+                          setChangeField(true);
+                        }}
+                      />
+                      <S.MinutesMaskField
+                        value={`${item.minutes_price}`}
+                        onChangeText={e => setMinutes(e)}
+                      />
+                      <S.AlignEditingButtons>
+                        <S.EditingButton
+                          style={{justifyContent: 'center'}}
+                          onPress={() => edicao(selectedRowId, formValues)}>
+                          <Text style={{color: 'white', fontWeight: 'bold'}}>
+                            Editar
+                          </Text>
+                        </S.EditingButton>
+                        <S.CancelButton
                           onPress={() => setEnableEdition(false)}
                           style={{justifyContent: 'center'}}>
-                          <Icon name="close-outline" size={35} color="grey" />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{justifyContent: 'center'}} onPress={() => edicao(selectedRowId, formValues)}>
-                          <Icon name="checkmark" size={30} color="grey" />
-                        </TouchableOpacity>
-                      </View>
-                    </>
+                          <Text style={{color: 'black', fontWeight: 'bold'}}>
+                            Cancelar
+                          </Text>
+                        </S.CancelButton>
+                      </S.AlignEditingButtons>
+                    </View>
                   ) : (
                     <>
                       <S.DataView>
@@ -240,23 +254,25 @@ export default function ToyListing() {
                         style={{
                           fontSize: 14,
                           textAlign: 'center',
+                          fontWeight: 'bold',
                           color: 'white',
                         }}>
-                        Sim
+                        Confirmar
                       </Text>
                     </S.Button>
                   </View>
-                  <View style={{width: '30%'}}>
-                    <S.Button onPress={() => setOpenModal(false)}>
+                  <View style={{width: '40%'}}>
+                    <S.CancelButton onPress={() => setOpenModal(false)}>
                       <Text
                         style={{
                           fontSize: 14,
                           textAlign: 'center',
-                          color: 'white',
+                          color: 'black',
+                          fontWeight: 'bold',
                         }}>
                         Cancelar
                       </Text>
-                    </S.Button>
+                    </S.CancelButton>
                   </View>
                 </S.AlignButtons>
               </View>
