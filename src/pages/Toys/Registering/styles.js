@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import {TextInputMask} from 'react-native-masked-text';
+import {Form as LibForm, Formik as LibFormik} from 'formik';
 
+export const Formik = styled(LibFormik)``;
+export const Form = styled(LibForm)``;
 export const Container = styled.View`
   justify-content: center;
   align-items: center;
@@ -84,4 +87,10 @@ export const Label = styled.Text`
 
 export const AlignFields = styled.View`
   width: 60%;
+`;
+
+export const ErrorMessage = styled.Text`
+  margin-left: 5px;
+  color: red;
+  font-size: 14px;
 `;
