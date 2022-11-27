@@ -10,7 +10,6 @@ import {
   useWindowDimensions,
   ActivityIndicator,
 } from 'react-native';
-import {Snackbar} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PencilIcon from 'react-native-vector-icons/EvilIcons';
 import axios from 'axios';
@@ -20,7 +19,6 @@ export default function ToyListing() {
   const [data, setData] = useState([]);
   const [updateTable, setUpdateTable] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [visible, setVisible] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [enableEdition, setEnableEdition] = useState(false);
   const [selectedRowId, setSelectedRowId] = useState();
@@ -65,7 +63,6 @@ export default function ToyListing() {
       );
       setUpdateTable(prevState => !prevState);
       setOpenModal(false);
-      setVisible(true);
     } catch (error) {
       alert('Ocorreu um erro inesperado, tente novamente.');
     }
@@ -90,10 +87,6 @@ export default function ToyListing() {
       alert('Ocorreu um erro inesperado, tente novamente.');
     }
   }
-
-  const closeSnackbar = () => {
-    setVisible(false);
-  };
 
   useEffect(() => {
     listagem();
@@ -280,16 +273,6 @@ export default function ToyListing() {
           </View>
         </Modal>
       </View>
-      <Snackbar
-        visible={visible}
-        onDismiss={closeSnackbar}
-        action={{
-          label: <Icon name="ios-close-outline" color="#fff" size={25} />,
-        }}
-        style={{backgroundColor: '#04B01B'}}
-        duration={3000}>
-        Brinquedo removido com sucesso!
-      </Snackbar>
     </ScrollView>
   );
 }

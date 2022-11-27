@@ -14,7 +14,7 @@ export const DataContainer = styled.View`
 
 export const Button = styled.TouchableOpacity`
   height: 40px;
-  min-width: 85px;
+  min-width: 90px;
   margin-top: 5px;
   border-radius: 5px;
   background-color: #003e9b;

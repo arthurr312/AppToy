@@ -39,70 +39,77 @@ export default function Registering() {
   };
 
   return (
-    <S.Container style={{height: window.height / 1.25}}>
-      <Formik
-        initialValues={{
-          name: '',
-          minutes_price: '',
-        }}
-        validationSchema={ToyFormSchema}
-        validateOnChange={false}
-        onSubmit={(values, {resetForm}) => {
-          setPricePerMinute('');
-          create(values);
-          resetForm({values: ''});
-        }}>
-        {({handleChange, handleBlur, handleSubmit, values, errors}) => (
-          <>
-            <S.MainText>Cadastro de brinquedos</S.MainText>
-            <S.AlignFields style={{paddingBottom: 10}}>
-              <S.Label>Nome</S.Label>
-              <S.Field
-                value={values.name}
-                onBlur={handleBlur('name')}
-                onChangeText={handleChange('name')}
-              />
-              <S.ErrorMessage>{errors.name}</S.ErrorMessage>
-            </S.AlignFields>
+    <View style={{height: window.height}}>
+      <S.Container style={{height: window.height / 1.25}}>
+        <Formik
+          initialValues={{
+            name: '',
+            minutes_price: '',
+          }}
+          validationSchema={ToyFormSchema}
+          validateOnChange={false}
+          onSubmit={(values, {resetForm}) => {
+            setPricePerMinute('');
+            create(values);
+            resetForm({values: ''});
+          }}>
+          {({handleChange, handleBlur, handleSubmit, values, errors}) => (
+            <>
+              <S.MainText>Cadastro de brinquedos</S.MainText>
+              <S.AlignFields style={{paddingBottom: 10}}>
+                <S.Label>Nome</S.Label>
+                <S.Field
+                  value={values.name}
+                  onBlur={handleBlur('name')}
+                  onChangeText={handleChange('name')}
+                />
+                <S.ErrorMessage>{errors.name}</S.ErrorMessage>
+              </S.AlignFields>
 
-            <S.AlignFields style={{paddingBottom: 10}}>
-              <S.Label>Preço</S.Label>
-              <S.PriceMaskField
-                value={price_per_minute}
-                onChangeText={e => setPricePerMinute(e)}
-              />
-            </S.AlignFields>
-            <S.AlignFields style={{paddingBottom: 10}}>
-              <S.Label>Minutos</S.Label>
-              <S.MinutesMaskField
-                value={values.minutes_price}
-                onBlur={handleBlur('minutes_price')}
-                onChangeText={handleChange('minutes_price')}
-              />
-            </S.AlignFields>
+              <S.AlignFields style={{paddingBottom: 10}}>
+                <S.Label>Preço</S.Label>
+                <S.PriceMaskField
+                  value={price_per_minute}
+                  onChangeText={e => setPricePerMinute(e)}
+                />
+              </S.AlignFields>
+              <S.AlignFields style={{paddingBottom: 10}}>
+                <S.Label>Minutos</S.Label>
+                <S.MinutesMaskField
+                  value={values.minutes_price}
+                  onBlur={handleBlur('minutes_price')}
+                  onChangeText={handleChange('minutes_price')}
+                />
+              </S.AlignFields>
 
-            <S.AlignButtons>
               <S.AlignButtons>
-                <View style={{width: '50%'}}>
-                  <S.Button onPress={handleSubmit}>
-                    <S.ButtonText>Cadastrar</S.ButtonText>
-                  </S.Button>
-                </View>
+                <S.AlignButtons>
+                  <View style={{width: '50%'}}>
+                    <S.Button onPress={handleSubmit}>
+                      <S.ButtonText>Cadastrar</S.ButtonText>
+                    </S.Button>
+                  </View>
+                </S.AlignButtons>
               </S.AlignButtons>
-            </S.AlignButtons>
-          </>
-        )}
-      </Formik>
-      <Snackbar
-        visible={visible}
-        onDismiss={closeSnackbar}
-        action={{
-          label: <Icon name="ios-close-outline" color="#fff" size={25} />,
-        }}
-        style={{backgroundColor: messageType ? '#04B01B' : '#f00'}}
-        duration={3000}>
-        {message}
-      </Snackbar>
-    </S.Container>
+            </>
+          )}
+        </Formik>
+      </S.Container>
+      <View style={{height: '12%'}}>
+        <Snackbar
+          visible={visible}
+          onDismiss={closeSnackbar}
+          action={{
+            label: <Icon name="ios-close-outline" color="#fff" size={25} />,
+          }}
+          style={{
+            alignItems: 'center',
+            backgroundColor: messageType ? '#04B01B' : '#f00',
+          }}
+          duration={3000}>
+          {message}
+        </Snackbar>
+      </View>
+    </View>
   );
 }
