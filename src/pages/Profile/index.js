@@ -7,7 +7,7 @@ export default function Profile() {
   async function filtro() {
     try {
       const response = await axios.get(
-        `http://app-toy-vinic.herokuapp.com/api/finances/5`,
+        `https://apptoytemp.000webhostapp.coms/api/finances/5`,
         {
           headers: {
             Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),

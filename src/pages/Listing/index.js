@@ -26,7 +26,7 @@ export default function Listing() {
     setLoading(prevState => !prevState);
     try {
       const response = await axios.get(
-        `http://app-toy-vinic.herokuapp.com/api/timer`,
+        `https://apptoytemp.000webhostapp.com/api/timer`,
         {
           headers: {
             Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
@@ -42,7 +42,7 @@ export default function Listing() {
 
   async function remocao(id) {
     try {
-      await axios.delete(`http://app-toy-vinic.herokuapp.com/api/timer/${id}`, {
+      await axios.delete(`https://apptoytemp.000webhostapp.com/api/timer/${id}`, {
         headers: {
           Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
         },

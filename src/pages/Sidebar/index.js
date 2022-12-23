@@ -5,6 +5,7 @@ import Homepage from '../HomePage';
 import Listing from '../Listing';
 import {UserContext} from '../../context/User';
 import Icon from 'react-native-vector-icons/Ionicons';
+import FinanceIcon from 'react-native-vector-icons/FontAwesome5';
 import TimerIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import PlusIcon from 'react-native-vector-icons/FontAwesome5';
 import CustomDrawer from './CustomDrawer';
@@ -33,11 +34,11 @@ export default function Sidebar() {
         },
       }}>
       <Drawer.Screen
-        name="Perfil"
+        name="Finanças"
         component={Profile}
         options={{
           drawerIcon: ({color}) => (
-            <Icon name="person" size={22} color={color} />
+            <FinanceIcon name="dollar-sign" size={22} color={color} style={{paddingLeft: 5, paddingRight: 7}} />
           ),
         }}
       />

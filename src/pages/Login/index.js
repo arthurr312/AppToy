@@ -22,7 +22,7 @@ export default function Login() {
     setLoading(prevState => !prevState);
     try {
       const response = await axios.post(
-        `https://app-toy-vinic.herokuapp.com/api/login`,
+        `https://apptoytemp.000webhostapp.com/api/login`,
         {
           name: userName,
           password: password,
