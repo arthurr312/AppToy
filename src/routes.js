@@ -9,6 +9,7 @@ import Sidebar from './pages/Sidebar';
 import Profile from './pages/Profile';
 import Registering from './pages/Toys/Registering';
 import ToyListing from './pages/Toys/Listing';
+import Finance from './pages/Finance';
 const Stack = createNativeStackNavigator();
 
 function Routes() {
@@ -41,11 +42,15 @@ function Routes() {
         name="Listing"
         component={Listing}
       />
-
       <Stack.Screen
         options={{headerShown: false}}
         name="Perfil"
         component={Profile}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="Finanças"
+        component={Finance}
       />
       <Stack.Screen
         options={{headerShown: false}}

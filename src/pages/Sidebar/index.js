@@ -12,6 +12,7 @@ import CustomDrawer from './CustomDrawer';
 import Profile from '../Profile';
 import Registering from '../Toys/Registering';
 import ToyListing from '../Toys/Listing';
+import Finance from '../Finance';
 export default function Sidebar() {
   const Drawer = createDrawerNavigator();
   const {user} = useContext(UserContext);
@@ -34,8 +35,17 @@ export default function Sidebar() {
         },
       }}>
       <Drawer.Screen
-        name="Finanças"
+        name="Perfil"
         component={Profile}
+        options={{
+          drawerIcon: ({color}) => (
+            <Icon name="person" size={22} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Finanças"
+        component={Finance}
         options={{
           drawerIcon: ({color}) => (
             <FinanceIcon name="dollar-sign" size={22} color={color} style={{paddingLeft: 5, paddingRight: 7}} />
