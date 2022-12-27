@@ -113,7 +113,7 @@ export default function Profile() {
                   />
                 )}
               </View>
-              <View style={{ width: '80%' }}>
+              <View style={{ width: '80%', display: errors.oldPass ? 'flex' : 'none' }}>
                 <S.ErrorMessage>{errors.oldPass}</S.ErrorMessage>
               </View>
               <View style={{ flexDirection: 'row' }}>
@@ -141,7 +141,7 @@ export default function Profile() {
                   />
                 )}
               </View>
-              <View style={{ width: '80%' }}>
+              <View style={{ width: '80%', display: errors.newPass ? 'flex' : 'none' }}>
                 <S.ErrorMessage>{errors.newPass}</S.ErrorMessage>
               </View>
               <S.Button onPress={handleSubmit}>

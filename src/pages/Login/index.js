@@ -63,7 +63,7 @@ export default function Login() {
         onChangeText={e => setUserName(e)}
       />
       <View style={{flexDirection: 'row'}}>
-        <S.Field
+        <S.PasswordField
           secureTextEntry={visiblePassword}
           placeholder="Senha"
           value={password}

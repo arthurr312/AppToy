@@ -33,3 +33,16 @@ export const Field = styled.TextInput.attrs({
   margin: 10px;
   color: black;
 `;
+
+export const PasswordField = styled.TextInput.attrs({
+  placeholderTextColor: '#B2B2B2',
+})`
+  width: 60%;
+  border: none;
+  background: white;
+  border-radius: 5px;
+  padding: 10px;
+  padding-right: 32px;
+  margin: 10px;
+  color: black;
+`;

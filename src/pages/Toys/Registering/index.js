@@ -63,7 +63,9 @@ export default function Registering() {
                   onBlur={handleBlur('name')}
                   onChangeText={handleChange('name')}
                 />
+                <View style={{display: errors.name ? 'flex': 'none'}}> 
                 <S.ErrorMessage>{errors.name}</S.ErrorMessage>
+                </View>
               </S.AlignFields>
 
               <S.AlignFields style={{paddingBottom: 10}}>

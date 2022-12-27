@@ -14,6 +14,7 @@ export const Field = styled.TextInput.attrs({
     border: 2px solid gray;
     border-radius: 5px;
     padding: 10px;
+    padding-right: 32px;
     margin: 10px;
     color: black;
 `;
@@ -21,7 +22,6 @@ export const Field = styled.TextInput.attrs({
 export const Button = styled.TouchableOpacity`
   width: 100px;
   height: 40px;
-  margin-top: 5px;
   border-radius: 5px;
   background-color: #003E9B;
   margin-top: 10px;
