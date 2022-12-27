@@ -27,3 +27,7 @@ export const Button = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
 `;
+
+export const ResetPasswordIconContainer = styled.View`
+  margin-top: -15px;
+`;

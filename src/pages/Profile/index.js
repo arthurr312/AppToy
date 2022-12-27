@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { FlatList, Image, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList, Image, Text, useWindowDimensions, View } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as S from './styles';
 export default function Profile() {
   const window = useWindowDimensions();
+  const [oldPasswordVisibility, setOldPasswordVisibility] = useState(false);
+  const [newPasswordVisibility, setNewPasswordVisibility] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [oldPassword, setOldPassword] = useState('');
 
@@ -46,10 +49,12 @@ export default function Profile() {
             Redefinir senha
           </Text>
         </View>
-        <Image
-          source={require('../../assets/reset.png')}
-          style={{ width: 130, height: 130 }}
-        />
+        <S.ResetPasswordIconContainer>
+          <Image
+            source={require('../../assets/reset.png')}
+            style={{ width: 130, height: 130 }}
+          />
+        </S.ResetPasswordIconContainer>
         <View style={{ width: '80%' }}>
           <Text style={{ fontSize: 18, color: 'black' }}>
             A fim de <Text style={{ fontWeight: 'bold' }}>proteger sua conta</Text>, tenha certeza que sua senha:
@@ -72,14 +77,54 @@ export default function Profile() {
             }}
           />
         </View>
-        <S.Field
-          placeholder="Digite sua senha antiga"
-          onChangeText={event => setOldPassword(event)}
-        />
-        <S.Field
-          placeholder="Digite sua nova senha"
-          onChangeText={event => setNewPassword(event)}
-        />
+        <View style={{ flexDirection: 'row' }}>
+          <S.Field
+            secureTextEntry={oldPasswordVisibility}
+            placeholder="Digite sua senha antiga"
+            onChangeText={event => setOldPassword(event)}
+          />
+          {oldPasswordVisibility ? (
+            <Icon
+              name="eye-off-outline"
+              size={25}
+              color="grey"
+              style={{ position: 'absolute', right: 15, top: 23 }}
+              onPress={() => setOldPasswordVisibility(prevState => !prevState)}
+            />
+          ) : (
+            <Icon
+              name="eye-outline"
+              size={25}
+              color="grey"
+              style={{ position: 'absolute', right: 15, top: 23 }}
+              onPress={() => setOldPasswordVisibility(prevState => !prevState)}
+            />
+          )}
+        </View>
+        <View style={{ flexDirection: 'row' }}>
+          <S.Field
+            secureTextEntry={newPasswordVisibility}
+            placeholder="Digite sua nova senha"
+            onChangeText={event => setNewPassword(event)}
+          />
+          {newPasswordVisibility ? (
+            <Icon
+              name="eye-off-outline"
+              size={25}
+              color="grey"
+              style={{ position: 'absolute', right: 15, top: 23 }}
+              onPress={() => setNewPasswordVisibility(prevState => !prevState)}
+            />
+          ) : (
+            <Icon
+              name="eye-outline"
+              size={25}
+              color="grey"
+              style={{ position: 'absolute', right: 15, top: 23 }}
+              onPress={() => setNewPasswordVisibility(prevState => !prevState)}
+            />
+          )}
+        </View>
         <S.Button onPress={changePassword}>
           <Text style={{ color: 'white', fontWeight: 'bold' }}>
             Confirmar
