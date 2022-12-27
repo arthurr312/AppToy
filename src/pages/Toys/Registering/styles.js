@@ -20,6 +20,7 @@ export const MainText = styled.Text`
 export const ButtonText = styled.Text`
   font-size: 14px;
   text-align: center;
+  font-weight: bold; 
   color: white;
 `;
 

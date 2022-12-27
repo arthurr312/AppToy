@@ -24,10 +24,17 @@ export const Button = styled.TouchableOpacity`
   margin-top: 5px;
   border-radius: 5px;
   background-color: #003E9B;
+  margin-top: 10px;
   align-items: center;
   justify-content: center;
 `;
 
 export const ResetPasswordIconContainer = styled.View`
   margin-top: -15px;
+`;
+
+export const ErrorMessage = styled.Text`
+  margin-left: 8px;
+  color: red;
+  font-size: 14px;
 `;
