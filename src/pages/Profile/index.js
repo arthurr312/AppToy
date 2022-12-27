@@ -54,16 +54,7 @@ export default function Profile() {
       >
         {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
           <>
-            <View style={{
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-              width: "90%",
-              minHeight: "60%",
-              paddingBottom: 15,
-              backgroundColor: "white",
-              elevation: 6,
-              borderRadius: 7,
-            }}>
+            <S.SecondaryContainer>
               <View style={{ width: '80%', paddingTop: 5 }}>
                 <Text style={{
                   fontWeight: 'bold',
@@ -103,7 +94,7 @@ export default function Profile() {
                   }}
                 />
               </View>
-              <View style={{ flexDirection: 'row' }}>
+              <S.AlignFieldAndIcon>
                 <S.Field
                   value={values.oldPass}
                   onBlur={handleBlur('oldPass')} onChangeText={handleChange('oldPass')}
@@ -127,11 +118,11 @@ export default function Profile() {
                     onPress={() => setOldPasswordVisibility(prevState => !prevState)}
                   />
                 )}
-              </View>
+              </S.AlignFieldAndIcon>
               <View style={{ width: '80%', display: errors.oldPass ? 'flex' : 'none' }}>
                 <S.ErrorMessage>{errors.oldPass}</S.ErrorMessage>
               </View>
-              <View style={{ flexDirection: 'row' }}>
+              <S.AlignFieldAndIcon>
                 <S.Field
                   value={values.newPass}
                   onBlur={handleBlur('newPass')} onChangeText={handleChange('newPass')}
@@ -155,7 +146,7 @@ export default function Profile() {
                     onPress={() => setNewPasswordVisibility(prevState => !prevState)}
                   />
                 )}
-              </View>
+              </S.AlignFieldAndIcon>
               <View style={{ width: '80%', display: errors.newPass ? 'flex' : 'none' }}>
                 <S.ErrorMessage>{errors.newPass}</S.ErrorMessage>
               </View>
@@ -164,7 +155,7 @@ export default function Profile() {
                   Confirmar
                 </Text>
               </S.Button>
-            </View>
+            </S.SecondaryContainer>
           </>
         )}
       </Formik>

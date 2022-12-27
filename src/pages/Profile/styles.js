@@ -7,9 +7,24 @@ export const MainContainer = styled.View`
     background-color: #D9D9D9;
 `;
 
+export const SecondaryContainer = styled.View`
+  justify-content: flex-start;
+  align-items: center;
+  width: 90%;
+  min-height: 60%;
+  padding-bottom: 15px;
+  background-color: white;
+  elevation: 6;
+  border-radius: 7px;
+`;
+
+export const AlignFieldAndIcon = styled.View`
+  flex-direction: row;
+`;
+
 export const Field = styled.TextInput.attrs({
-    placeholderTextColor: 'gray',
-  })`
+  placeholderTextColor: 'gray',
+})`
     width: 80%;
     border: 2px solid gray;
     border-radius: 5px;
