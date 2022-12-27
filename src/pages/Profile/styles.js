@@ -1,24 +1,29 @@
 import styled from 'styled-components';
 
-export const MainContainer = styled.View``;
-
-export const ProfileContainer = styled.View`
-    width: 90%; 
-    height: 60%; 
-    background-color: black; 
-    margin: 0 auto;
-    border-radius: 10px;
-    margin-bottom: 10px;
+export const MainContainer = styled.View`
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    background-color: #D9D9D9;
 `;
 
-export const OptionsContainer = styled.View`
-    margin-top: 10px;
-    margin: 0 auto;
-    width: 90%;
-    flex-direction: row;
-    justify-content: space-around;
+export const Field = styled.TextInput.attrs({
+    placeholderTextColor: 'gray',
+  })`
+    width: 80%;
+    border: 2px solid gray;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    color: black;
 `;
 
-export const Option = styled.View`
-width: 80px; height: 50px; background-color: #949494; border-radius: 5px; padding: 10px;
+export const Button = styled.TouchableOpacity`
+  width: 100px;
+  height: 40px;
+  margin-top: 5px;
+  border-radius: 5px;
+  background-color: #003E9B;
+  align-items: center;
+  justify-content: center;
 `;

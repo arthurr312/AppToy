@@ -22,7 +22,7 @@ export default function Login() {
     setLoading(prevState => !prevState);
     try {
       const response = await axios.post(
-        `https://apptoytemp.000webhostapp.com/api/login`,
+        `https://apptoydev.000webhostapp.com/api/login`,
         {
           name: userName,
           password: password,
@@ -39,6 +39,7 @@ export default function Login() {
       setUserName('');
       setPassword('');
     } catch (error) {
+      alert(error)
       setErrorMessage('Dados inválidos, tente novamente.');
       setVisible(true);
     }
