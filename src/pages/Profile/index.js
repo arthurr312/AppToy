@@ -25,44 +25,48 @@ export default function Profile() {
   }
   return (
     <S.MainContainer>
-      <Image
-        source={require('../../assets/app_logo.png')}
-        style={{ width: 150, height: 150 }}
-      />
       <View style={{
         justifyContent: 'flex-start',
         alignItems: 'center',
         width: "90%",
         minHeight: "60%",
+        paddingBottom: 15,
         backgroundColor: "white",
         elevation: 6,
         borderRadius: 7,
       }}>
-        <View style={{ width: '80%', paddingVertical: 10 }}>
+        <View style={{ width: '80%', paddingTop: 5 }}>
           <Text style={{
-            fontFamily: 'Ubuntu',
             fontWeight: 'bold',
             fontSize: 26,
-            color: 'black'
-          }}>Mudar senha</Text>
+            color: 'black',
+            textAlign: 'center',
+            marginTop: 15
+          }}>
+            Redefinir senha
+          </Text>
         </View>
-        <View style={{ width: '70%', backgroundColor: 'blue' }}>
-          <Text>
-            A fim de proteger sua conta, tenha certeza que sua senha:
+        <Image
+          source={require('../../assets/reset.png')}
+          style={{ width: 130, height: 130 }}
+        />
+        <View style={{ width: '80%' }}>
+          <Text style={{ fontSize: 18, color: 'black' }}>
+            A fim de <Text style={{ fontWeight: 'bold' }}>proteger sua conta</Text>, tenha certeza que sua senha:
           </Text>
         </View>
         <View style={{
-          width: '50%', backgroundColor: 'red'
+          width: '70%', padding: 10
         }}>
           <FlatList
             data={[
-              { value: 'tem no mínimo 5 caracteres;' },
-              { value: 'tem no máximo 15 caracteres;' },
+              { value: 'Tem no mínimo 5 caracteres;' },
+              { value: 'Tem no máximo 15 caracteres.' },
             ]}
             renderItem={({ item }) => {
               return (
                 <View style={{ marginBottom: 10 }}>
-                  <Text style={{ fontSize: 16 }}>{`\u2022 ${item.value}`}</Text>
+                  <Text style={{ fontSize: 15, color: 'black' }}>{`\u2022 ${item.value}`}</Text>
                 </View>
               );
             }}
