@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import { FlatList, Image, Text, useWindowDimensions, View } from 'react-native';
+import * as S from './styles';
+import { FlatList, Image, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as S from './styles';
+import { Snackbar } from 'react-native-paper';
 import { Formik } from 'formik';
 import { ResetPassWordSchema } from '../../utils/validations';
+import { useNavigation } from '@react-navigation/native';
 export default function Profile() {
-  const window = useWindowDimensions();
+  const navigation = useNavigation();
   const [oldPasswordVisibility, setOldPasswordVisibility] = useState(true);
   const [newPasswordVisibility, setNewPasswordVisibility] = useState(true);
-
+  const [snackbarVisibility, setSnackbarVisibility] = useState(false);
+  const [snackbarResponse, setSnackbarResponse] = useState(true);
+  const [message, setMessage] = useState('');
   async function changePassword(values) {
     try {
       await axios.post(`https://apptoydev.000webhostapp.com/api/user/new-pass`, values, {
@@ -18,11 +22,22 @@ export default function Profile() {
           Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
         },
       },);
-      alert('deu bom');
+      setSnackbarResponse(true);
+      setSnackbarVisibility(true);
+      setMessage("Senha alterada com sucesso!");
+      setTimeout(() => {
+        AsyncStorage.removeItem('@token');
+        AsyncStorage.removeItem('@username');
+        navigation.navigate('App');
+      }, 4000);
     } catch (error) {
-      alert(error);
+      setSnackbarVisibility(true);
+      setMessage("Ocorreu um erro inesperado, tente novamente.");
     }
   }
+
+  const closeSnackbar = () => setSnackbarVisibility(false);
+
   return (
     <S.MainContainer>
       <Formik
@@ -153,7 +168,16 @@ export default function Profile() {
           </>
         )}
       </Formik>
-
+      <Snackbar
+        visible={snackbarVisibility}
+        onDismiss={closeSnackbar}
+        action={{
+          label: <Icon name="ios-close-outline" color="#fff" size={25} />,
+        }}
+        style={{ backgroundColor: snackbarResponse ? 'green' : 'red' }}
+        duration={3000}>
+        {message}
+      </Snackbar>
     </S.MainContainer>
   );
 }
