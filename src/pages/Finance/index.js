@@ -11,15 +11,21 @@ export default function Finance() {
       <Button title="Open" onPress={() => setOpen(true)} />
       <DatePicker
         modal
+        title={"Selecione a data"}
         open={open}
         date={date}
+        is24hourSource="locale"
         onConfirm={(date) => {
           setOpen(false)
           setDate(date)
+          alert(JSON.stringify(date))
         }}
+        cancelText="Cancelar"
+        confirmText="Confirmar"
         onCancel={() => {
           setOpen(false)
         }}
+        locale="pt"
       />
     </View>
   );

@@ -99,7 +99,7 @@ export default function Profile() {
                   value={values.oldPass}
                   onBlur={handleBlur('oldPass')} onChangeText={handleChange('oldPass')}
                   secureTextEntry={oldPasswordVisibility}
-                  placeholder="Digite sua senha antiga"
+                  placeholder="Digite sua antiga senha"
                 />
                 {oldPasswordVisibility ? (
                   <Icon
