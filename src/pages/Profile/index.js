@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import * as S from './styles';
-import { FlatList, Image, Text, View } from 'react-native';
+import { FlatList, Image, Text, View, useWindowDimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,6 +10,7 @@ import { ResetPassWordSchema } from '../../utils/validations';
 import { useNavigation } from '@react-navigation/native';
 export default function Profile() {
   const navigation = useNavigation();
+  const window = useWindowDimensions();
   const [oldPasswordVisibility, setOldPasswordVisibility] = useState(true);
   const [newPasswordVisibility, setNewPasswordVisibility] = useState(true);
   const [snackbarVisibility, setSnackbarVisibility] = useState(false);
@@ -53,8 +54,8 @@ export default function Profile() {
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-          <>
-            <S.SecondaryContainer>
+          <View style={{height: window.height/1.25, width: '100%', alignItems: 'center'}}>
+            <S.SecondaryContainer >
               <View style={{ width: '80%', paddingTop: 5 }}>
                 <Text style={{
                   fontWeight: 'bold',
@@ -72,8 +73,8 @@ export default function Profile() {
                   style={{ width: 130, height: 130 }}
                 />
               </S.ResetPasswordIconContainer>
-              <View style={{ width: '80%' }}>
-                <Text style={{ fontSize: 18, color: 'black' }}>
+              <View style={{ width: '85%'}}>
+                <Text style={{ fontSize: 18, color: 'black'  }}>
                   A fim de <Text style={{ fontWeight: 'bold' }}>proteger sua conta</Text>, tenha certeza que sua senha:
                 </Text>
               </View>
@@ -156,7 +157,7 @@ export default function Profile() {
                 </Text>
               </S.Button>
             </S.SecondaryContainer>
-          </>
+          </View>
         )}
       </Formik>
       <Snackbar
