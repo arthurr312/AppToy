@@ -1,10 +1,11 @@
 import React from "react";
-import { Text, View } from "react-native";
-
-export default function FinalDate(){
-    return(
-        <View>
-            <Text>Data final</Text>
+import { View } from "react-native";
+import * as S from './styles'
+export const FinalDate = ({ finalDate }) => {
+    return (
+        <View style={{ width: '80%' }}>
+            <S.Label>Data final:</S.Label>
+            <S.DateField value={finalDate} />
         </View>
     )
 }

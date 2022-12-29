@@ -1,11 +1,11 @@
 import React from "react";
 import { View } from "react-native";
 import * as S from './styles';
-export const InitialDate = ({ initialDate }) => {
+export const MonthField = ({ monthValue }) => {
     return (
         <View style={{ width: '80%' }}>
-            <S.Label>Data inicial:</S.Label>
-            <S.DateField value={initialDate} />
+            <S.Label>Agrupado por:</S.Label>
+            <S.Field value={monthValue} />
         </View>
     )
 }

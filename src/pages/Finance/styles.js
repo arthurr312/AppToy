@@ -1,14 +1,29 @@
 import styled from 'styled-components';
 
-export const Field = styled.TextInput.attrs({
-  placeholderTextColor: '#B2B2B2',
-})`
-  width: 100%;
-  border: 1px solid gray;
-  background: white;
+export const MainContainer = styled.View`
+    flex: 1;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #D9D9D9;
+`;
+
+export const SecondaryContainer = styled.View`
+  justify-content: flex-start;
+  align-items: center;
+  width: 90%;
+  min-height: 60%;
+  padding-bottom: 15px;
+  background-color: white;
+  elevation: 6;
+  border-radius: 7px;
+`;
+
+export const Field = styled.TextInput`
+  width: 80%;
+  border: 2px solid gray;
   border-radius: 5px;
   padding: 10px;
-  margin: 0 auto;
+  padding-top: 7px;
   color: black;
 `;
 
@@ -17,4 +32,9 @@ export const FieldAlignment = styled.View`
   flex-direction: row; 
   width: 70%; 
   justify-content: space-evenly; 
+`;
+
+export const AlignIcon = styled.View`
+  align-self: center;
+  margin-top: -5px;
 `;
