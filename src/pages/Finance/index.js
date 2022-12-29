@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Text, View } from 'react-native';
+import * as S from './styles';
+import { Button, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import DatePicker from 'react-native-date-picker';
 import FinalDate from './FinalDate';
@@ -18,14 +19,17 @@ export default function Finance() {
 
   return (
     <>
-      <View style={{flexDirection:'row', width: '100%', backgroundColor: 'red'}}>
-      <InitialDate initialDate={formattedDate} />
-      <View >
-        <Icon name='calendar' onPress={() => setOpen(true)}/>
-      </View>
-      </View>
+      <S.FieldAlignment>
+        <InitialDate initialDate={formattedDate} />
+        <View style={{ justifyContent: 'flex-end' }}>
+          <TouchableOpacity onPress={() => setOpen(true)} style={{ backgroundColor: '#003E9B', width: 30, height: 30, marginBottom: 5, borderRadius: 3 }}>
+            <View style={{height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+              <Icon name='calendar' size={20} />
+            </View>
+          </TouchableOpacity>
+        </View>
+      </S.FieldAlignment>
       <FinalDate />
-      <Button title="Open" />
       <DatePicker
         modal
         mode='date'
@@ -45,7 +49,6 @@ export default function Finance() {
         }}
         locale="pt"
       />
-      <Button title="clica" onPress={() => alert(JSON.stringify(formattedDate))} />
     </>
   );
 }

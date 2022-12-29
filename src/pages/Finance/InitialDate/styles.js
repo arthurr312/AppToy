@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const DateField = styled.TextInput.attrs({
-    placeholderTextColor: '#B2B2B2',
     disabled: true,
 })`
     width: 100%;

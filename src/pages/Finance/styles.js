@@ -11,3 +11,10 @@ export const Field = styled.TextInput.attrs({
   margin: 0 auto;
   color: black;
 `;
+
+export const FieldAlignment = styled.View`
+  margin: 0 auto;
+  flex-direction: row; 
+  width: 70%; 
+  justify-content: space-evenly; 
+`;

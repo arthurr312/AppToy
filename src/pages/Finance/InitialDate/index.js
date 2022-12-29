@@ -4,9 +4,9 @@ import { Text, View } from "react-native";
 
 export default function InitialDate({ initialDate }) {
     return (
-        <View>
+        <View style={{width: '80%'}}>
             <S.Label>Data inicial:</S.Label>
-            <S.DateField value={initialDate} placeholder="Data inicial" />
+            <S.DateField value={initialDate} />
         </View>
     )
 }
