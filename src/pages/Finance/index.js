@@ -5,19 +5,26 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import FinanceIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ToyIcon from 'react-native-vector-icons/MaterialIcons';
 import DatePicker from 'react-native-date-picker';
-import {FinalDate} from './FinalDate';
-import {InitialDate} from './InitialDate';
+import { FinalDate } from './FinalDate';
+import { InitialDate } from './InitialDate';
 import { MonthField } from './MonthField';
 import { ToyField } from './ToyField';
-
+import DropDownPicker from 'react-native-dropdown-picker';
 export default function Finance() {
   const [date, setDate] = useState(new Date());
   const [initialDate, setInitialDate] = useState();
   const [finalDate, setFinalDate] = useState();
   const [openInitial, setOpenInitial] = useState(false);
   const [openFinal, setOpenFinal] = useState(false);
-  const [visible, setVisible] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState();
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    { label: 'Apple', value: 'apple' },
+    { label: 'Banana', value: 'banana' }
+  ]);
+
   const formattingDate = (setDate, date) => {
     let day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
     let month = date.getMonth() + 1 == 10 || date.getMonth() + 1 > 10 ? `${date.getMonth() + 1}` : `0${date.getMonth() + 1}`;
@@ -27,7 +34,6 @@ export default function Finance() {
 
   return (
     <S.MainContainer>
-
       <View>
         <Text style={{ color: 'black', textAlign: 'center', margin: 10, fontSize: 30, fontWeight: 'bold' }}>Finanças</Text>
         <S.AlignIcon>
@@ -54,7 +60,7 @@ export default function Finance() {
           </View>
         </S.FieldAlignment>
         <S.FieldAlignment>
-          <ToyField toyValue={'oiii'}/>
+          <ToyField toyValue={'oiii'} />
           <View style={{ justifyContent: 'flex-end' }}>
             <TouchableOpacity onPress={() => setOpenModal(true)} style={{ backgroundColor: '#003E9B', width: 30, height: 30, marginBottom: 7, borderRadius: 3 }}>
               <View style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}>
@@ -63,16 +69,29 @@ export default function Finance() {
             </TouchableOpacity>
           </View>
         </S.FieldAlignment>
-        <S.FieldAlignment>
+        <DropDownPicker
+          style={{ border: '2px solid gray', backgroundColor: 'transparent', width: '56%', borderRadius: 6, alignSelf: 'center' }}
+          open={open}
+          dropDownContainerStyle={{
+            backgroundColor: "#dfdfdf",
+            width: '50%'
+          }}
+          value={value}
+          items={items}
+          setOpen={setOpen}
+          setValue={setValue}
+          setItems={setItems}
+        />
+        {/* <S.FieldAlignment>
           <MonthField monthValue={'oiii'}/>
           <View style={{ justifyContent: 'flex-end' }}>
             <TouchableOpacity onPress={() => setOpenModal(true)} style={{ backgroundColor: '#003E9B', width: 30, height: 30, marginBottom: 7, borderRadius: 3 }}>
               <View style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                <Icon name='calendar' size={20} />
+                <Icon name='arrowdown' size={20} />
               </View>
             </TouchableOpacity>
           </View>
-        </S.FieldAlignment>
+        </S.FieldAlignment> */}
       </View>
       {/* initial date */}
       <DatePicker
@@ -115,33 +134,33 @@ export default function Finance() {
         locale="pt"
       />
       <Modal transparent={true} visible={openModal}>
-          <View style={{backgroundColor: '#000000aa', flex: 1}}>
+        <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
+          <View
+            style={{
+              backgroundColor: 'white',
+              margin: 50,
+              height: '20%',
+              borderRadius: 10,
+            }}>
             <View
               style={{
-                backgroundColor: 'white',
-                margin: 50,
-                height: '20%',
-                borderRadius: 10,
+                flex: 1,
+                flexDirection: 'column',
               }}>
-              <View
+              <Text
                 style={{
-                  flex: 1,
-                  flexDirection: 'column',
+                  fontSize: 18,
+                  textAlign: 'center',
+                  marginTop: 20,
+                  color: 'black',
                 }}>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    textAlign: 'center',
-                    marginTop: 20,
-                    color: 'black',
-                  }}>
-                  Tem certeza que deseja excluir?
-                </Text>
-                
-              </View>
+                Tem certeza que deseja excluir?
+              </Text>
+
             </View>
           </View>
-        </Modal>
+        </View>
+      </Modal>
     </S.MainContainer>
   );
 }

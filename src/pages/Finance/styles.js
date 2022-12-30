@@ -38,3 +38,11 @@ export const AlignIcon = styled.View`
   align-self: center;
   margin-top: -5px;
 `;
+
+export const FinanceText = styled.Text`
+  color: black; 
+  text-align: center;
+  margin: 10px; 
+  font-size: 30px; 
+  font-weight: bold; 
+`;
