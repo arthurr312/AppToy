@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import * as S from './styles';
 import { Button, Text, TouchableOpacity, View, Modal } from 'react-native';
-
 import Icon from 'react-native-vector-icons/AntDesign';
-import FinanceIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import FinanceIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import ToyIcon from 'react-native-vector-icons/MaterialIcons';
 import DatePicker from 'react-native-date-picker';
 import {FinalDate} from './FinalDate';
 import {InitialDate} from './InitialDate';
 import { MonthField } from './MonthField';
+import { ToyField } from './ToyField';
+
 export default function Finance() {
   const [date, setDate] = useState(new Date());
   const [initialDate, setInitialDate] = useState();
@@ -52,6 +54,16 @@ export default function Finance() {
           </View>
         </S.FieldAlignment>
         <S.FieldAlignment>
+          <ToyField toyValue={'oiii'}/>
+          <View style={{ justifyContent: 'flex-end' }}>
+            <TouchableOpacity onPress={() => setOpenModal(true)} style={{ backgroundColor: '#003E9B', width: 30, height: 30, marginBottom: 7, borderRadius: 3 }}>
+              <View style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                <ToyIcon name='toys' size={20} />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </S.FieldAlignment>
+        <S.FieldAlignment>
           <MonthField monthValue={'oiii'}/>
           <View style={{ justifyContent: 'flex-end' }}>
             <TouchableOpacity onPress={() => setOpenModal(true)} style={{ backgroundColor: '#003E9B', width: 30, height: 30, marginBottom: 7, borderRadius: 3 }}>
@@ -61,8 +73,6 @@ export default function Finance() {
             </TouchableOpacity>
           </View>
         </S.FieldAlignment>
-        {/* <S.FieldAlignment><S.Field /></S.FieldAlignment> */}
-        {/* <S.Field /> */}
       </View>
       {/* initial date */}
       <DatePicker

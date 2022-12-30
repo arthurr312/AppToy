@@ -37,7 +37,7 @@ export default function ToyListing() {
     setLoading(prevState => !prevState);
     try {
       const response = await axios.get(
-        `https://apptoytemp.000webhostapp.com/api/brinquedo`,
+        `https://apptoydev.000webhostapp.com/api/brinquedo`,
         {
           headers: {
             Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
@@ -54,7 +54,7 @@ export default function ToyListing() {
   async function remocao(id) {
     try {
       await axios.delete(
-        `https://apptoytemp.000webhostapp.com/api/brinquedo/${id}`,
+        `https://apptoydev.000webhostapp.com/api/brinquedo/${id}`,
         {
           headers: {
             Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
@@ -71,7 +71,7 @@ export default function ToyListing() {
   async function edicao(id, values) {
     try {
       await axios.put(
-        `https://apptoytemp.000webhostapp.com/api/update/brinquedo/${id}`,
+        `https://apptoydev.000webhostapp.com/api/update/brinquedo/${id}`,
         values,
         {
           headers: {

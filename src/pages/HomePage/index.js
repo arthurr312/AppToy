@@ -19,7 +19,7 @@ export default function Homepage() {
   async function Registering(values) {
     try {
       await axios.post(
-        `https://apptoytemp.000webhostapp.com/api/timer/clients`,
+        `https://apptoydev.000webhostapp.com/api/timer/clients`,
         {...values, price_per_minute: value},
         {
           headers: {

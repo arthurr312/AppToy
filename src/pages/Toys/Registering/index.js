@@ -18,7 +18,7 @@ export default function Registering() {
   async function create(values) {
     try {
       await axios.post(
-        `https://apptoytemp.000webhostapp.com/api/brinquedo`,
+        `https://apptoydev.000webhostapp.com/api/brinquedo`,
         {...values, price_per_minute: formattedPrice},
         {
           headers: {
