@@ -51,3 +51,23 @@ export const SelectFieldAlignMent = styled.View`
   margin: 0 auto;
   width: 70%;
 `;
+
+export const IconButton = styled.TouchableOpacity`
+  background-color: #003E9B; 
+  width: 30px; 
+  height: 30px;
+  margin-bottom: 7px; 
+  border-radius: 3px;
+`;
+
+export const AlignCalendarIcon = styled.View`
+  height: 100%; 
+  justify-content: center;
+  align-items: center;
+`;
+
+export const AlignSelect = styled.View`
+  width: 100%; 
+  align-self: flex-start; 
+  margin-left: 10px;
+`;

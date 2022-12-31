@@ -7,7 +7,7 @@ export const DateField = styled.TextInput.attrs({
     border: 2px solid gray;
     border-radius: 5px;
     padding: 10px;
-    padding-top: 12px;
+    padding-top: 10px;
     color: black;
 `;
 
