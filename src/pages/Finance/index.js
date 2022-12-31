@@ -1,29 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as S from './styles';
-import { Button, Text, TouchableOpacity, View, Modal } from 'react-native';
+import { Text, TouchableOpacity, View, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import FinanceIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import ToyIcon from 'react-native-vector-icons/MaterialIcons';
 import DatePicker from 'react-native-date-picker';
 import { FinalDate } from './FinalDate';
 import { InitialDate } from './InitialDate';
-import { MonthField } from './MonthField';
+import { ClusteringField } from './ClusteringField';
 import { ToyField } from './ToyField';
-import DropDownPicker from 'react-native-dropdown-picker';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Finance() {
+  const [data, setData] = useState([]);
   const [date, setDate] = useState(new Date());
   const [initialDate, setInitialDate] = useState();
   const [finalDate, setFinalDate] = useState();
   const [openInitial, setOpenInitial] = useState(false);
   const [openFinal, setOpenFinal] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState();
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: 'Apple', value: 'apple' },
-    { label: 'Banana', value: 'banana' }
-  ]);
+  const [clusteringValue, setClusteringValue] = useState(null);
+  const [toyValue, setToyValue] = useState(null);
 
   const formattingDate = (setDate, date) => {
     let day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
@@ -31,6 +26,29 @@ export default function Finance() {
     let year = date.getFullYear();
     setDate(`${day}/${month}/${year}`);
   }
+
+  async function listagem() {
+    try {
+      const response = await axios.get(
+        `https://apptoydev.000webhostapp.com/api/brinquedo`,
+        {
+          headers: {
+            Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
+          },
+        },
+      );
+      const filterResponse = response.data.brinquedos.map((item) => ({
+        ...item,
+        value: item.id,
+        label: item.name,
+      }))
+      setData(filterResponse);
+    } catch (error) {
+      alert('Ocorreu um erro inesperado, tente novamente.');
+    }
+  }
+
+  useEffect(() => {listagem()}, []);
 
   return (
     <S.MainContainer>
@@ -59,39 +77,17 @@ export default function Finance() {
             </TouchableOpacity>
           </View>
         </S.FieldAlignment>
-        <S.FieldAlignment>
-          <ToyField toyValue={'oiii'} />
-          <View style={{ justifyContent: 'flex-end' }}>
-            <TouchableOpacity onPress={() => setOpenModal(true)} style={{ backgroundColor: '#003E9B', width: 30, height: 30, marginBottom: 7, borderRadius: 3 }}>
-              <View style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                <ToyIcon name='toys' size={20} />
-              </View>
-            </TouchableOpacity>
-          </View>
-        </S.FieldAlignment>
-        <DropDownPicker
-          style={{ border: '2px solid gray', backgroundColor: 'transparent', width: '56%', borderRadius: 6, alignSelf: 'center' }}
-          open={open}
-          dropDownContainerStyle={{
-            backgroundColor: "#dfdfdf",
-            width: '50%'
-          }}
-          value={value}
-          items={items}
-          setOpen={setOpen}
-          setValue={setValue}
-          setItems={setItems}
-        />
-        {/* <S.FieldAlignment>
-          <MonthField monthValue={'oiii'}/>
-          <View style={{ justifyContent: 'flex-end' }}>
-            <TouchableOpacity onPress={() => setOpenModal(true)} style={{ backgroundColor: '#003E9B', width: 30, height: 30, marginBottom: 7, borderRadius: 3 }}>
-              <View style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                <Icon name='arrowdown' size={20} />
-              </View>
-            </TouchableOpacity>
-          </View>
-        </S.FieldAlignment> */}
+
+        <View style={{ width: '100%', alignSelf: 'flex-start', marginLeft: 10 }}>
+          <S.SelectFieldAlignMent>
+            <ClusteringField value={clusteringValue} setValue={setClusteringValue} />
+          </S.SelectFieldAlignMent>
+        </View>        
+        <View style={{ width: '100%', alignSelf: 'flex-start', marginLeft: 10 }}>
+          <S.SelectFieldAlignMent>
+            <ToyField value={toyValue} setValue={setToyValue} setItems={setData} items={data}/>
+          </S.SelectFieldAlignMent>
+        </View>
       </View>
       {/* initial date */}
       <DatePicker
@@ -133,34 +129,6 @@ export default function Finance() {
         }}
         locale="pt"
       />
-      <Modal transparent={true} visible={openModal}>
-        <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
-          <View
-            style={{
-              backgroundColor: 'white',
-              margin: 50,
-              height: '20%',
-              borderRadius: 10,
-            }}>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'column',
-              }}>
-              <Text
-                style={{
-                  fontSize: 18,
-                  textAlign: 'center',
-                  marginTop: 20,
-                  color: 'black',
-                }}>
-                Tem certeza que deseja excluir?
-              </Text>
-
-            </View>
-          </View>
-        </View>
-      </Modal>
     </S.MainContainer>
   );
 }

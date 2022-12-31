@@ -46,3 +46,8 @@ export const FinanceText = styled.Text`
   font-size: 30px; 
   font-weight: bold; 
 `;
+
+export const SelectFieldAlignMent = styled.View`
+  margin: 0 auto;
+  width: 70%;
+`;
