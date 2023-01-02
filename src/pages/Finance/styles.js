@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 export const MainContainer = styled.View`
     flex: 1;
     justify-content: flex-start;
@@ -15,17 +14,26 @@ export const FinanceText = styled.Text`
   font-weight: bold; 
 `;
 
+export const AlignImageAndLabel = styled.View`
+  width: 90%;
+  justify-content: center;
+  margin: 0 auto;
+`;
+
 export const SelectFieldAlignMent = styled.View`
   margin: 0 auto;
-  width: 87%;
+  width: 100%;
 `;
 
 export const AlignButton = styled.View`
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
 `;
 
 export const Button = styled.TouchableOpacity`
-  width: 100px;
+  width: 80px;
   height: 40px;
   margin-top: 5px;
   border-radius: 5px;
@@ -34,7 +42,21 @@ export const Button = styled.TouchableOpacity`
   justify-content: center;
 `;
 
+export const CancelButton = styled.TouchableOpacity`
+  width: 80px;
+  height: 40px;
+  margin-top: 5px;
+  border-radius: 5px;
+  background-color: transparent;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const ButtonText = styled.Text`
   font-size: 16px; 
   font-weight: bold;
+`;
+
+export const CancelButtonText = styled(ButtonText)`
+  color: black;
 `;
