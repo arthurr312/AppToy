@@ -71,3 +71,13 @@ export const AlignSelect = styled.View`
   align-self: flex-start; 
   margin-left: 10px;
 `;
+
+export const Button = styled.TouchableOpacity`
+  width: 100px;
+  height: 40px;
+  margin-top: 5px;
+  border-radius: 5px;
+  background-color: #003E9B;
+  align-items: center;
+  justify-content: center;
+`;

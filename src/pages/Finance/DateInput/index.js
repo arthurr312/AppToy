@@ -1,38 +1,45 @@
 import React from "react";
 import { View } from "react-native";
 import DatePicker from "react-native-date-picker";
+import Icon from 'react-native-vector-icons/AntDesign';
 import { formattedDate } from "../FormattedDate";
 import * as S from './styles';
-export const InitialDate = ({
-    initialDate,
-    setOpenInitial,
-    openInitial,
-    setInitialDate,
-    setDate,
-    date
+export const DateInput = ({
+    dateValue,
+    setDateValue,
+    setOpen,
+    open,
 }) => {
+    const [date, setDate] = React.useState(new Date());
     return (
         <>
-            <View style={{ width: '80%' }}>
+            <View>
                 <S.Label>Data inicial:</S.Label>
-                <S.DateField value={initialDate} />
+                <View style={{ flexDirection: 'row' }}>
+                    <S.DateField value={dateValue} />
+                    <Icon
+                        onPress={() => setOpen(true)}
+                        name='calendar' size={25}
+                        color="grey"
+                        style={{ position: 'absolute', right: 5, top: 20 }} />
+                </View>
             </View>
             <DatePicker
                 modal
                 mode='date'
                 title={"Selecione a data"}
-                open={openInitial}
+                open={open}
                 date={date}
                 is24hourSource="locale"
                 onConfirm={(date) => {
-                    setOpenInitial(false)
+                    setOpen(false)
                     setDate(date)
-                    formattedDate(setInitialDate, date);
+                    formattedDate(setDateValue, date);
                 }}
                 cancelText="Cancelar"
                 confirmText="Confirmar"
                 onCancel={() => {
-                    setOpenInitial(false)
+                    setOpen(false)
                 }}
                 locale="pt"
             />

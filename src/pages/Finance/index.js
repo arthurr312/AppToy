@@ -1,12 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import FinanceIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as S from './styles';
 import { FinalDate } from './FinalDate';
-import { InitialDate } from './InitialDate';
+import { DateInput } from './DateInput';
 import { ClusteringField } from './ClusteringField';
 import { ToyField } from './ToyField';
 
@@ -45,45 +44,24 @@ export default function Finance() {
 
   return (
     <S.MainContainer>
-      <View>
+      <View style={{ alignItems: 'center' }}>
         <S.FinanceText>Finanças</S.FinanceText>
-        <S.AlignIcon>
-          <FinanceIcon name='finance' size={90} color="#003E9B" />
-        </S.AlignIcon>
-        <S.FieldAlignment>
-          <InitialDate
-            initialDate={initialDate}
-            setInitialDate={setInitialDate}
-            setDate={setDate}
-            date={date}
-            setOpenInitial={setOpenInitial}
-            openInitial={openInitial}
+        <View style={{ width: '70%' }}>
+          <DateInput
+            dateValue={initialDate}
+            setDateValue={setInitialDate}
+            setOpen={setOpenInitial}
+            open={openInitial}
           />
-          <View style={{ justifyContent: 'flex-end' }}>
-            <S.IconButton onPress={() => setOpenInitial(true)}>
-              <S.AlignCalendarIcon>
-                <Icon name='calendar' size={20} />
-              </S.AlignCalendarIcon>
-            </S.IconButton>
-          </View>
-        </S.FieldAlignment>
-        <S.FieldAlignment>
-          <FinalDate
-            finalDate={finalDate}
-            setFinalDate={setFinalDate}
-            date={date}
-            setDate={setDate}
-            setOpenFinal={setOpenFinal}
-            openFinal={openFinal}
+        </View>
+        <View style={{ width: '70%' }}>
+          <DateInput
+            dateValue={finalDate}
+            setDateValue={setFinalDate}
+            setOpen={setOpenFinal}
+            open={openFinal}
           />
-          <View style={{ justifyContent: 'flex-end' }}>
-            <S.IconButton onPress={() => setOpenFinal(true)}>
-              <S.AlignCalendarIcon>
-                <Icon name='calendar' size={20} />
-              </S.AlignCalendarIcon>
-            </S.IconButton>
-          </View>
-        </S.FieldAlignment>
+        </View>
         <S.AlignSelect>
           <S.SelectFieldAlignMent>
             <ClusteringField value={clusteringValue} setValue={setClusteringValue} />
@@ -94,6 +72,9 @@ export default function Finance() {
             <ToyField value={toyValue} setValue={setToyValue} setItems={setData} items={data} />
           </S.SelectFieldAlignMent>
         </S.AlignSelect>
+        <View style={{ alignItems: 'center' }}>
+          <S.Button><Text style={{ fontSize: 16, fontWeight: 'bold' }}>Filtrar</Text></S.Button>
+        </View>
       </View>
     </S.MainContainer>
   );
