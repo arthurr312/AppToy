@@ -1,22 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, ScrollView, Image, useWindowDimensions, Text, Modal } from 'react-native';
 import * as S from './styles';
 import { DateInput } from './DateInput';
 import { SelectInput } from './SelectInput';
+import { DataTable } from 'react-native-paper';
 
 export default function Finance() {
   const window = useWindowDimensions();
-  const [data, setData] = React.useState([]);
-  const [initialDate, setInitialDate] = React.useState();
-  const [finalDate, setFinalDate] = React.useState();
-  const [openInitial, setOpenInitial] = React.useState(false);
-  const [openFinal, setOpenFinal] = React.useState(false);
-  const [clusteringValue, setClusteringValue] = React.useState(null);
-  const [openModal, setOpenModal] = React.useState(false);
-  const [toyValue, setToyValue] = React.useState(null);
-  const [items, setItems] = React.useState([
+  const [data, setData] = useState([]);
+  const [initialDate, setInitialDate] = useState();
+  const [finalDate, setFinalDate] = useState();
+  const [openInitial, setOpenInitial] = useState(false);
+  const [openFinal, setOpenFinal] = useState(false);
+  const [clusteringValue, setClusteringValue] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [toyValue, setToyValue] = useState(null);
+  const [showWarningMessage, setShowWarningMessage] = useState(false);
+  const [items, setItems] = useState([
     { label: 'Mês', value: 'month' },
     { label: 'Dia', value: 'day' },
     { label: 'Semana', value: 'year' },
@@ -47,7 +49,7 @@ export default function Finance() {
 
   return (
     <ScrollView>
-      <View >
+      <View style={{display: showWarningMessage === false ? 'none' : 'flex'}}>
         <S.AlignImageAndLabel style={{ height: window.height / 1.25 }}>
           <Image
             source={require('../../assets/financeImage.png')}
@@ -132,6 +134,37 @@ export default function Finance() {
           </View>
         </Modal>
       </View>
+      <DataTable style={{width: '100%'}}>
+        <DataTable.Header>
+          <DataTable.Title>Brinquedo</DataTable.Title>
+          <DataTable.Title>Data inicial</DataTable.Title>
+          <DataTable.Title numeric>Data Final</DataTable.Title>
+          <DataTable.Title numeric>Clientes</DataTable.Title>
+          <DataTable.Title numeric>Lucro</DataTable.Title>
+
+        </DataTable.Header>
+
+        <DataTable.Row>
+          <DataTable.Cell style={{backgroundColor: 'blue'}}>John</DataTable.Cell>
+          <DataTable.Cell style={{backgroundColor: 'red'}}>john@kindacode.com</DataTable.Cell>
+          <DataTable.Cell style={{backgroundColor: 'yellow'}} numeric>33</DataTable.Cell>
+          <DataTable.Cell style={{backgroundColor: 'yellow'}} numeric>33</DataTable.Cell>
+          <DataTable.Cell style={{backgroundColor: 'yellow'}} numeric>33</DataTable.Cell>
+        </DataTable.Row>
+
+        <DataTable.Row>
+          <DataTable.Cell>Bob</DataTable.Cell>
+          <DataTable.Cell>test@test.com</DataTable.Cell>
+          <DataTable.Cell numeric>105</DataTable.Cell>
+        </DataTable.Row>
+
+        <DataTable.Row>
+          <DataTable.Cell>Mei</DataTable.Cell>
+          <DataTable.Cell>mei@kindacode.com</DataTable.Cell>
+          <DataTable.Cell numeric>23</DataTable.Cell>
+        </DataTable.Row>
+
+      </DataTable>
     </ScrollView>
   );
 }
