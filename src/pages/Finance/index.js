@@ -1,23 +1,24 @@
 import React from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
+import { View } from 'react-native';
 import * as S from './styles';
-import { FinalDate } from './FinalDate';
 import { DateInput } from './DateInput';
-import { ClusteringField } from './ClusteringField';
-import { ToyField } from './ToyField';
+import { SelectInput } from './SelectInput';
 
 export default function Finance() {
   const [data, setData] = React.useState([]);
-  const [date, setDate] = React.useState(new Date());
   const [initialDate, setInitialDate] = React.useState();
   const [finalDate, setFinalDate] = React.useState();
   const [openInitial, setOpenInitial] = React.useState(false);
   const [openFinal, setOpenFinal] = React.useState(false);
   const [clusteringValue, setClusteringValue] = React.useState(null);
   const [toyValue, setToyValue] = React.useState(null);
+  const [items, setItems] = React.useState([
+    { label: 'Mês', value: 'month' },
+    { label: 'Dia', value: 'day' },
+    { label: 'Semana', value: 'year' },
+  ]);
 
   async function listing() {
     try {
@@ -44,7 +45,7 @@ export default function Finance() {
 
   return (
     <S.MainContainer>
-      <View style={{ alignItems: 'center' }}>
+      <View>
         <S.FinanceText>Finanças</S.FinanceText>
         <View style={{ width: '70%' }}>
           <DateInput
@@ -62,19 +63,30 @@ export default function Finance() {
             open={openFinal}
           />
         </View>
-        <S.AlignSelect>
-          <S.SelectFieldAlignMent>
-            <ClusteringField value={clusteringValue} setValue={setClusteringValue} />
-          </S.SelectFieldAlignMent>
-        </S.AlignSelect>
-        <S.AlignSelect>
-          <S.SelectFieldAlignMent>
-            <ToyField value={toyValue} setValue={setToyValue} setItems={setData} items={data} />
-          </S.SelectFieldAlignMent>
-        </S.AlignSelect>
-        <View style={{ alignItems: 'center' }}>
-          <S.Button><Text style={{ fontSize: 16, fontWeight: 'bold' }}>Filtrar</Text></S.Button>
-        </View>
+        <S.SelectFieldAlignMent>
+          <SelectInput
+            value={clusteringValue}
+            setValue={setClusteringValue}
+            setItems={setItems}
+            items={items}
+            dropDownDirection="TOP"
+            label="Agrupado por:"
+          />
+        </S.SelectFieldAlignMent>
+        <S.SelectFieldAlignMent>
+          <SelectInput
+            value={toyValue}
+            setValue={setToyValue}
+            setItems={setData}
+            items={data}
+            label="Escolha um brinquedo:"
+          />
+        </S.SelectFieldAlignMent>
+        <S.AlignButton>
+          <S.Button>
+            <S.ButtonText>Filtrar</S.ButtonText>
+          </S.Button>
+        </S.AlignButton>
       </View>
     </S.MainContainer>
   );

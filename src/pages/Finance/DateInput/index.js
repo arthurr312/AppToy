@@ -20,8 +20,8 @@ export const DateInput = ({
                     <Icon
                         onPress={() => setOpen(true)}
                         name='calendar' size={25}
-                        color="grey"
-                        style={{ position: 'absolute', right: 5, top: 20 }} />
+                        color="black"
+                        style={{ position: 'absolute', right: 10, top: 20 }} />
                 </View>
             </View>
             <DatePicker
