@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, ScrollView, Image, useWindowDimensions, Text, Modal } from 'react-native';
+import { View, ScrollView, Image, useWindowDimensions, Text, Modal, ActivityIndicator } from 'react-native';
 import * as S from './styles';
 import { DateInput } from './DateInput';
 import { SelectInput } from './SelectInput';
@@ -11,6 +11,7 @@ import { americanDateFormatting } from './FormattedDate';
 export default function Finance() {
   const window = useWindowDimensions();
   const [data, setData] = useState([]);
+  const [financeData, setFinanceData] = useState([]);
   const [initialDate, setInitialDate] = useState();
   const [finalDate, setFinalDate] = useState();
   const [openInitial, setOpenInitial] = useState(false);
@@ -49,11 +50,25 @@ export default function Finance() {
     }
   }
 
+  async function getFinanceData() {
+    try {
+      const response = await axios.get(`https://apptoydev.000webhostapp.com/api/financas/${initialAmericanDateFormat}/${finalAmericanDateFormat}/${toyValue}`,
+        {
+          headers: {
+            Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
+          },
+        },);
+      alert(JSON.stringify(response.data.toy));
+    } catch (error) {
+      alert(error);
+    }
+  }
+
   React.useEffect(() => { selectInputData() }, []);
 
   return (
     <ScrollView>
-      <View style={{display: showWarningMessage === false ? 'none' : 'flex'}}>
+      <View style={{ display: showWarningMessage === false ? 'none' : 'flex' }}>
         <S.AlignImageAndLabel style={{ height: window.height / 1.25 }}>
           <Image
             source={require('../../assets/financeImage.png')}
@@ -70,9 +85,14 @@ export default function Finance() {
             Bem-vindo ao setor de finanças! :)
           </Text>
           <Text style={{ fontSize: 17, color: '#838383', textAlign: 'center' }}>
-            <Text onPress={() => setOpenModal(true)} style={{ color: 'darkblue' }}>Clique aqui</Text> para aplicar filtros e ter resultados mais detalhados.
+            <Text onPress={() => setOpenModal(true)} style={{ color: 'darkblue' }}>Clique aqui</Text> para aplicar filtros e obter resultados mais detalhados.
           </Text>
         </S.AlignImageAndLabel>
+        <ActivityIndicator size="large" color="#003E9B" style={{
+            transform: [{scaleX: 4}, {scaleY: 4}],
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}/>
       </View>
       <View>
         <Modal transparent={true} visible={openModal}>
@@ -131,17 +151,18 @@ export default function Finance() {
                 </S.SelectFieldAlignMent>
               </View>
               <S.AlignButton>
-                <S.Button>
+                <S.Button onPress={() => getFinanceData()}>
                   <S.ButtonText>Filtrar</S.ButtonText>
                 </S.Button>
                 <S.CancelButton onPress={() => setOpenModal(false)}>
-                <S.CancelButtonText>Cancelar</S.CancelButtonText>
+                  <S.CancelButtonText>Cancelar</S.CancelButtonText>
                 </S.CancelButton>
               </S.AlignButton>
             </View>
           </View>
         </Modal>
       </View>
+      
       {/* <DataTable style={{width: '100%'}}>
         <DataTable.Header>
           <DataTable.Title>Brinquedo</DataTable.Title>

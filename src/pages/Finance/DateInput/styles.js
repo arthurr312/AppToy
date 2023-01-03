@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const DateField = styled.TextInput.attrs({
-    disabled: true,
+  editable: false, 
+  selectTextOnFocus: false,
 })`
     width: 100%;
     border: 2px solid gray;
