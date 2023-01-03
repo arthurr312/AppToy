@@ -55,6 +55,7 @@ export const CancelButton = styled.TouchableOpacity`
 export const ButtonText = styled.Text`
   font-size: 16px; 
   font-weight: bold;
+  color: white;
 `;
 
 export const CancelButtonText = styled(ButtonText)`

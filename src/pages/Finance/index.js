@@ -6,6 +6,7 @@ import * as S from './styles';
 import { DateInput } from './DateInput';
 import { SelectInput } from './SelectInput';
 import { DataTable } from 'react-native-paper';
+import { americanDateFormatting } from './FormattedDate';
 
 export default function Finance() {
   const window = useWindowDimensions();
@@ -17,14 +18,17 @@ export default function Finance() {
   const [clusteringValue, setClusteringValue] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [toyValue, setToyValue] = useState(null);
-  const [showWarningMessage, setShowWarningMessage] = useState(false);
+  const [showWarningMessage, setShowWarningMessage] = useState(true);
+  const [initialAmericanDateFormat, setInitialAmericanDateFormat] = useState();
+  const [finalAmericanDateFormat, setFinalAmericanDateFormat] = useState();
+
   const [items, setItems] = useState([
     { label: 'Mês', value: 'month' },
     { label: 'Dia', value: 'day' },
     { label: 'Semana', value: 'year' },
   ]);
 
-  async function listing() {
+  async function selectInputData() {
     try {
       const response = await axios.get(
         `https://apptoydev.000webhostapp.com/api/brinquedo`,
@@ -45,7 +49,7 @@ export default function Finance() {
     }
   }
 
-  React.useEffect(() => { listing() }, []);
+  React.useEffect(() => { selectInputData() }, []);
 
   return (
     <ScrollView>
@@ -88,16 +92,20 @@ export default function Finance() {
                 <DateInput
                   dateValue={initialDate}
                   setDateValue={setInitialDate}
+                  setAmericanDate={setInitialAmericanDateFormat}
                   setOpen={setOpenInitial}
                   open={openInitial}
+                  label="Data inicial"
                 />
               </View>
               <View style={{ width: '100%' }}>
                 <DateInput
                   dateValue={finalDate}
                   setDateValue={setFinalDate}
+                  setAmericanDate={setFinalAmericanDateFormat}
                   setOpen={setOpenFinal}
                   open={openFinal}
+                  label="Data final"
                 />
               </View>
               <View style={{ justifyContent: 'center' }}>
@@ -134,11 +142,11 @@ export default function Finance() {
           </View>
         </Modal>
       </View>
-      <DataTable style={{width: '100%'}}>
+      {/* <DataTable style={{width: '100%'}}>
         <DataTable.Header>
           <DataTable.Title>Brinquedo</DataTable.Title>
           <DataTable.Title>Data inicial</DataTable.Title>
-          <DataTable.Title numeric>Data Final</DataTable.Title>
+          <DataTable.Title numeric>Data final</DataTable.Title>
           <DataTable.Title numeric>Clientes</DataTable.Title>
           <DataTable.Title numeric>Lucro</DataTable.Title>
 
@@ -164,7 +172,7 @@ export default function Finance() {
           <DataTable.Cell numeric>23</DataTable.Cell>
         </DataTable.Row>
 
-      </DataTable>
+      </DataTable> */}
     </ScrollView>
   );
 }
