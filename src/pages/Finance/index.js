@@ -15,6 +15,7 @@ export default function Finance() {
   const [initialDate, setInitialDate] = useState();
   const [finalDate, setFinalDate] = useState();
   const [openInitial, setOpenInitial] = useState(false);
+  const [lines, setLines] = useState(0);
   const [openFinal, setOpenFinal] = useState(false);
   const [clusteringValue, setClusteringValue] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -58,7 +59,9 @@ export default function Finance() {
             Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
           },
         },);
-      alert(JSON.stringify(response.data));
+      setFinanceData(response.data.timers);
+      setOpenModal(false);
+      setShowWarningMessage(false);
     } catch (error) {
       alert(error);
     }
@@ -162,38 +165,30 @@ export default function Finance() {
           </View>
         </Modal>
       </View>
-      
-      {/* <DataTable style={{width: '100%'}}>
+
+      <DataTable style={{ display: showWarningMessage ? 'none' : 'flex'}}>
         <DataTable.Header>
-          <DataTable.Title>Brinquedo</DataTable.Title>
-          <DataTable.Title>Data inicial</DataTable.Title>
-          <DataTable.Title numeric>Data final</DataTable.Title>
-          <DataTable.Title numeric>Clientes</DataTable.Title>
-          <DataTable.Title numeric>Lucro</DataTable.Title>
+          <DataTable.Title style={{ justifyContent: 'center' }}>Brinquedo</DataTable.Title>
+          <DataTable.Title style={{ justifyContent: 'center' }}>Data inicial</DataTable.Title>
+          <DataTable.Title style={{ justifyContent: 'center' }}>Data final</DataTable.Title>
+          <DataTable.Title style={{ justifyContent: 'center' }}>Clientes</DataTable.Title>
+          <DataTable.Title style={{ justifyContent: 'center' }}>Lucro</DataTable.Title>
 
         </DataTable.Header>
 
-        <DataTable.Row>
-          <DataTable.Cell style={{backgroundColor: 'blue'}}>John</DataTable.Cell>
-          <DataTable.Cell style={{backgroundColor: 'red'}}>john@kindacode.com</DataTable.Cell>
-          <DataTable.Cell style={{backgroundColor: 'yellow'}} numeric>33</DataTable.Cell>
-          <DataTable.Cell style={{backgroundColor: 'yellow'}} numeric>33</DataTable.Cell>
-          <DataTable.Cell style={{backgroundColor: 'yellow'}} numeric>33</DataTable.Cell>
-        </DataTable.Row>
+        {financeData.map((item) => {
+          return (
+            <DataTable.Row key={item} style={{backgroundColor: 'green'}}>
+              <DataTable.Cell style={{justifyContent: 'center', backgroundColor: 'red', width: '100%' }}>John</DataTable.Cell>
+              <DataTable.Cell style={{justifyContent: 'center' }}>05/01/2022</DataTable.Cell>
+              <DataTable.Cell style={{justifyContent: 'center' }} numeric>05/01/2022</DataTable.Cell>
+              <DataTable.Cell style={{ justifyContent: 'center' }} numeric>{item.qntClients}</DataTable.Cell>
+              <DataTable.Cell style={{justifyContent: 'center' }} numeric>R$ {item.montante}</DataTable.Cell>
+            </DataTable.Row>
+          )
+        })}
 
-        <DataTable.Row>
-          <DataTable.Cell>Bob</DataTable.Cell>
-          <DataTable.Cell>test@test.com</DataTable.Cell>
-          <DataTable.Cell numeric>105</DataTable.Cell>
-        </DataTable.Row>
-
-        <DataTable.Row>
-          <DataTable.Cell>Mei</DataTable.Cell>
-          <DataTable.Cell>mei@kindacode.com</DataTable.Cell>
-          <DataTable.Cell numeric>23</DataTable.Cell>
-        </DataTable.Row>
-
-      </DataTable> */}
+      </DataTable>
     </ScrollView>
   );
 }

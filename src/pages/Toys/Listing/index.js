@@ -64,7 +64,7 @@ export default function ToyListing() {
       setUpdateTable(prevState => !prevState);
       setOpenModal(false);
     } catch (error) {
-      alert('Ocorreu um erro inesperado, tente novamente.');
+      alert(error);
     }
   }
 
