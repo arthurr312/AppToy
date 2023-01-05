@@ -23,7 +23,7 @@ export const DateInput = ({
                         onPress={() => setOpen(true)}
                         name='calendar' size={25}
                         color="black"
-                        style={{ position: 'absolute', right: 10, top: 20 }} />
+                        style={{ position: 'absolute', right: 10, top: 15 }} />
                 </View>
             </View>
             <DatePicker

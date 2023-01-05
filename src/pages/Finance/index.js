@@ -58,7 +58,7 @@ export default function Finance() {
             Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
           },
         },);
-      alert(JSON.stringify(response.data.toy));
+      alert(JSON.stringify(response.data));
     } catch (error) {
       alert(error);
     }
@@ -88,11 +88,11 @@ export default function Finance() {
             <Text onPress={() => setOpenModal(true)} style={{ color: 'darkblue' }}>Clique aqui</Text> para aplicar filtros e obter resultados mais detalhados.
           </Text>
         </S.AlignImageAndLabel>
-        <ActivityIndicator size="large" color="#003E9B" style={{
+        {/* <ActivityIndicator size="large" color="#003E9B" style={{
             transform: [{scaleX: 4}, {scaleY: 4}],
             justifyContent: 'center',
             alignItems: 'center',
-          }}/>
+          }}/> */}
       </View>
       <View>
         <Modal transparent={true} visible={openModal}>

@@ -5,9 +5,9 @@ export const DateField = styled.TextInput.attrs({
   selectTextOnFocus: false,
 })`
     width: 100%;
-    border: 2px solid gray;
+    border: 1px solid black;
     border-radius: 5px;
-    padding: 15px;
+    padding: 10px;
     color: black;
 `;
 
