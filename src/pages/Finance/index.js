@@ -6,7 +6,6 @@ import * as S from './styles';
 import { DateInput } from './DateInput';
 import { SelectInput } from './SelectInput';
 import { DataTable } from 'react-native-paper';
-import { americanDateFormatting } from './FormattedDate';
 
 export default function Finance() {
   const window = useWindowDimensions();
@@ -170,10 +169,18 @@ export default function Finance() {
       </View>
 
       <View style={{ display: showWarningMessage ? 'none' : 'flex' }}>
-        <Button title='Filtrar novamente' onPress={() => setOpenModal(true)} />
-        <Button title='Voltar' onPress={() => setShowWarningMessage(true)} />
+        <View style={{ alignItems: 'center', marginTop: 10 }}>
+          <Image source={require('../../assets/arrowIcon.png')}
+            style={{ width: 250, height: 120 }} />
+          <View style={{ width: '90%' }}>
+            <Text style={{ fontSize: 22, fontWeight: '400', textAlign: 'center', color: 'black', backgroundColor: 'transparent' }}>Filtragem realizada com sucesso!</Text>
+          </View>
+          <View style={{ width: '80%' }}>
+            <Text style={{ color: 'gray', fontSize: 16, textAlign: 'center' }}>Veja abaixo os dados referentes à sua pesquisa. </Text>
+          </View>
+        </View>
 
-        <DataTable>
+        <DataTable style={{marginTop: 10}}>
           <DataTable.Header style={{ backgroundColor: '#eff7ff' }}>
             <DataTable.Title style={{ justifyContent: 'center' }}>Brinquedo</DataTable.Title>
             <DataTable.Title style={{ justifyContent: 'center' }}>Data inicial</DataTable.Title>
@@ -184,20 +191,28 @@ export default function Finance() {
           </DataTable.Header>
 
           {financeData.map((item) => {
-            let amountDigits = item.montante.toFixed(2);
-            let convertedAmount = amountDigits.replace('.', ',');
+            let amountFixedDigits = item.montante.toFixed(2);
+            let convertedAmount = amountFixedDigits.replace('.', ',');
             return (
               <DataTable.Row key={item}>
                 <DataTable.Cell style={{ justifyContent: 'flex-start' }}>John Cena</DataTable.Cell>
                 <DataTable.Cell style={{ justifyContent: 'flex-start' }}>05/01/2022</DataTable.Cell>
-                <DataTable.Cell style={{ justifyContent: 'flex-start' }} numeric>05/01/2022</DataTable.Cell>
-                <DataTable.Cell style={{ justifyContent: 'center' }} numeric>{item.qntClients}</DataTable.Cell>
-                <DataTable.Cell style={{ justifyContent: 'flex-start' }} numeric>R${convertedAmount}</DataTable.Cell>
+                <DataTable.Cell style={{ justifyContent: 'flex-start' }}>05/01/2022</DataTable.Cell>
+                <DataTable.Cell style={{ justifyContent: 'center' }}>{item.qntClients}</DataTable.Cell>
+                <DataTable.Cell style={{ justifyContent: 'center' }}>R$ {convertedAmount}</DataTable.Cell>
               </DataTable.Row>
             )
           })}
 
         </DataTable>
+        <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', marginTop: 10 }}>
+          <S.Button onPress={() => setOpenModal(true)}>
+            <S.ButtonText>Filtrar novamente</S.ButtonText>
+          </S.Button>
+          <S.Button onPress={() => setShowWarningMessage(true)}>
+            <S.ButtonText>Voltar</S.ButtonText>
+          </S.Button>
+        </View>
       </View>
     </ScrollView>
   );

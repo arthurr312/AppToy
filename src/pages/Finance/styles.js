@@ -33,10 +33,12 @@ export const AlignButton = styled.View`
 `;
 
 export const Button = styled.TouchableOpacity`
-  width: 80px;
+  min-width: 80px;
   height: 40px;
   margin-top: 5px;
   border-radius: 5px;
+  margin-right: 10px;
+  padding: 10px;
   background-color: #003E9B;
   align-items: center;
   justify-content: center;
