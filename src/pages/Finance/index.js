@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
+import * as S from './styles';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, ScrollView, Image, useWindowDimensions, Text, Modal, ActivityIndicator, Button } from 'react-native';
-import * as S from './styles';
+import {
+  View,
+  ScrollView,
+  Image,
+  useWindowDimensions,
+  Text,
+  Modal,
+  ActivityIndicator
+} from 'react-native';
 import { DateInput } from './DateInput';
 import { SelectInput } from './SelectInput';
-import { DataTable } from 'react-native-paper';
+import { Table } from './Table';
 
 export default function Finance() {
   const window = useWindowDimensions();
@@ -101,17 +109,8 @@ export default function Finance() {
       </View>
       <View>
         <Modal transparent={true} visible={openModal}>
-          <View style={{ backgroundColor: '#000000aa', flex: 1, justifyContent: 'center' }}>
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'white',
-                margin: 50,
-                padding: 20,
-                minHeight: '20%',
-                borderRadius: 10,
-              }}>
+          <S.OutSideModalBg>
+            <S.ModalContainer>
               <S.FinanceText>Filtrar</S.FinanceText>
               <View style={{ width: '100%' }}>
                 <DateInput
@@ -163,56 +162,16 @@ export default function Finance() {
                   <S.CancelButtonText>Cancelar</S.CancelButtonText>
                 </S.CancelButton>
               </S.AlignButton>
-            </View>
-          </View>
+            </S.ModalContainer>
+          </S.OutSideModalBg>
         </Modal>
       </View>
-
       <View style={{ display: showWarningMessage ? 'none' : 'flex' }}>
-        <View style={{ alignItems: 'center', marginTop: 10 }}>
-          <Image source={require('../../assets/arrowIcon.png')}
-            style={{ width: 250, height: 120 }} />
-          <View style={{ width: '90%' }}>
-            <Text style={{ fontSize: 22, fontWeight: '400', textAlign: 'center', color: 'black', backgroundColor: 'transparent' }}>Filtragem realizada com sucesso!</Text>
-          </View>
-          <View style={{ width: '80%' }}>
-            <Text style={{ color: 'gray', fontSize: 16, textAlign: 'center' }}>Veja abaixo os dados referentes à sua pesquisa. </Text>
-          </View>
-        </View>
-
-        <DataTable style={{marginTop: 10}}>
-          <DataTable.Header style={{ backgroundColor: '#eff7ff' }}>
-            <DataTable.Title style={{ justifyContent: 'center' }}>Brinquedo</DataTable.Title>
-            <DataTable.Title style={{ justifyContent: 'center' }}>Data inicial</DataTable.Title>
-            <DataTable.Title style={{ justifyContent: 'center' }}>Data final</DataTable.Title>
-            <DataTable.Title style={{ justifyContent: 'center' }}>Clientes</DataTable.Title>
-            <DataTable.Title style={{ justifyContent: 'center' }}>Lucro</DataTable.Title>
-
-          </DataTable.Header>
-
-          {financeData.map((item) => {
-            let amountFixedDigits = item.montante.toFixed(2);
-            let convertedAmount = amountFixedDigits.replace('.', ',');
-            return (
-              <DataTable.Row key={item}>
-                <DataTable.Cell style={{ justifyContent: 'flex-start' }}>John Cena</DataTable.Cell>
-                <DataTable.Cell style={{ justifyContent: 'flex-start' }}>05/01/2022</DataTable.Cell>
-                <DataTable.Cell style={{ justifyContent: 'flex-start' }}>05/01/2022</DataTable.Cell>
-                <DataTable.Cell style={{ justifyContent: 'center' }}>{item.qntClients}</DataTable.Cell>
-                <DataTable.Cell style={{ justifyContent: 'center' }}>R$ {convertedAmount}</DataTable.Cell>
-              </DataTable.Row>
-            )
-          })}
-
-        </DataTable>
-        <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', marginTop: 10 }}>
-          <S.Button onPress={() => setOpenModal(true)}>
-            <S.ButtonText>Filtrar novamente</S.ButtonText>
-          </S.Button>
-          <S.Button onPress={() => setShowWarningMessage(true)}>
-            <S.ButtonText>Voltar</S.ButtonText>
-          </S.Button>
-        </View>
+        <Table
+          financeData={financeData}
+          setOpenModal={setOpenModal}
+          setShowWarningMessage={setShowWarningMessage}
+        />
       </View>
     </ScrollView>
   );

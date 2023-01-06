@@ -33,7 +33,7 @@ export const AlignButton = styled.View`
 `;
 
 export const Button = styled.TouchableOpacity`
-  min-width: 80px;
+  width: 80px;
   height: 40px;
   margin-top: 5px;
   border-radius: 5px;
@@ -62,4 +62,20 @@ export const ButtonText = styled.Text`
 
 export const CancelButtonText = styled(ButtonText)`
   color: black;
+`;
+
+export const OutSideModalBg = styled.View`
+  background-color: #000000aa; 
+  flex: 1;
+  justify-content: center;
+`;
+
+export const ModalContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  margin: 50px;
+  padding: 20px;
+  min-height: 20%;
+  border-radius: 10px;
 `;
