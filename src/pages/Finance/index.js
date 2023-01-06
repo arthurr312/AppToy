@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, ScrollView, Image, useWindowDimensions, Text, Modal, ActivityIndicator } from 'react-native';
+import { View, ScrollView, Image, useWindowDimensions, Text, Modal, ActivityIndicator, Button } from 'react-native';
 import * as S from './styles';
 import { DateInput } from './DateInput';
 import { SelectInput } from './SelectInput';
@@ -15,7 +15,6 @@ export default function Finance() {
   const [initialDate, setInitialDate] = useState();
   const [finalDate, setFinalDate] = useState();
   const [openInitial, setOpenInitial] = useState(false);
-  const [lines, setLines] = useState(0);
   const [openFinal, setOpenFinal] = useState(false);
   const [clusteringValue, setClusteringValue] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -59,6 +58,10 @@ export default function Finance() {
             Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
           },
         },);
+      setFinalDate();
+      setInitialDate();
+      setClusteringValue();
+      setToyValue();
       setFinanceData(response.data.timers);
       setOpenModal(false);
       setShowWarningMessage(false);
@@ -166,29 +169,36 @@ export default function Finance() {
         </Modal>
       </View>
 
-      <DataTable style={{ display: showWarningMessage ? 'none' : 'flex'}}>
-        <DataTable.Header>
-          <DataTable.Title style={{ justifyContent: 'center' }}>Brinquedo</DataTable.Title>
-          <DataTable.Title style={{ justifyContent: 'center' }}>Data inicial</DataTable.Title>
-          <DataTable.Title style={{ justifyContent: 'center' }}>Data final</DataTable.Title>
-          <DataTable.Title style={{ justifyContent: 'center' }}>Clientes</DataTable.Title>
-          <DataTable.Title style={{ justifyContent: 'center' }}>Lucro</DataTable.Title>
+      <View style={{ display: showWarningMessage ? 'none' : 'flex' }}>
+        <Button title='Filtrar novamente' onPress={() => setOpenModal(true)} />
+        <Button title='Voltar' onPress={() => setShowWarningMessage(true)} />
 
-        </DataTable.Header>
+        <DataTable>
+          <DataTable.Header style={{ backgroundColor: '#eff7ff' }}>
+            <DataTable.Title style={{ justifyContent: 'center' }}>Brinquedo</DataTable.Title>
+            <DataTable.Title style={{ justifyContent: 'center' }}>Data inicial</DataTable.Title>
+            <DataTable.Title style={{ justifyContent: 'center' }}>Data final</DataTable.Title>
+            <DataTable.Title style={{ justifyContent: 'center' }}>Clientes</DataTable.Title>
+            <DataTable.Title style={{ justifyContent: 'center' }}>Lucro</DataTable.Title>
 
-        {financeData.map((item) => {
-          return (
-            <DataTable.Row key={item} style={{backgroundColor: 'green'}}>
-              <DataTable.Cell style={{justifyContent: 'center', backgroundColor: 'red', width: '100%' }}>John</DataTable.Cell>
-              <DataTable.Cell style={{justifyContent: 'center' }}>05/01/2022</DataTable.Cell>
-              <DataTable.Cell style={{justifyContent: 'center' }} numeric>05/01/2022</DataTable.Cell>
-              <DataTable.Cell style={{ justifyContent: 'center' }} numeric>{item.qntClients}</DataTable.Cell>
-              <DataTable.Cell style={{justifyContent: 'center' }} numeric>R$ {item.montante}</DataTable.Cell>
-            </DataTable.Row>
-          )
-        })}
+          </DataTable.Header>
 
-      </DataTable>
+          {financeData.map((item) => {
+            let amountDigits = item.montante.toFixed(2);
+            let convertedAmount = amountDigits.replace('.', ',');
+            return (
+              <DataTable.Row key={item}>
+                <DataTable.Cell style={{ justifyContent: 'flex-start' }}>John Cena</DataTable.Cell>
+                <DataTable.Cell style={{ justifyContent: 'flex-start' }}>05/01/2022</DataTable.Cell>
+                <DataTable.Cell style={{ justifyContent: 'flex-start' }} numeric>05/01/2022</DataTable.Cell>
+                <DataTable.Cell style={{ justifyContent: 'center' }} numeric>{item.qntClients}</DataTable.Cell>
+                <DataTable.Cell style={{ justifyContent: 'flex-start' }} numeric>R${convertedAmount}</DataTable.Cell>
+              </DataTable.Row>
+            )
+          })}
+
+        </DataTable>
+      </View>
     </ScrollView>
   );
 }
