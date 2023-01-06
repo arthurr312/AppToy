@@ -5,7 +5,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   View,
   ScrollView,
-  Image,
   useWindowDimensions,
   Text,
   Modal,
@@ -83,20 +82,12 @@ export default function Finance() {
     <ScrollView>
       <View style={{ display: showWarningMessage === false ? 'none' : 'flex' }}>
         <S.AlignImageAndLabel style={{ height: window.height / 1.25 }}>
-          <Image
+          <S.Image
             source={require('../../assets/financeImage.png')}
-            style={{ width: 250, height: 200, alignSelf: 'center' }}
           />
-          <Text
-            style={{
-              fontSize: 21,
-              color: '#192d4b',
-              textAlign: 'center',
-              fontWeight: 'bold',
-              paddingTop: 10,
-            }}>
+          <S.MainText>
             Bem-vindo ao setor de finanças! :)
-          </Text>
+          </S.MainText>
           <Text style={{ fontSize: 17, color: '#838383', textAlign: 'center' }}>
             <Text onPress={() => setOpenModal(true)} style={{ color: 'darkblue' }}>Clique aqui</Text> para aplicar filtros e obter resultados mais detalhados.
           </Text>
@@ -119,7 +110,7 @@ export default function Finance() {
                   setAmericanDate={setInitialAmericanDateFormat}
                   setOpen={setOpenInitial}
                   open={openInitial}
-                  label="Data inicial"
+                  label="Data inicial:"
                 />
               </View>
               <View style={{ width: '100%' }}>
@@ -129,7 +120,7 @@ export default function Finance() {
                   setAmericanDate={setFinalAmericanDateFormat}
                   setOpen={setOpenFinal}
                   open={openFinal}
-                  label="Data final"
+                  label="Data final:"
                 />
               </View>
               <View style={{ justifyContent: 'center' }}>

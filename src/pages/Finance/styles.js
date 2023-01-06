@@ -1,9 +1,16 @@
 import styled from 'styled-components';
+
 export const MainContainer = styled.View`
-    flex: 1;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: #D9D9D9;
+  flex: 1;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #D9D9D9;
+`;
+
+export const Image = styled.Image`
+  width: 280px;
+  height: 200px;
+  align-self: center;
 `;
 
 export const FinanceText = styled.Text`
@@ -12,6 +19,14 @@ export const FinanceText = styled.Text`
   margin: 10px; 
   font-size: 30px; 
   font-weight: bold; 
+`;
+
+export const MainText = styled.Text`
+  font-size: 21px;
+  color: #192d4b;
+  text-align: center;
+  font-weight: bold;
+  padding-top: 10px;
 `;
 
 export const AlignImageAndLabel = styled.View`

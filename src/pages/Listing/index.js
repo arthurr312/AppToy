@@ -98,7 +98,8 @@ export default function Listing() {
       ) : (
         data.map(item => {
           let formattedTime = item.time.substring(0, 5);
-          let formattedPrice = item.total_price.replace('.', ',');
+          let priceFixedDigits = item.total_price.toFixed(2);
+          let convertedPrice = priceFixedDigits.replace('.', ',');
           return (
             <View key={item.id}>
               <S.DataContainer>
@@ -106,7 +107,7 @@ export default function Listing() {
                   <S.DataView>
                     <S.NameClient>{item.name_client}</S.NameClient>
                     <S.TimeValue>{formattedTime}</S.TimeValue>
-                    <S.ValueText>R$ {formattedPrice}</S.ValueText>
+                    <S.ValueText>R$ {convertedPrice}</S.ValueText>
                   </S.DataView>
                   <TouchableOpacity
                     style={{justifyContent: 'center'}}
@@ -125,10 +126,12 @@ export default function Listing() {
       <View>
         <Modal transparent={true} visible={openModal}>
           <View style={{backgroundColor: '#000000aa', flex: 1}}>
-            <View
+          <View
               style={{
                 backgroundColor: 'white',
-                margin: 50,
+                width: '80%',
+                alignSelf: 'center',
+                marginTop: 70,
                 height: '20%',
                 borderRadius: 10,
               }}>
@@ -153,23 +156,25 @@ export default function Listing() {
                         style={{
                           fontSize: 14,
                           textAlign: 'center',
+                          fontWeight: 'bold',
                           color: 'white',
                         }}>
-                        Sim
+                        Confirmar
                       </Text>
                     </S.Button>
                   </View>
-                  <View style={{width: '30%'}}>
-                    <S.Button onPress={() => setOpenModal(false)}>
+                  <View style={{width: '40%'}}>
+                    <S.CancelButton onPress={() => setOpenModal(false)}>
                       <Text
                         style={{
                           fontSize: 14,
                           textAlign: 'center',
-                          color: 'white',
+                          color: 'black',
+                          fontWeight: 'bold',
                         }}>
-                        Não
+                        Cancelar
                       </Text>
-                    </S.Button>
+                    </S.CancelButton>
                   </View>
                 </S.AlignButtons>
               </View>

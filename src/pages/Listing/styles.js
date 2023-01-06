@@ -14,11 +14,18 @@ export const DataContainer = styled.View`
 
 export const Button = styled.TouchableOpacity`
   height: 40px;
+  min-width: 90px;
   margin-top: 5px;
   border-radius: 5px;
   background-color: #003e9b;
+  padding: 8px;
   align-items: center;
   justify-content: center;
+`;
+
+export const CancelButton = styled(Button)`
+  width: 80px;
+  background-color: transparent;
 `;
 
 export const NameClient = styled.Text`
@@ -32,12 +39,12 @@ export const TimeValue = styled(NameClient)`
 export const ValueText = styled(TimeValue)``;
 
 export const AlignButtons = styled.View`
-width: 70%;
-margin: 0 auto;
-flex-direction: row;
-justify-content: space-around;
-flex: 1;
-align-items: center;
+  width: 55%;
+  margin: 0 auto;
+  flex-direction: row;
+  justify-content: space-around;
+  flex: 1;
+  align-items: center;
 `;
 
 export const MainView = styled.View`
