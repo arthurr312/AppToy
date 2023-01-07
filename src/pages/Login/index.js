@@ -1,11 +1,11 @@
-import React, {useState, useContext} from 'react';
-import {View, Image, ActivityIndicator} from 'react-native';
-import {UserContext} from '../../context/User';
-import {useNavigation} from '@react-navigation/native';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, Image, ActivityIndicator } from 'react-native';
+import { UserContext } from '../../context/User';
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import * as S from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Snackbar} from 'react-native-paper';
+import { Snackbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
@@ -15,9 +15,17 @@ export default function Login() {
   const [visiblePassword, setVisiblePassword] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [visible, setVisible] = useState(false);
-  const {signIn, setInitialScreen, initialScreen} = useContext(UserContext);
+  const { signIn, setIsLogged, isLogged } = useContext(UserContext);
   const navigation = useNavigation();
+  let logged;
+  async function getCurrentState() {
+    logged = await AsyncStorage.getItem('@initial_screen');
+    setIsLogged(logged);
+  }
 
+  React.useEffect(() => {
+    getCurrentState();
+  }, []);
   async function login() {
     setLoading(prevState => !prevState);
     try {
@@ -31,15 +39,16 @@ export default function Login() {
           },
         },
       );
-      handleLogin();
+      signIn(userName, password);
       await AsyncStorage.setItem('@token', response.data.access_token);
       await AsyncStorage.setItem('@username', userName);
-      await AsyncStorage.setItem('@initial_screen', 'Sidebar');
+      await AsyncStorage.setItem('@initial_screen', 'true');
+      logged = await AsyncStorage.getItem('@initial_screen');
+      setIsLogged(logged);
       navigation.navigate('Sidebar');
       setUserName('');
       setPassword('');
     } catch (error) {
-      alert(error)
       setErrorMessage('Dados inválidos, tente novamente.');
       setVisible(true);
     }
@@ -48,21 +57,18 @@ export default function Login() {
 
   const closeSnackbar = () => setVisible(false);
 
-  function handleLogin() {
-    signIn(userName, password);
-  }
   return (
     <S.Container>
       <Image
         source={require('../../assets/app_logo.png')}
-        style={{width: 200, height: 200}}
+        style={{ width: 200, height: 200 }}
       />
       <S.Field
         placeholder="Nome"
         value={userName}
         onChangeText={e => setUserName(e)}
       />
-      <View style={{flexDirection: 'row'}}>
+      <View style={{ flexDirection: 'row' }}>
         <S.PasswordField
           secureTextEntry={visiblePassword}
           placeholder="Senha"
@@ -74,7 +80,7 @@ export default function Login() {
             name="eye-off-outline"
             size={25}
             color="grey"
-            style={{position: 'absolute', right: 15, top: 20}}
+            style={{ position: 'absolute', right: 15, top: 20 }}
             onPress={() => setVisiblePassword(prevState => !prevState)}
           />
         ) : (
@@ -82,13 +88,13 @@ export default function Login() {
             name="eye-outline"
             size={25}
             color="grey"
-            style={{position: 'absolute', right: 15, top: 20}}
+            style={{ position: 'absolute', right: 15, top: 20 }}
             onPress={() => setVisiblePassword(prevState => !prevState)}
           />
         )}
       </View>
 
-      <View style={{justifyContent: 'center'}}>
+      <View style={{ justifyContent: 'center' }}>
         <S.Button onPress={login}>
           {loading ? (
             <View>
@@ -100,6 +106,7 @@ export default function Login() {
             </View>
           )}
         </S.Button>
+        <S.Button onPress={() => alert(JSON.stringify(isLogged))}><S.Text>clica</S.Text></S.Button>
       </View>
       <Snackbar
         visible={visible}
@@ -107,7 +114,7 @@ export default function Login() {
         action={{
           label: <Icon name="ios-close-outline" color="#fff" size={25} />,
         }}
-        style={{backgroundColor: '#010E3F'}}
+        style={{ backgroundColor: '#010E3F' }}
         duration={3000}>
         {errorMessage}
       </Snackbar>
