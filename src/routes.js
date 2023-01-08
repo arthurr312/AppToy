@@ -16,7 +16,7 @@ function Routes() {
   const { isLogged } = useContext(UserContext);
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ orientation: 'portrait' }}>
       {isLogged === 'true' ? (
         <>
           <Stack.Screen
