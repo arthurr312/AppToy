@@ -45,7 +45,6 @@ export default function Login() {
       await AsyncStorage.setItem('@initial_screen', 'true');
       logged = await AsyncStorage.getItem('@initial_screen');
       setIsLogged(logged);
-      navigation.navigate('Sidebar');
       setUserName('');
       setPassword('');
     } catch (error) {
@@ -106,7 +105,6 @@ export default function Login() {
             </View>
           )}
         </S.Button>
-        <S.Button onPress={() => alert(JSON.stringify(isLogged))}><S.Text>clica</S.Text></S.Button>
       </View>
       <Snackbar
         visible={visible}

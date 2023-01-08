@@ -10,14 +10,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 const CustomDrawer = props => {
   const navigation = useNavigation();
-  const {setIsLogged, isLogged} = useContext(UserContext);
+  const {setIsLogged} = useContext(UserContext);
   async function logout() {
     AsyncStorage.removeItem('@token');
     AsyncStorage.removeItem('@username');
     await AsyncStorage.setItem('@initial_screen', 'false');
     let logged = await AsyncStorage.getItem('@initial_screen');
     setIsLogged(logged);
-    navigation.navigate('App');
   }
   return (
     <View style={{flex: 1}}>

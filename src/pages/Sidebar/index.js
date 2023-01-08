@@ -15,7 +15,6 @@ import ToyListing from '../Toys/Listing';
 import Finance from '../Finance';
 export default function Sidebar() {
   const Drawer = createDrawerNavigator();
-  const {user} = useContext(UserContext);
   return (
     <Drawer.Navigator
       drawerContent={props => <CustomDrawer {...props} />}
