@@ -17,6 +17,17 @@ export const MainText = styled.Text`
   color: black;
 `;
 
+export const SecondaryContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  min-height: 60%;
+  padding-bottom: 15px;
+  background-color: white;
+  elevation: 6;
+  border-radius: 7px;
+`;
+
 export const ButtonText = styled.Text`
   font-size: 14px;
   text-align: center;

@@ -180,7 +180,7 @@ export default function ToyListing() {
                       <S.DataView>
                         <S.NameClient>{item.name}</S.NameClient>
                         <S.ValueText>R$ {convertedPrice}</S.ValueText>
-                        <S.TimeValue>{item.minutes_price} minutos</S.TimeValue>
+                        <S.TimeValue>{item.minutes_price} {item.minutes_price > 1 ? 'minutos' : 'minuto'}</S.TimeValue>
                       </S.DataView>
                       <View
                         style={{

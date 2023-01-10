@@ -54,7 +54,7 @@ export default function Registering() {
             resetForm({values: ''});
           }}>
           {({handleChange, handleBlur, handleSubmit, values, errors}) => (
-            <>
+            <S.SecondaryContainer>
               <S.MainText>Cadastro de brinquedos</S.MainText>
               <S.AlignFields style={{paddingBottom: 10}}>
                 <S.Label>Nome</S.Label>
@@ -93,7 +93,7 @@ export default function Registering() {
                   </View>
                 </S.AlignButtons>
               </S.AlignButtons>
-            </>
+            </S.SecondaryContainer>
           )}
         </Formik>
       </S.Container>
