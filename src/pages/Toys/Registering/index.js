@@ -97,7 +97,7 @@ export default function Registering() {
           )}
         </Formik>
       </S.Container>
-      <View style={{height: '12%'}}>
+      <View style={{height: '8%'}}>
         <Snackbar
           visible={visible}
           onDismiss={closeSnackbar}
