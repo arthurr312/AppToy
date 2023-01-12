@@ -1,19 +1,18 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, ScrollView, TouchableOpacity, Text, Button} from 'react-native';
 import axios from 'axios';
 import {Formik} from 'formik';
-import {UserContext} from '../../context/User';
 import * as S from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Homepage() {
-  const {user} = useContext(UserContext);
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [customInterval, setCustomInterval] = useState(null);
   const [isPaused, setIsPaused] = useState(true);
   const [enablePauseButton, setEnablePauseButton] = useState(false);
   const [disableStartButton, setDisableStartButton] = useState(false);
+  const [enableResetButton, setEnableResetButton] = useState(false);
   const [value, setValue] = useState();
   const [userName, setUserName] = useState();
   async function Registering(values) {
@@ -47,6 +46,7 @@ export default function Homepage() {
     setIsPaused(false);
     setEnablePauseButton(true);
     setDisableStartButton(true);
+    setEnableResetButton(true);
   };
 
   const stopTimer = () => {
@@ -68,6 +68,9 @@ export default function Homepage() {
     setValue(0);
     setCustomInterval(null);
     setIsPaused(true);
+    setEnablePauseButton(false);
+    setEnableResetButton(false);
+    setDisableStartButton(false);
   };
 
   const changeTime = () => {
@@ -145,13 +148,18 @@ export default function Homepage() {
                   disabled={!enablePauseButton}
                   onPress={() => {
                     stopTimer();
-                    setDisableStartButton(prevState => !prevState);
-                    setEnablePauseButton(prevState => !prevState);
+                    setDisableStartButton(false);
+                    setEnablePauseButton(false);
                   }}>
                   <S.ButtonsText>Pausar</S.ButtonsText>
                 </S.Button>
                 {/* resetar */}
-                <S.Button onPress={clear}>
+                <S.Button
+                  disabled={!enableResetButton}
+                  style={{
+                    opacity: enableResetButton === false ? 0.5 : 1,
+                  }}
+                  onPress={clear}>
                   <S.ButtonsText>Resetar</S.ButtonsText>
                 </S.Button>
               </S.AlignIcons>
