@@ -4,6 +4,7 @@ import axios from 'axios';
 import {Formik} from 'formik';
 import * as S from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 export default function Homepage() {
   const [seconds, setSeconds] = useState(0);
@@ -119,16 +120,50 @@ export default function Homepage() {
                 </TouchableOpacity>
               </S.AlignTitleAndIcon>
               <S.TimerContainer>
-                <S.AlignTimerItens>
+                {/* <S.AlignTimerItens>
+                      <S.Timer>
+                        {minutes < 10 ? '0' + minutes : minutes}:
+                        {seconds < 10 ? '0' + seconds : seconds}
+                      </S.Timer>
+                      <View>
+                        <S.Field/>
+                        <S.GenericText>R$ 10,00</S.GenericText>
+                      </View>
+                    </S.AlignTimerItens> */}
+                <View style={{flexDirection: 'row'}}>
+                  <View style={{width: '60%', justifyContent: 'center', alignItems: 'center'}}>
+                    <S.Field placeholder="Nome" />
+                    <S.Field placeholder="Brinquedo" />
+                    {/* <DropDownPicker
+                      dropDownDirection="AUTO"
+                      placeholder="Brinquedo"
+                      style={{
+                        border: '2px solid gray',
+                        backgroundColor: 'transparent',
+                        borderRadius: 6,
+                        width: '100%',
+                        padding: 10,
+                        paddingTop: 7,
+                      }}
+                      //open={openToyOptions}
+                      dropDownContainerStyle={{
+                        backgroundColor: 'white',
+                        width: '100%',
+                      }}
+                      // value={value}
+                      // items={items}
+                      // setOpen={setOpenToyOptions}
+                      // setValue={setValue}
+                      // setItems={setItems}
+                    /> */}
+                  </View>
+                  <View style={{justifyContent: 'center', alignItems: 'center'}}>
                   <S.Timer>
                     {minutes < 10 ? '0' + minutes : minutes}:
                     {seconds < 10 ? '0' + seconds : seconds}
                   </S.Timer>
-                  <View>
-                    <S.GenericText>Nome do mlk</S.GenericText>
-                    <S.GenericText>R$ 10,00</S.GenericText>
                   </View>
-                </S.AlignTimerItens>
+                </View>
               </S.TimerContainer>
               <S.AlignIcons>
                 {/* iniciar  */}

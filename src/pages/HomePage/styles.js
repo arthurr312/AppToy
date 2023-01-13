@@ -90,11 +90,12 @@ export const AlignIcons = styled.View`
 `;
 
 export const Field = styled.TextInput.attrs({
-  placeholderTextColor: '#B2B2B2',
+  placeholderTextColor: '#525252',
 })`
-  width: 60%;
-  border: none;
-  background: white;
+  width: 80%;
+  height: 33%;
+  border: 1px solid black;
+  background: transparent;
   border-radius: 5px;
   padding: 10px;
   margin: 10px;
