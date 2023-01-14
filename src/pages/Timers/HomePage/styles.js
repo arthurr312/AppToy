@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { TouchableOpacity } from 'react-native';
+import {TouchableOpacity} from 'react-native';
 export const MainContainer = styled.View`
   background-color: #d9d9d9;
 `;
@@ -10,7 +10,7 @@ export const Button = styled.TouchableOpacity`
   height: 40px;
   margin-top: 5px;
   border-radius: 5px;
-  background-color: #003E9B;
+  background-color: #003e9b;
   align-items: center;
   justify-content: center;
 `;
@@ -82,9 +82,9 @@ export const AlignTimerItens = styled.View`
 
 export const AlignIcons = styled.View`
   display: flex;
-  flex-direction: row; 
-  justify-content: space-around; 
-  width: 90%; 
+  flex-direction: row;
+  justify-content: space-around;
+  width: 90%;
   margin: 0 auto;
   padding-bottom: 20px;
 `;

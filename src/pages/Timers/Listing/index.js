@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {
   Text,
@@ -14,7 +15,7 @@ import * as S from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-export default function Listing() {
+export default function TimerListing() {
   const window = useWindowDimensions();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -42,11 +43,14 @@ export default function Listing() {
 
   async function remocao(id) {
     try {
-      await axios.delete(`https://apptoydev.000webhostapp.com/api/timer/${id}`, {
-        headers: {
-          Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
+      await axios.delete(
+        `https://apptoydev.000webhostapp.com/api/timer/${id}`,
+        {
+          headers: {
+            Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
+          },
         },
-      });
+      );
       setUpdateTable(prevState => !prevState);
       setOpenModal(false);
       setVisible(true);
@@ -78,7 +82,7 @@ export default function Listing() {
       ) : data.length === 0 ? (
         <View style={{height: window.height / 1.25, justifyContent: 'center'}}>
           <Image
-            source={require('../../assets/lupa.png')}
+            source={require('../../../assets/lupa.png')}
             style={{width: 200, height: 200, alignSelf: 'center'}}
           />
           <Text
@@ -126,7 +130,7 @@ export default function Listing() {
       <View>
         <Modal transparent={true} visible={openModal}>
           <View style={{backgroundColor: '#000000aa', flex: 1}}>
-          <View
+            <View
               style={{
                 backgroundColor: 'white',
                 width: '80%',

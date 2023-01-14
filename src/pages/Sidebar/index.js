@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import Homepage from '../HomePage';
-import Listing from '../Listing';
+import Homepage from '../Timers/HomePage';
+import Listing from '../Timers/Listing';
 import {UserContext} from '../../context/User';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FinanceIcon from 'react-native-vector-icons/FontAwesome5';
@@ -47,7 +47,12 @@ export default function Sidebar() {
         component={Finance}
         options={{
           drawerIcon: ({color}) => (
-            <FinanceIcon name="dollar-sign" size={22} color={color} style={{paddingLeft: 5, paddingRight: 7}} />
+            <FinanceIcon
+              name="dollar-sign"
+              size={22}
+              color={color}
+              style={{paddingLeft: 5, paddingRight: 7}}
+            />
           ),
         }}
       />

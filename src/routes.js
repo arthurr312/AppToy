@@ -2,8 +2,8 @@
 import React, { useContext } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './pages/Login';
-import HomePage from './pages/HomePage';
-import Listing from './pages/Listing';
+import HomePage from './pages/Timers/HomePage';
+import TimerListing from './pages/Timers/Listing';
 import Sidebar from './pages/Sidebar';
 import Profile from './pages/Profile';
 import Registering from './pages/Toys/Registering';
@@ -32,7 +32,7 @@ function Routes() {
           <Stack.Screen
             options={{ headerShown: false }}
             name="Listing"
-            component={Listing}
+            component={TimerListing}
           />
           <Stack.Screen
             options={{ headerShown: false }}

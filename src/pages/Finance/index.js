@@ -1,18 +1,11 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import * as S from './styles';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
-  View,
-  ScrollView,
-  useWindowDimensions,
-  Text,
-  Modal,
-  ActivityIndicator
-} from 'react-native';
-import { DateInput } from './DateInput';
-import { SelectInput } from './SelectInput';
-import { Table } from './Table';
+import {View, ScrollView, useWindowDimensions, Text, Modal} from 'react-native';
+import {DateInput} from './DateInput';
+import {SelectInput} from './SelectInput';
+import {Table} from './Table';
 
 export default function Finance() {
   const window = useWindowDimensions();
@@ -30,9 +23,9 @@ export default function Finance() {
   const [finalAmericanDateFormat, setFinalAmericanDateFormat] = useState();
 
   const [items, setItems] = useState([
-    { label: 'Mês', value: 'month' },
-    { label: 'Dia', value: 'day' },
-    { label: 'Semana', value: 'year' },
+    {label: 'Mês', value: 'month'},
+    {label: 'Dia', value: 'day'},
+    {label: 'Semana', value: 'year'},
   ]);
 
   async function selectInputData() {
@@ -45,11 +38,11 @@ export default function Finance() {
           },
         },
       );
-      const filterResponse = response.data.brinquedos.map((item) => ({
+      const filterResponse = response.data.brinquedos.map(item => ({
         ...item,
         value: item.id,
         label: item.name,
-      }))
+      }));
       setData(filterResponse);
     } catch (error) {
       alert('Ocorreu um erro inesperado, tente novamente.');
@@ -58,12 +51,14 @@ export default function Finance() {
 
   async function getFinanceData() {
     try {
-      const response = await axios.get(`https://apptoydev.000webhostapp.com/api/financas/${initialAmericanDateFormat}/${finalAmericanDateFormat}/${toyValue}`,
+      const response = await axios.get(
+        `https://apptoydev.000webhostapp.com/api/financas/${initialAmericanDateFormat}/${finalAmericanDateFormat}/${toyValue}`,
         {
           headers: {
             Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
           },
-        },);
+        },
+      );
       setFinalDate();
       setInitialDate();
       setClusteringValue();
@@ -76,34 +71,32 @@ export default function Finance() {
     }
   }
 
-  React.useEffect(() => { selectInputData() }, []);
+  React.useEffect(() => {
+    selectInputData();
+  }, []);
 
   return (
     <ScrollView>
-      <View style={{ display: showWarningMessage === false ? 'none' : 'flex' }}>
-        <S.AlignImageAndLabel style={{ height: window.height / 1.25 }}>
-          <S.Image
-            source={require('../../assets/financeImage.png')}
-          />
-          <S.MainText>
-            Bem-vindo ao setor de finanças! :)
-          </S.MainText>
-          <Text style={{ fontSize: 17, color: '#838383', textAlign: 'center' }}>
-            <Text onPress={() => setOpenModal(true)} style={{ color: 'darkblue' }}>Clique aqui</Text> para aplicar filtros e obter resultados mais detalhados.
+      <View style={{display: showWarningMessage === false ? 'none' : 'flex'}}>
+        <S.AlignImageAndLabel style={{height: window.height / 1.25}}>
+          <S.Image source={require('../../assets/financeImage.png')} />
+          <S.MainText>Bem-vindo ao setor de finanças! :)</S.MainText>
+          <Text style={{fontSize: 17, color: '#838383', textAlign: 'center'}}>
+            <Text
+              onPress={() => setOpenModal(true)}
+              style={{color: 'darkblue'}}>
+              Clique aqui
+            </Text>{' '}
+            para aplicar filtros e obter resultados mais detalhados.
           </Text>
         </S.AlignImageAndLabel>
-        {/* <ActivityIndicator size="large" color="#003E9B" style={{
-            transform: [{scaleX: 4}, {scaleY: 4}],
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}/> */}
       </View>
       <View>
         <Modal transparent={true} visible={openModal}>
           <S.OutSideModalBg>
             <S.ModalContainer>
               <S.FinanceText>Filtrar</S.FinanceText>
-              <View style={{ width: '100%' }}>
+              <View style={{width: '100%'}}>
                 <DateInput
                   dateValue={initialDate}
                   setDateValue={setInitialDate}
@@ -113,7 +106,7 @@ export default function Finance() {
                   label="Data inicial:"
                 />
               </View>
-              <View style={{ width: '100%' }}>
+              <View style={{width: '100%'}}>
                 <DateInput
                   dateValue={finalDate}
                   setDateValue={setFinalDate}
@@ -123,7 +116,7 @@ export default function Finance() {
                   label="Data final:"
                 />
               </View>
-              <View style={{ justifyContent: 'center' }}>
+              <View style={{justifyContent: 'center'}}>
                 <S.SelectFieldAlignMent>
                   <SelectInput
                     value={clusteringValue}
@@ -133,8 +126,9 @@ export default function Finance() {
                     dropDownDirection="TOP"
                     label="Agrupado por:"
                   />
-                </S.SelectFieldAlignMent></View>
-              <View style={{ justifyContent: 'center' }}>
+                </S.SelectFieldAlignMent>
+              </View>
+              <View style={{justifyContent: 'center'}}>
                 <S.SelectFieldAlignMent>
                   <SelectInput
                     value={toyValue}
@@ -157,7 +151,7 @@ export default function Finance() {
           </S.OutSideModalBg>
         </Modal>
       </View>
-      <View style={{ display: showWarningMessage ? 'none' : 'flex' }}>
+      <View style={{display: showWarningMessage ? 'none' : 'flex'}}>
         <Table
           financeData={financeData}
           setOpenModal={setOpenModal}

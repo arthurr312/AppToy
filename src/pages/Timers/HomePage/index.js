@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable no-alert */
 import React, {useState} from 'react';
 import {View, ScrollView, TouchableOpacity, Text, Button} from 'react-native';
 import axios from 'axios';
@@ -5,9 +7,11 @@ import {Formik} from 'formik';
 import * as S from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {SelectInput} from '../../Finance/SelectInput';
 
 export default function Homepage() {
   const [seconds, setSeconds] = useState(0);
+  const [toyData, setToyData] = useState([]);
   const [minutes, setMinutes] = useState(0);
   const [customInterval, setCustomInterval] = useState(null);
   const [isPaused, setIsPaused] = useState(true);
@@ -16,6 +20,9 @@ export default function Homepage() {
   const [enableResetButton, setEnableResetButton] = useState(false);
   const [value, setValue] = useState();
   const [userName, setUserName] = useState();
+  const [toyValue, setToyValue] = useState(null);
+  const [openToyOptions, setOpenToyOptions] = useState(false);
+
   async function Registering(values) {
     try {
       await axios.post(
@@ -30,6 +37,27 @@ export default function Homepage() {
       alert('deu bom ihu');
     } catch (error) {
       alert(error);
+    }
+  }
+
+  async function selectInputData() {
+    try {
+      const response = await axios.get(
+        `https://apptoydev.000webhostapp.com/api/brinquedo`,
+        {
+          headers: {
+            Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
+          },
+        },
+      );
+      const filterResponse = response.data.brinquedos.map(item => ({
+        ...item,
+        value: item.id,
+        label: item.name,
+      }));
+      setToyData(filterResponse);
+    } catch (error) {
+      alert('Ocorreu um erro inesperado, tente novamente.');
     }
   }
 
@@ -120,48 +148,29 @@ export default function Homepage() {
                 </TouchableOpacity>
               </S.AlignTitleAndIcon>
               <S.TimerContainer>
-                {/* <S.AlignTimerItens>
-                      <S.Timer>
-                        {minutes < 10 ? '0' + minutes : minutes}:
-                        {seconds < 10 ? '0' + seconds : seconds}
-                      </S.Timer>
-                      <View>
-                        <S.Field/>
-                        <S.GenericText>R$ 10,00</S.GenericText>
-                      </View>
-                    </S.AlignTimerItens> */}
                 <View style={{flexDirection: 'row'}}>
-                  <View style={{width: '60%', justifyContent: 'center', alignItems: 'center'}}>
+                  <View
+                    style={{
+                      width: '60%',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
                     <S.Field placeholder="Nome" />
-                    <S.Field placeholder="Brinquedo" />
-                    {/* <DropDownPicker
-                      dropDownDirection="AUTO"
-                      placeholder="Brinquedo"
-                      style={{
-                        border: '2px solid gray',
-                        backgroundColor: 'transparent',
-                        borderRadius: 6,
-                        width: '100%',
-                        padding: 10,
-                        paddingTop: 7,
-                      }}
-                      //open={openToyOptions}
-                      dropDownContainerStyle={{
-                        backgroundColor: 'white',
-                        width: '100%',
-                      }}
-                      // value={value}
-                      // items={items}
-                      // setOpen={setOpenToyOptions}
-                      // setValue={setValue}
-                      // setItems={setItems}
-                    /> */}
+                    <SelectInput
+                      dropDownDirection="TOP"
+                      items={toyData}
+                      setItems={setToyData}
+                      setValue={setToyValue}
+                      value={toyValue}
+                      label=""
+                    />
                   </View>
-                  <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                  <S.Timer>
-                    {minutes < 10 ? '0' + minutes : minutes}:
-                    {seconds < 10 ? '0' + seconds : seconds}
-                  </S.Timer>
+                  <View
+                    style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <S.Timer>
+                      {minutes < 10 ? '0' + minutes : minutes}:
+                      {seconds < 10 ? '0' + seconds : seconds}
+                    </S.Timer>
                   </View>
                 </View>
               </S.TimerContainer>
