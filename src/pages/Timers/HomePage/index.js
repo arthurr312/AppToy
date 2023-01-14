@@ -1,7 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable no-alert */
 import React, {useState} from 'react';
-import {View, ScrollView, TouchableOpacity, Text, Button} from 'react-native';
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Text,
+  Button,
+  useWindowDimensions,
+  Modal,
+} from 'react-native';
 import axios from 'axios';
 import {Formik} from 'formik';
 import * as S from './styles';
@@ -10,6 +18,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import {SelectInput} from '../../Finance/SelectInput';
 
 export default function Homepage() {
+  const window = useWindowDimensions();
   const [seconds, setSeconds] = useState(0);
   const [toyData, setToyData] = useState([]);
   const [minutes, setMinutes] = useState(0);
@@ -22,6 +31,8 @@ export default function Homepage() {
   const [userName, setUserName] = useState();
   const [toyValue, setToyValue] = useState(null);
   const [openToyOptions, setOpenToyOptions] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [showWarningMessage, setShowWarningMessage] = useState(true);
 
   async function Registering(values) {
     try {
@@ -123,94 +134,116 @@ export default function Homepage() {
   getUsername();
 
   return (
-    <S.MainContainer style={{flex: 1}}>
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          minWidth: '100%',
-        }}>
-        <Formik
-          initialValues={{
-            name_client: '',
-            price: '',
-          }}
-          onSubmit={values => Registering(values)}>
-          {({handleChange, handleSubmit, values}) => (
-            <View>
-              <S.MainTitle>Bem-vindo, {userName}</S.MainTitle>
-              <S.AlignTitleAndIcon>
-                <S.TimerTextTitle>Adicionar um cronômetro</S.TimerTextTitle>
-                <TouchableOpacity
-                  style={{
-                    marginLeft: '5%',
-                  }}>
-                  <S.PlusIcon />
-                </TouchableOpacity>
-              </S.AlignTitleAndIcon>
-              <S.TimerContainer>
-                <View style={{flexDirection: 'row'}}>
-                  <View
-                    style={{
-                      width: '60%',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <S.Field placeholder="Nome" />
-                    <SelectInput
-                      dropDownDirection="TOP"
-                      items={toyData}
-                      setItems={setToyData}
-                      setValue={setToyValue}
-                      value={toyValue}
-                      label=""
-                    />
+    <ScrollView>
+      <View style={{display: showWarningMessage === false ? 'none' : 'flex'}}>
+        <S.AlignImageAndLabel style={{height: window.height / 1.25}}>
+          <S.Image source={require('../../../assets/timerIcon.png')} />
+          <S.MainText>
+            Bem-vindo ao cadastro de cronômetros, {userName}! :)
+          </S.MainText>
+          <Text style={{fontSize: 17, color: '#838383', textAlign: 'center'}}>
+            <Text
+              onPress={() => setOpenModal(true)}
+              style={{color: 'darkblue'}}>
+              Clique aqui
+            </Text>{' '}
+            para cadastrar e iniciar um cronômetro.
+          </Text>
+        </S.AlignImageAndLabel>
+      </View>
+      <View>
+        <Modal transparent={true} visible={openModal}>
+          <S.OutSideModalBg>
+            <S.ModalContainer>
+              <Formik
+                initialValues={{
+                  name_client: '',
+                  price: '',
+                }}
+                onSubmit={values => Registering(values)}>
+                {({handleChange, handleSubmit, values}) => (
+                  <View>
+                    <S.AlignTitleAndIcon>
+                      <S.TimerTextTitle>
+                        Adicionar um cronômetro
+                      </S.TimerTextTitle>
+                      <TouchableOpacity
+                        style={{
+                          marginLeft: '5%',
+                        }}>
+                        <S.PlusIcon />
+                      </TouchableOpacity>
+                    </S.AlignTitleAndIcon>
+                    <S.TimerContainer>
+                      <View style={{flexDirection: 'row'}}>
+                        <View
+                          style={{
+                            width: '60%',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <S.Field placeholder="Nome" />
+                          <SelectInput
+                            dropDownDirection="TOP"
+                            items={toyData}
+                            setItems={setToyData}
+                            setValue={setToyValue}
+                            value={toyValue}
+                            label=""
+                          />
+                        </View>
+                        <View
+                          style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <S.Timer>
+                            {minutes < 10 ? '0' + minutes : minutes}:
+                            {seconds < 10 ? '0' + seconds : seconds}
+                          </S.Timer>
+                        </View>
+                      </View>
+                    </S.TimerContainer>
+                    <S.AlignIcons>
+                      {/* iniciar  */}
+                      <S.Button
+                        disabled={disableStartButton}
+                        style={{
+                          opacity: disableStartButton ? 0.5 : 1,
+                        }}
+                        onPress={startTimer}>
+                        <S.ButtonsText>Iniciar</S.ButtonsText>
+                      </S.Button>
+                      {/* pausar  */}
+                      <S.Button
+                        style={{
+                          opacity: enablePauseButton === false ? 0.5 : 1,
+                        }}
+                        disabled={!enablePauseButton}
+                        onPress={() => {
+                          stopTimer();
+                          setDisableStartButton(false);
+                          setEnablePauseButton(false);
+                        }}>
+                        <S.ButtonsText>Pausar</S.ButtonsText>
+                      </S.Button>
+                      {/* resetar */}
+                      <S.Button
+                        disabled={!enableResetButton}
+                        style={{
+                          opacity: enableResetButton === false ? 0.5 : 1,
+                        }}
+                        onPress={clear}>
+                        <S.ButtonsText>Resetar</S.ButtonsText>
+                      </S.Button>
+                    </S.AlignIcons>
                   </View>
-                  <View
-                    style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <S.Timer>
-                      {minutes < 10 ? '0' + minutes : minutes}:
-                      {seconds < 10 ? '0' + seconds : seconds}
-                    </S.Timer>
-                  </View>
-                </View>
-              </S.TimerContainer>
-              <S.AlignIcons>
-                {/* iniciar  */}
-                <S.Button
-                  disabled={disableStartButton}
-                  style={{
-                    opacity: disableStartButton ? 0.5 : 1,
-                  }}
-                  onPress={startTimer}>
-                  <S.ButtonsText>Iniciar</S.ButtonsText>
-                </S.Button>
-                {/* pausar  */}
-                <S.Button
-                  style={{
-                    opacity: enablePauseButton === false ? 0.5 : 1,
-                  }}
-                  disabled={!enablePauseButton}
-                  onPress={() => {
-                    stopTimer();
-                    setDisableStartButton(false);
-                    setEnablePauseButton(false);
-                  }}>
-                  <S.ButtonsText>Pausar</S.ButtonsText>
-                </S.Button>
-                {/* resetar */}
-                <S.Button
-                  disabled={!enableResetButton}
-                  style={{
-                    opacity: enableResetButton === false ? 0.5 : 1,
-                  }}
-                  onPress={clear}>
-                  <S.ButtonsText>Resetar</S.ButtonsText>
-                </S.Button>
-              </S.AlignIcons>
-            </View>
-          )}
-        </Formik>
-      </ScrollView>
-    </S.MainContainer>
+                )}
+              </Formik>
+            </S.ModalContainer>
+          </S.OutSideModalBg>
+        </Modal>
+      </View>
+    </ScrollView>
   );
 }

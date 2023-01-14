@@ -4,7 +4,7 @@ export const MainContainer = styled.View`
   flex: 1;
   justify-content: flex-start;
   align-items: center;
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
 `;
 
 export const Image = styled.Image`
@@ -14,11 +14,11 @@ export const Image = styled.Image`
 `;
 
 export const FinanceText = styled.Text`
-  color: black; 
+  color: black;
   text-align: center;
-  margin: 10px; 
-  font-size: 30px; 
-  font-weight: bold; 
+  margin: 10px;
+  font-size: 30px;
+  font-weight: bold;
 `;
 
 export const MainText = styled.Text`
@@ -54,7 +54,7 @@ export const Button = styled.TouchableOpacity`
   border-radius: 5px;
   margin-right: 10px;
   padding: 10px;
-  background-color: #003E9B;
+  background-color: #003e9b;
   align-items: center;
   justify-content: center;
 `;
@@ -70,7 +70,7 @@ export const CancelButton = styled.TouchableOpacity`
 `;
 
 export const ButtonText = styled.Text`
-  font-size: 16px; 
+  font-size: 16px;
   font-weight: bold;
   color: white;
 `;
@@ -80,7 +80,7 @@ export const CancelButtonText = styled(ButtonText)`
 `;
 
 export const OutSideModalBg = styled.View`
-  background-color: #000000aa; 
+  background-color: #000000aa;
   flex: 1;
   justify-content: center;
 `;

@@ -101,3 +101,39 @@ export const Field = styled.TextInput.attrs({
   margin: 10px;
   color: black;
 `;
+
+export const AlignImageAndLabel = styled.View`
+  width: 90%;
+  justify-content: center;
+  margin: 0 auto;
+`;
+
+export const Image = styled.Image`
+  width: 200px;
+  height: 200px;
+  align-self: center;
+`;
+
+export const MainText = styled.Text`
+  font-size: 21px;
+  color: #192d4b;
+  text-align: center;
+  font-weight: bold;
+  padding-top: 10px;
+`;
+
+export const OutSideModalBg = styled.View`
+  background-color: #000000aa;
+  flex: 1;
+  justify-content: center;
+`;
+
+export const ModalContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  margin: 50px;
+  padding: 20px;
+  min-height: 20%;
+  border-radius: 10px;
+`;
