@@ -9,12 +9,12 @@ import axios from 'axios';
 import {Formik} from 'formik';
 import {useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
-import {SelectInput} from '../../Finance/SelectInput';
 import * as S from './styles';
 import DropDownPicker from 'react-native-dropdown-picker';
 export const TimerForm = () => {
-  const [value, setValue] = useState();
-
+  const [value, setValue] = useState('');
+  const [toyValue, setToyValue] = useState(null);
+  const [name, setName] = useState('');
   const [seconds, setSeconds] = useState(0);
   const [toyData, setToyData] = useState([]);
   const [minutes, setMinutes] = useState(0);
@@ -23,24 +23,35 @@ export const TimerForm = () => {
   const [enablePauseButton, setEnablePauseButton] = useState(false);
   const [disableStartButton, setDisableStartButton] = useState(false);
   const [enableResetButton, setEnableResetButton] = useState(false);
-  const [toyValue, setToyValue] = useState(null);
+  const [showComponent, setShowComponent] = useState(true);
   const [openToyOptions, setOpenToyOptions] = useState(false);
-  async function Registering(values) {
+  async function registering() {
     try {
       await axios.post(
-        `https://apptoydev.000webhostapp.com/api/timer/clients`,
-        {...values, price_per_minute: value},
+        `https://apptoydev.000webhostapp.com/api/timer`,
+        {
+          service_toy: toyValue,
+          time: value,
+          name_client: name,
+        },
         {
           headers: {
             Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
           },
         },
       );
+      setShowComponent(false);
       alert('deu bom ihu');
     } catch (error) {
       alert(error);
     }
   }
+
+  const formValues = {
+    service_toy: toyValue,
+    time: value,
+    name_client: name,
+  };
 
   async function selectInputData() {
     try {
@@ -86,10 +97,12 @@ export const TimerForm = () => {
       setValue(
         `${minutes < 10 ? '0' + minutes : minutes}:${
           seconds < 10 ? '0' + seconds : seconds
-        }`,
+        }:00`,
       );
       clearInterval(customInterval);
     }
+    setDisableStartButton(false);
+    setEnablePauseButton(false);
   };
 
   const clear = () => {
@@ -118,98 +131,94 @@ export const TimerForm = () => {
     selectInputData();
   }, []);
   return (
-    <View style={{flex: 1, height: '100%'}}>
-      <Formik
-        initialValues={{
-          name_client: '',
-          price: '',
-        }}
-        onSubmit={values => Registering(values)}>
-        {({handleChange, handleSubmit, values}) => (
-          <View>
-            <S.TimerContainer>
-              <View style={{alignContent: 'center'}}>
-                <View
-                  style={{
-                    width: '100%',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <View
-                    style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <DropDownPicker
-                      placeholder="Selecione um brinquedo"
-                      dropDownDirection="BOTTOM"
-                      style={{
-                        border: '2px solid gray',
-                        backgroundColor: 'transparent',
-                        borderRadius: 6,
-                        width: '70%',
-                        padding: 10,
-                        paddingTop: 7,
-                      }}
-                      open={openToyOptions}
-                      setOpen={setOpenToyOptions}
-                      dropDownContainerStyle={{
-                        backgroundColor: 'white',
-                        width: '70%',
-                      }}
-                      value={toyValue}
-                      items={toyData}
-                      setValue={setToyValue}
-                      setItems={setToyData}
-                    />
-                  </View>
-                  <S.Field placeholder="Nome" />
-                </View>
-                <View
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <S.Timer>
-                    {minutes < 10 ? '0' + minutes : minutes}:
-                    {seconds < 10 ? '0' + seconds : seconds}
-                  </S.Timer>
-                </View>
-              </View>
-              <S.AlignIcons>
-                {/* iniciar  */}
-                <S.Button
-                  disabled={disableStartButton}
-                  style={{
-                    opacity: disableStartButton ? 0.5 : 1,
-                  }}
-                  onPress={startTimer}>
-                  <S.ButtonsText>Iniciar</S.ButtonsText>
-                </S.Button>
-                {/* pausar  */}
-                <S.Button
-                  style={{
-                    opacity: enablePauseButton === false ? 0.5 : 1,
-                  }}
-                  disabled={!enablePauseButton}
-                  onPress={() => {
-                    stopTimer();
-                    setDisableStartButton(false);
-                    setEnablePauseButton(false);
-                  }}>
-                  <S.ButtonsText>Pausar</S.ButtonsText>
-                </S.Button>
-                {/* resetar */}
-                <S.Button
-                  disabled={!enableResetButton}
-                  style={{
-                    opacity: enableResetButton === false ? 0.5 : 1,
-                  }}
-                  onPress={clear}>
-                  <S.ButtonsText>Resetar</S.ButtonsText>
-                </S.Button>
-              </S.AlignIcons>
-            </S.TimerContainer>
+    <View
+      style={{
+        flex: 1,
+        height: '100%',
+        display: showComponent ? 'flex' : 'none',
+      }}>
+      <S.TimerContainer>
+        <View style={{alignContent: 'center'}}>
+          <View
+            style={{
+              width: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <DropDownPicker
+                placeholder="Selecione um brinquedo"
+                dropDownDirection="BOTTOM"
+                style={{
+                  border: '2px solid gray',
+                  backgroundColor: 'transparent',
+                  borderRadius: 6,
+                  width: '70%',
+                  padding: 10,
+                  paddingTop: 7,
+                }}
+                open={openToyOptions}
+                setOpen={setOpenToyOptions}
+                dropDownContainerStyle={{
+                  backgroundColor: 'white',
+                  width: '70%',
+                }}
+                value={toyValue}
+                items={toyData}
+                setValue={setToyValue}
+                setItems={setToyData}
+              />
+            </View>
+            <S.Field
+              placeholder="Nome"
+              value={name}
+              onChangeText={event => setName(event)}
+            />
           </View>
-        )}
-      </Formik>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <S.Timer>
+              {minutes < 10 ? '0' + minutes : minutes}:
+              {seconds < 10 ? '0' + seconds : seconds}
+            </S.Timer>
+          </View>
+        </View>
+        <S.AlignIcons>
+          {/* iniciar  */}
+          <S.Button
+            disabled={disableStartButton}
+            style={{
+              opacity: disableStartButton ? 0.5 : 1,
+            }}
+            onPress={startTimer}>
+            <S.ButtonsText>Iniciar</S.ButtonsText>
+          </S.Button>
+          {/* pausar  */}
+          <S.Button
+            style={{
+              opacity: enablePauseButton === false ? 0.5 : 1,
+            }}
+            disabled={!enablePauseButton}
+            onPress={stopTimer}>
+            <S.ButtonsText>Pausar</S.ButtonsText>
+          </S.Button>
+          {/* resetar */}
+          <S.Button
+            disabled={!enableResetButton}
+            style={{
+              opacity: enableResetButton === false ? 0.5 : 1,
+            }}
+            onPress={clear}>
+            <S.ButtonsText>Resetar</S.ButtonsText>
+          </S.Button>
+          <TouchableOpacity onPress={() => registering()}>
+            <S.ButtonsText>Cadastrar</S.ButtonsText>
+          </TouchableOpacity>
+        </S.AlignIcons>
+      </S.TimerContainer>
     </View>
   );
 };

@@ -31,8 +31,8 @@ export default function Homepage() {
   }
 
   return (
-    <View style={{flex: 1, height: '100%'}}>
-      <ScrollView style={{flex: 1, height: '100%'}}>
+    <View>
+      <ScrollView>
         <View
           style={{
             height: window.height / 1.25,
