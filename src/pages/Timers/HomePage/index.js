@@ -32,7 +32,7 @@ export default function Homepage() {
 
   return (
     <View style={{flex: 1, height: '100%'}}>
-      <ScrollView>
+      <ScrollView style={{flex: 1, height: '100%'}}>
         <View
           style={{
             height: window.height / 1.25,
@@ -47,6 +47,7 @@ export default function Homepage() {
             <Text
               style={{
                 fontSize: 17,
+                marginTop: 5,
                 color: '#838383',
                 textAlign: 'center',
                 width: '100%',
@@ -54,13 +55,13 @@ export default function Homepage() {
               <Text onPress={addComponent} style={{color: 'darkblue'}}>
                 Clique aqui
               </Text>{' '}
-              para cadastrar e iniciar um cronômetro.
+              para iniciar um cronômetro.
             </Text>
           </S.AlignImageAndLabel>
         </View>
         <S.AlignTitleAndIcon
           style={{display: disableWarningMessage ? 'flex' : 'none'}}>
-          <S.TimerTextTitle>Adicionar um cronômetro</S.TimerTextTitle>
+          <S.TimerTextTitle>Adicionar novo cronômetro</S.TimerTextTitle>
           <TouchableOpacity
             onPress={addComponent}
             style={{
@@ -69,13 +70,15 @@ export default function Homepage() {
             <S.PlusIcon />
           </TouchableOpacity>
         </S.AlignTitleAndIcon>
-        {components.map(i => {
-          return (
-            <>
-              <TimerForm key={i} />
-            </>
-          );
-        })}
+        <View style={{height: '100%', paddingBottom: '25%'}}>
+          {components.map(i => {
+            return (
+              <>
+                <TimerForm key={i} />
+              </>
+            );
+          })}
+        </View>
       </ScrollView>
     </View>
   );

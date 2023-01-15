@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {TouchableOpacity} from 'react-native';
+
 export const MainContainer = styled.View`
   background-color: #d9d9d9;
 `;
@@ -39,7 +39,8 @@ export const TimerContainer = styled.View`
   margin: 0 auto;
   margin-top: 5%;
   margin-bottom: 5%;
-  height: 100px;
+  padding: 5px;
+  min-height: 80px;
   width: 90%;
   background-color: #d9d9d9;
   border-radius: 5px;
@@ -70,7 +71,9 @@ export const PlusIcon = styled(Icon).attrs({
   name: 'plus',
   size: 30,
   color: 'black',
-})``;
+})`
+  margin-top: -2px;
+`;
 
 export const AlignTimerItens = styled.View`
   margin-top: 20px;
@@ -84,7 +87,7 @@ export const AlignIcons = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   padding-bottom: 20px;
 `;
@@ -92,8 +95,8 @@ export const AlignIcons = styled.View`
 export const Field = styled.TextInput.attrs({
   placeholderTextColor: '#525252',
 })`
-  width: 80%;
-  height: 33%;
+  width: 70%;
+  height: 35%;
   border: 1px solid black;
   background: transparent;
   border-radius: 5px;
@@ -120,12 +123,6 @@ export const MainText = styled.Text`
   text-align: center;
   font-weight: bold;
   padding-top: 10px;
-`;
-
-export const OutSideModalBg = styled.View`
-  background-color: #000000aa;
-  flex: 1;
-  justify-content: center;
 `;
 
 export const ModalContainer = styled.View`
