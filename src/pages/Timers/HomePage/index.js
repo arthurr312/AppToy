@@ -5,11 +5,9 @@ import {Teste} from './teste';
 import {
   View,
   ScrollView,
-  TouchableOpacity,
   Text,
-  Button,
   useWindowDimensions,
-  Modal,
+  TouchableOpacity,
 } from 'react-native';
 import * as S from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,7 +15,7 @@ import {TimerForm} from './TimerForm';
 
 export default function Homepage() {
   const window = useWindowDimensions();
-
+  const [disableWarningMessage, setDisableWarningMessage] = useState(false);
   const [userName, setUserName] = useState();
   const [components, setComponents] = useState([]);
 
@@ -28,14 +26,21 @@ export default function Homepage() {
   getUsername();
 
   function addComponent() {
+    setDisableWarningMessage(true);
     setComponents([...components, <Teste />]);
   }
 
   return (
     <View style={{flex: 1, height: '100%'}}>
       <ScrollView>
-        <View>
+        <View
+          style={{
+            height: window.height / 1.25,
+            justifyContent: 'center',
+            display: disableWarningMessage ? 'none' : 'flex',
+          }}>
           <S.AlignImageAndLabel>
+            <S.Image source={require('../../../assets/timerIcon.png')} />
             <S.MainText>
               Olá, {userName}, bem-vindo ao cadastro de cronômetros! :)
             </S.MainText>
@@ -51,15 +56,26 @@ export default function Homepage() {
               </Text>{' '}
               para cadastrar e iniciar um cronômetro.
             </Text>
-            {components.map((item, i) => {
-              return (
-                <>
-                  <TimerForm key={i} />
-                </>
-              );
-            })}
           </S.AlignImageAndLabel>
         </View>
+        <S.AlignTitleAndIcon
+          style={{display: disableWarningMessage ? 'flex' : 'none'}}>
+          <S.TimerTextTitle>Adicionar um cronômetro</S.TimerTextTitle>
+          <TouchableOpacity
+            onPress={addComponent}
+            style={{
+              marginLeft: '5%',
+            }}>
+            <S.PlusIcon />
+          </TouchableOpacity>
+        </S.AlignTitleAndIcon>
+        {components.map(i => {
+          return (
+            <>
+              <TimerForm key={i} />
+            </>
+          );
+        })}
       </ScrollView>
     </View>
   );

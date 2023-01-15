@@ -126,15 +126,6 @@ export const TimerForm = () => {
       onSubmit={values => Registering(values)}>
       {({handleChange, handleSubmit, values}) => (
         <View>
-          <S.AlignTitleAndIcon>
-            <S.TimerTextTitle>Adicionar um cronômetro</S.TimerTextTitle>
-            <TouchableOpacity
-              style={{
-                marginLeft: '5%',
-              }}>
-              <S.PlusIcon />
-            </TouchableOpacity>
-          </S.AlignTitleAndIcon>
           <S.TimerContainer>
             <View style={{flexDirection: 'row'}}>
               <View
