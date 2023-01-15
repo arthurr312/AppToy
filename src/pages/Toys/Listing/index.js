@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import * as S from './styles';
 import {
   Text,
@@ -99,16 +99,16 @@ export default function ToyListing() {
           color="#003e9b"
           style={{
             height: window.height / 1.25,
-            transform: [{ scaleX: 4 }, { scaleY: 4 }],
+            transform: [{scaleX: 4}, {scaleY: 4}],
             justifyContent: 'center',
             alignItems: 'center',
           }}
         />
       ) : data.length === 0 ? (
-        <View style={{ height: window.height / 1.25, justifyContent: 'center' }}>
+        <View style={{height: window.height / 1.25, justifyContent: 'center'}}>
           <Image
             source={require('../../../assets/lupa.png')}
-            style={{ width: 200, height: 200, alignSelf: 'center' }}
+            style={{width: 200, height: 200, alignSelf: 'center'}}
           />
           <Text
             style={{
@@ -120,7 +120,7 @@ export default function ToyListing() {
             }}>
             Ops, nenhum resultado encontrado :(
           </Text>
-          <Text style={{ fontSize: 17, color: '#838383', textAlign: 'center' }}>
+          <Text style={{fontSize: 17, color: '#838383', textAlign: 'center'}}>
             Parece que não há nenhum brinquedo cadastrado.
           </Text>
         </View>
@@ -142,7 +142,7 @@ export default function ToyListing() {
               <S.DataContainer>
                 <S.MainView>
                   {selectedRowId === item.id && enableEdition ? (
-                    <View style={{ width: '100%' }}>
+                    <View style={{width: '100%'}}>
                       <S.Field
                         defaultValue={item.name}
                         onChangeText={e => setName(e)}
@@ -160,16 +160,16 @@ export default function ToyListing() {
                       />
                       <S.AlignEditingButtons>
                         <S.EditingButton
-                          style={{ justifyContent: 'center' }}
+                          style={{justifyContent: 'center'}}
                           onPress={() => edicao(selectedRowId, formValues)}>
-                          <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                          <Text style={{color: 'white', fontWeight: 'bold'}}>
                             Editar
                           </Text>
                         </S.EditingButton>
                         <S.CancelButton
                           onPress={() => setEnableEdition(false)}
-                          style={{ justifyContent: 'center' }}>
-                          <Text style={{ color: 'black', fontWeight: 'bold' }}>
+                          style={{justifyContent: 'center'}}>
+                          <Text style={{color: 'black', fontWeight: 'bold'}}>
                             Cancelar
                           </Text>
                         </S.CancelButton>
@@ -180,7 +180,10 @@ export default function ToyListing() {
                       <S.DataView>
                         <S.NameClient>{item.name}</S.NameClient>
                         <S.ValueText>R$ {convertedPrice}</S.ValueText>
-                        <S.TimeValue>{item.minutes_price} {item.minutes_price > 1 ? 'minutos' : 'minuto'}</S.TimeValue>
+                        <S.TimeValue>
+                          {item.minutes_price}{' '}
+                          {item.minutes_price > 1 ? 'minutos' : 'minuto'}
+                        </S.TimeValue>
                       </S.DataView>
                       <View
                         style={{
@@ -188,7 +191,7 @@ export default function ToyListing() {
                           justifyContent: 'center',
                         }}>
                         <TouchableOpacity
-                          style={{ justifyContent: 'center' }}
+                          style={{justifyContent: 'center'}}
                           onPress={() => {
                             setOpenModal(true);
                             setId(item.id);
@@ -204,7 +207,7 @@ export default function ToyListing() {
                             setEnableEdition(true);
                             setSelectedRowId(item.id);
                           }}
-                          style={{ justifyContent: 'center' }}>
+                          style={{justifyContent: 'center'}}>
                           <PencilIcon name="pencil" size={35} color="grey" />
                         </TouchableOpacity>
                       </View>
@@ -218,7 +221,7 @@ export default function ToyListing() {
       )}
       <View>
         <Modal transparent={true} visible={openModal}>
-          <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
+          <View style={{backgroundColor: '#000000aa', flex: 1}}>
             <View
               style={{
                 backgroundColor: 'white',
@@ -243,7 +246,7 @@ export default function ToyListing() {
                   Tem certeza que deseja excluir?
                 </Text>
                 <S.AlignButtons>
-                  <View style={{ width: '30%' }}>
+                  <View style={{width: '30%'}}>
                     <S.Button onPress={() => remocao(id)}>
                       <Text
                         style={{
@@ -256,7 +259,7 @@ export default function ToyListing() {
                       </Text>
                     </S.Button>
                   </View>
-                  <View style={{ width: '40%' }}>
+                  <View style={{width: '40%'}}>
                     <S.CancelButton onPress={() => setOpenModal(false)}>
                       <Text
                         style={{
