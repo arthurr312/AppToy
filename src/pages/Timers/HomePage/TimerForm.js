@@ -41,17 +41,10 @@ export const TimerForm = () => {
         },
       );
       setShowComponent(false);
-      alert('deu bom ihu');
     } catch (error) {
       alert(error);
     }
   }
-
-  const formValues = {
-    service_toy: toyValue,
-    time: value,
-    name_client: name,
-  };
 
   async function selectInputData() {
     try {
@@ -197,26 +190,36 @@ export const TimerForm = () => {
             <S.ButtonsText>Iniciar</S.ButtonsText>
           </S.Button>
           {/* pausar  */}
-          <S.Button
-            style={{
-              opacity: enablePauseButton === false ? 0.5 : 1,
-            }}
-            disabled={!enablePauseButton}
-            onPress={stopTimer}>
-            <S.ButtonsText>Pausar</S.ButtonsText>
-          </S.Button>
+          {isPaused ? (
+            <S.Button
+              disabled={!enableResetButton}
+              style={{
+                opacity: enableResetButton === false ? 0.5 : 1,
+              }}
+              onPress={clear}>
+              <S.ButtonsText>Resetar</S.ButtonsText>
+            </S.Button>
+          ) : (
+            <S.Button
+              style={{
+                opacity: enablePauseButton === false ? 0.5 : 1,
+              }}
+              disabled={!enablePauseButton}
+              onPress={stopTimer}>
+              <S.ButtonsText>Pausar</S.ButtonsText>
+            </S.Button>
+          )}
+
           {/* resetar */}
+          {/*  */}
+          {/* encerrar */}
           <S.Button
-            disabled={!enableResetButton}
+            onPress={() => registering()}
             style={{
-              opacity: enableResetButton === false ? 0.5 : 1,
-            }}
-            onPress={clear}>
-            <S.ButtonsText>Resetar</S.ButtonsText>
+              opacity: 1,
+            }}>
+            <S.ButtonsText>Encerrar</S.ButtonsText>
           </S.Button>
-          <TouchableOpacity onPress={() => registering()}>
-            <S.ButtonsText>Cadastrar</S.ButtonsText>
-          </TouchableOpacity>
         </S.AlignIcons>
       </S.TimerContainer>
     </View>
