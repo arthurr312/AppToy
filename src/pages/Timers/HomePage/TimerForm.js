@@ -25,6 +25,7 @@ export const TimerForm = () => {
   const [enableResetButton, setEnableResetButton] = useState(false);
   const [showComponent, setShowComponent] = useState(true);
   const [openToyOptions, setOpenToyOptions] = useState(false);
+  let changeMinutes = 0;
   async function registering() {
     try {
       await axios.post(
@@ -67,6 +68,17 @@ export const TimerForm = () => {
     }
   }
 
+  const changeTime = () => {
+    setSeconds(prevState => {
+      if (prevState + 1 === 60) {
+        changeMinutes++;
+        setMinutes(changeMinutes);
+        return 0;
+      }
+      return prevState + 1;
+    });
+  };
+
   const startTimer = () => {
     if (customInterval != null && !isPaused) {
       return;
@@ -108,16 +120,6 @@ export const TimerForm = () => {
     setEnablePauseButton(false);
     setEnableResetButton(false);
     setDisableStartButton(false);
-  };
-
-  const changeTime = () => {
-    setSeconds(prevState => {
-      if (prevState + 1 === 60) {
-        setMinutes(minutes + 1);
-        return 0;
-      }
-      return prevState + 1;
-    });
   };
 
   useEffect(() => {
@@ -209,10 +211,6 @@ export const TimerForm = () => {
               <S.ButtonsText>Pausar</S.ButtonsText>
             </S.Button>
           )}
-
-          {/* resetar */}
-          {/*  */}
-          {/* encerrar */}
           <S.Button
             onPress={() => registering()}
             style={{
