@@ -15,6 +15,7 @@ import * as S from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function TimerListing() {
   const window = useWindowDimensions();
   const [loading, setLoading] = useState(false);

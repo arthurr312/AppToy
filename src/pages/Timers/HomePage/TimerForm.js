@@ -212,9 +212,10 @@ export const TimerForm = () => {
             </S.Button>
           )}
           <S.Button
+            disabled={!isPaused}
             onPress={() => registering()}
             style={{
-              opacity: 1,
+              opacity: isPaused ? 1 : 0.5,
             }}>
             <S.ButtonsText>Encerrar</S.ButtonsText>
           </S.Button>

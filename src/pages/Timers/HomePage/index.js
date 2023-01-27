@@ -1,7 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable no-alert */
 import React, {useState} from 'react';
-import {Teste} from './teste';
 import {
   View,
   ScrollView,
@@ -27,7 +26,7 @@ export default function Homepage() {
 
   function addComponent() {
     setDisableWarningMessage(true);
-    setComponents([...components, <Teste />]);
+    setComponents([...components, <TimerForm />]);
   }
 
   return (
@@ -71,10 +70,10 @@ export default function Homepage() {
           </TouchableOpacity>
         </S.AlignTitleAndIcon>
         <View style={{height: '100%', paddingBottom: '25%'}}>
-          {components.map(i => {
+          {components.map((i, index) => {
             return (
               <>
-                <TimerForm key={i} />
+                <TimerForm key={index} />
               </>
             );
           })}

@@ -1,18 +1,19 @@
-import React, {useContext} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Homepage from '../Timers/HomePage';
 import Listing from '../Timers/Listing';
-import {UserContext} from '../../context/User';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FinanceIcon from 'react-native-vector-icons/FontAwesome5';
 import TimerIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import PlusIcon from 'react-native-vector-icons/FontAwesome5';
+import UpdateIcon from 'react-native-vector-icons/AntDesign';
 import CustomDrawer from './CustomDrawer';
 import Profile from '../Profile';
 import Registering from '../Toys/Registering';
 import ToyListing from '../Toys/Listing';
 import Finance from '../Finance';
+import {TouchableOpacity, View} from 'react-native';
 export default function Sidebar() {
   const Drawer = createDrawerNavigator();
   return (
@@ -34,6 +35,15 @@ export default function Sidebar() {
         },
       }}>
       <Drawer.Screen
+        name="Tela Inicial"
+        component={Homepage}
+        options={{
+          drawerIcon: ({color}) => (
+            <Icon name="home-outline" size={22} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
         name="Perfil"
         component={Profile}
         options={{
@@ -53,15 +63,6 @@ export default function Sidebar() {
               color={color}
               style={{paddingLeft: 5, paddingRight: 7}}
             />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name="Tela Inicial"
-        component={Homepage}
-        options={{
-          drawerIcon: ({color}) => (
-            <Icon name="home-outline" size={22} color={color} />
           ),
         }}
       />
@@ -89,6 +90,28 @@ export default function Sidebar() {
         options={{
           drawerIcon: ({color}) => (
             <TimerIcons name="timer-outline" size={22} color={color} />
+          ),
+          headerRight: () => (
+            <View
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+                height: '100%',
+              }}>
+              <TouchableOpacity
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginRight: 25,
+                  marginTop: 6,
+                }}
+                onPress={() => {
+                  alert('Right');
+                }}>
+                <UpdateIcon name="sync" size={20} color="black" />
+              </TouchableOpacity>
+            </View>
           ),
         }}
       />
