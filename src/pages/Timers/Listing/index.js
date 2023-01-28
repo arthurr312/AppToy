@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import {UserContext} from '../../../context/User';
 import {
   Text,
   View,
@@ -17,10 +18,10 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function TimerListing() {
+  const {updateTimerTable, setUpdateTimerTable} = useContext(UserContext);
   const window = useWindowDimensions();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [updateTable, setUpdateTable] = useState(false);
   const [visible, setVisible] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [id, setId] = useState();
@@ -52,7 +53,7 @@ export default function TimerListing() {
           },
         },
       );
-      setUpdateTable(prevState => !prevState);
+      setUpdateTimerTable(prevState => !prevState);
       setOpenModal(false);
       setVisible(true);
     } catch (error) {
@@ -66,7 +67,7 @@ export default function TimerListing() {
 
   useEffect(() => {
     listagem();
-  }, [updateTable]);
+  }, [updateTimerTable]);
   return (
     <ScrollView>
       {loading ? (

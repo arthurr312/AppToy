@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import * as S from './styles';
 import {
   Text,
@@ -14,10 +14,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import PencilIcon from 'react-native-vector-icons/EvilIcons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {UserContext} from '../../../context/User';
 export default function ToyListing() {
+  const {updateToyTable, setUpdateToyTable} = useContext(UserContext);
   const window = useWindowDimensions();
   const [data, setData] = useState([]);
-  const [updateTable, setUpdateTable] = useState(false);
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [enableEdition, setEnableEdition] = useState(false);
@@ -61,7 +62,7 @@ export default function ToyListing() {
           },
         },
       );
-      setUpdateTable(prevState => !prevState);
+      setUpdateToyTable(prevState => !prevState);
       setOpenModal(false);
     } catch (error) {
       alert(error);
@@ -79,7 +80,7 @@ export default function ToyListing() {
           },
         },
       );
-      setUpdateTable(prevState => !prevState);
+      setUpdateToyTable(prevState => !prevState);
       clearFields();
       setEnableEdition(false);
       setChangeField(false);
@@ -90,7 +91,7 @@ export default function ToyListing() {
 
   useEffect(() => {
     listagem();
-  }, [updateTable]);
+  }, [updateToyTable]);
   return (
     <ScrollView>
       {loading ? (

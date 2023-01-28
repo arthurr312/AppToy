@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useContext} from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Homepage from '../Timers/HomePage';
 import Listing from '../Timers/Listing';
@@ -14,8 +14,10 @@ import Registering from '../Toys/Registering';
 import ToyListing from '../Toys/Listing';
 import Finance from '../Finance';
 import {TouchableOpacity, View} from 'react-native';
+import {UserContext} from '../../context/User';
 export default function Sidebar() {
   const Drawer = createDrawerNavigator();
+  const {setUpdateTimerTable, setUpdateToyTable} = useContext(UserContext);
   return (
     <Drawer.Navigator
       drawerContent={props => <CustomDrawer {...props} />}
@@ -98,7 +100,7 @@ export default function Sidebar() {
                   marginTop: 6,
                 }}
                 onPress={() => {
-                  alert('left');
+                  setUpdateToyTable(prevState => !prevState);
                 }}>
                 <UpdateIcon name="sync" size={20} color="black" />
               </TouchableOpacity>
@@ -129,7 +131,7 @@ export default function Sidebar() {
                   marginTop: 6,
                 }}
                 onPress={() => {
-                  alert('Right');
+                  setUpdateTimerTable(prevState => !prevState);
                 }}>
                 <UpdateIcon name="sync" size={20} color="black" />
               </TouchableOpacity>
