@@ -82,6 +82,28 @@ export default function Sidebar() {
           drawerIcon: ({color}) => (
             <Icon name="ios-list-outline" size={22} color={color} />
           ),
+          headerRight: () => (
+            <View
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+                height: '100%',
+              }}>
+              <TouchableOpacity
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginRight: 25,
+                  marginTop: 6,
+                }}
+                onPress={() => {
+                  alert('left');
+                }}>
+                <UpdateIcon name="sync" size={20} color="black" />
+              </TouchableOpacity>
+            </View>
+          ),
         }}
       />
       <Drawer.Screen
