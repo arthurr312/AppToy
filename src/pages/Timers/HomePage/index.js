@@ -12,12 +12,17 @@ import * as S from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TimerForm} from './TimerForm';
 
-export default function Homepage() {
+export default function Homepage({navigation}) {
   const window = useWindowDimensions();
   const [disableWarningMessage, setDisableWarningMessage] = useState(false);
   const [userName, setUserName] = useState();
   const [components, setComponents] = useState([]);
-
+  React.useEffect(() => {
+    const reloadScreen = navigation.addListener('focus', () => {
+      setDisableWarningMessage(false);
+    });
+    return reloadScreen;
+  }, [navigation]);
   async function getUsername() {
     return setUserName(await AsyncStorage.getItem('@username'));
   }

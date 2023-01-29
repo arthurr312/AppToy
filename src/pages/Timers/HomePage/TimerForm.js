@@ -213,7 +213,7 @@ export const TimerForm = () => {
           )}
           <S.Button
             disabled={!isPaused}
-            onPress={() => registering()}
+            onPress={() => setShowComponent(false)}
             style={{
               opacity: isPaused ? 1 : 0.5,
             }}>

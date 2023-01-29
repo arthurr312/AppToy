@@ -56,32 +56,7 @@ function Routes() {
           <Stack.Screen
             name="Listing"
             component={TimerListing}
-            options={{
-              header: () => (
-                <View
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    height: 50,
-                  }}>
-                  <TouchableOpacity
-                    style={{padding: 10}}
-                    onPress={() => {
-                      alert('Left');
-                    }}>
-                    <Text>Left</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{padding: 10}}
-                    onPress={() => {
-                      alert('Right');
-                    }}>
-                    <Text>Right</Text>
-                  </TouchableOpacity>
-                </View>
-              ),
-            }}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             options={{headerShown: false}}
