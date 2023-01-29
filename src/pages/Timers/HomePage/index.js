@@ -20,6 +20,7 @@ export default function Homepage({navigation}) {
   React.useEffect(() => {
     const reloadScreen = navigation.addListener('focus', () => {
       setDisableWarningMessage(false);
+      setComponents([]);
     });
     return reloadScreen;
   }, [navigation]);
@@ -78,7 +79,7 @@ export default function Homepage({navigation}) {
           {components.map((i, index) => {
             return (
               <>
-                <TimerForm key={index} />
+                <TimerForm key={i} />
               </>
             );
           })}

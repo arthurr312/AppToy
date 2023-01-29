@@ -11,6 +11,7 @@ import {useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import * as S from './styles';
 import DropDownPicker from 'react-native-dropdown-picker';
+import CloseIcon from 'react-native-vector-icons/Ionicons';
 export const TimerForm = () => {
   const [value, setValue] = useState('');
   const [toyValue, setToyValue] = useState(null);
@@ -141,6 +142,21 @@ export const TimerForm = () => {
               alignItems: 'center',
             }}>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <View
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  position: 'absolute',
+                }}>
+                <TouchableOpacity onPress={() => setShowComponent(false)}>
+                  <CloseIcon
+                    name="close"
+                    color={'black'}
+                    size={25}
+                    style={{alignSelf: 'flex-end'}}
+                  />
+                </TouchableOpacity>
+              </View>
               <DropDownPicker
                 placeholder="Selecione um brinquedo"
                 dropDownDirection="BOTTOM"
@@ -213,7 +229,7 @@ export const TimerForm = () => {
           )}
           <S.Button
             disabled={!isPaused}
-            onPress={() => setShowComponent(false)}
+            onPress={() => registering()}
             style={{
               opacity: isPaused ? 1 : 0.5,
             }}>
