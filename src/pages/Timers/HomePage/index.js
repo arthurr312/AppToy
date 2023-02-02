@@ -7,6 +7,7 @@ import {
   Text,
   useWindowDimensions,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import * as S from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,6 +18,7 @@ export default function Homepage({navigation}) {
   const [disableWarningMessage, setDisableWarningMessage] = useState(false);
   const [userName, setUserName] = useState();
   const [components, setComponents] = useState([]);
+  const [counter, setCounter] = useState(0);
   React.useEffect(() => {
     const reloadScreen = navigation.addListener('focus', () => {
       setDisableWarningMessage(false);
@@ -33,58 +35,57 @@ export default function Homepage({navigation}) {
   function addComponent() {
     setDisableWarningMessage(true);
     setComponents([...components, <TimerForm />]);
+    setCounter(prevState => prevState + 1);
   }
 
   return (
-    <View>
-      <ScrollView>
-        <View
-          style={{
-            height: window.height / 1.25,
-            justifyContent: 'center',
-            display: disableWarningMessage ? 'none' : 'flex',
-          }}>
-          <S.AlignImageAndLabel>
-            <S.Image source={require('../../../assets/timerIcon.png')} />
-            <S.MainText>
-              Olá, {userName}, bem-vindo ao cadastro de cronômetros! :)
-            </S.MainText>
-            <Text
-              style={{
-                fontSize: 17,
-                marginTop: 5,
-                color: '#838383',
-                textAlign: 'center',
-                width: '100%',
-              }}>
-              <Text onPress={addComponent} style={{color: 'darkblue'}}>
-                Clique aqui
-              </Text>{' '}
-              para iniciar um cronômetro.
-            </Text>
-          </S.AlignImageAndLabel>
-        </View>
-        <S.AlignTitleAndIcon
-          style={{display: disableWarningMessage ? 'flex' : 'none'}}>
-          <S.TimerTextTitle>Adicionar novo cronômetro</S.TimerTextTitle>
-          <TouchableOpacity
-            onPress={addComponent}
+    <FlatList
+      ListEmptyComponent={
+        <>
+          <View
             style={{
-              marginLeft: '5%',
+              height: window.height / 1.25,
+              justifyContent: 'center',
+              display: disableWarningMessage ? 'none' : 'flex',
             }}>
-            <S.PlusIcon />
-          </TouchableOpacity>
-        </S.AlignTitleAndIcon>
-        <View style={{height: '100%', paddingBottom: '25%'}}>
-          {components.map((i, index) => {
-            return (
-              <>
-                <TimerForm key={i} />
-              </>
-            );
-          })}
-        </View>
-      </ScrollView>
-    </View>
+            <S.AlignImageAndLabel>
+              <S.Image source={require('../../../assets/timerIcon.png')} />
+              <S.MainText>
+                Olá, {userName}, bem-vindo ao cadastro de cronômetros! :)
+              </S.MainText>
+              <Text
+                style={{
+                  fontSize: 17,
+                  marginTop: 5,
+                  color: '#838383',
+                  textAlign: 'center',
+                  width: '100%',
+                }}>
+                <Text onPress={addComponent} style={{color: 'darkblue'}}>
+                  Clique aqui
+                </Text>{' '}
+                para iniciar um cronômetro.
+              </Text>
+            </S.AlignImageAndLabel>
+          </View>
+          <S.AlignTitleAndIcon
+            style={{display: disableWarningMessage ? 'flex' : 'none'}}>
+            <S.TimerTextTitle>Adicionar novo cronômetro</S.TimerTextTitle>
+            <TouchableOpacity
+              onPress={addComponent}
+              style={{
+                marginLeft: '5%',
+              }}>
+              <S.PlusIcon />
+            </TouchableOpacity>
+          </S.AlignTitleAndIcon>
+          <View style={{height: '100%', paddingBottom: '25%'}}>
+            {components.map((i, index) => {
+              return <TimerForm key={index + 1} />;
+            })}
+          </View>
+        </>
+      }
+    />
   );
 }

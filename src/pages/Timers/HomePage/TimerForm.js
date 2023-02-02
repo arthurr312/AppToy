@@ -6,7 +6,6 @@
 import React, {useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {Formik} from 'formik';
 import {useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import * as S from './styles';
