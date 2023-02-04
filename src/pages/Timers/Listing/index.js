@@ -45,19 +45,16 @@ export default function TimerListing() {
 
   async function remocao(id) {
     try {
-      await axios.delete(
-        `https://apptoydev.000webhostapp.com/api/timer/${id}`,
-        {
-          headers: {
-            Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
-          },
+      await axios.post(`https://apptoydev.000webhostapp.com/api/timer/${id}`, {
+        headers: {
+          Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
         },
-      );
+      });
       setUpdateTimerTable(prevState => !prevState);
       setOpenModal(false);
       setVisible(true);
     } catch (error) {
-      alert('ta dando ruim');
+      alert(error);
     }
   }
 
@@ -106,6 +103,10 @@ export default function TimerListing() {
           let formattedTime = item.time.substring(0, 5);
           let priceFixedDigits = item.total_price.toFixed(2);
           let convertedPrice = priceFixedDigits.replace('.', ',');
+          let finalValue = convertedPrice.replace(
+            /(\d)(?=(\d{3})+(?!\d))/g,
+            '$1.',
+          );
           return (
             <View key={item.id}>
               <S.DataContainer>
@@ -113,7 +114,7 @@ export default function TimerListing() {
                   <S.DataView>
                     <S.NameClient>{item.name_client}</S.NameClient>
                     <S.TimeValue>{formattedTime}</S.TimeValue>
-                    <S.ValueText>R$ {convertedPrice}</S.ValueText>
+                    <S.ValueText>R$ {finalValue}</S.ValueText>
                   </S.DataView>
                   <TouchableOpacity
                     style={{justifyContent: 'center'}}

@@ -131,6 +131,10 @@ export default function ToyListing() {
           let formattedPrice = formatted.replace(',', '.');
           let priceFixedDigits = item.price_per_minute.toFixed(2);
           let convertedPrice = priceFixedDigits.replace('.', ',');
+          let finalValue = convertedPrice.replace(
+            /(\d)(?=(\d{3})+(?!\d))/g,
+            '$1.',
+          );
           const formValues = {
             name: name ? name : item.name,
             price_per_minute: changeField
@@ -149,7 +153,7 @@ export default function ToyListing() {
                         onChangeText={e => setName(e)}
                       />
                       <S.PriceMaskField
-                        value={`${convertedPrice}`}
+                        value={`${finalValue}`}
                         onChangeText={e => {
                           setPricePerMinute(e);
                           setChangeField(true);
@@ -180,7 +184,7 @@ export default function ToyListing() {
                     <>
                       <S.DataView>
                         <S.NameClient>{item.name}</S.NameClient>
-                        <S.ValueText>R$ {convertedPrice}</S.ValueText>
+                        <S.ValueText>R$ {finalValue}</S.ValueText>
                         <S.TimeValue>
                           {item.minutes_price}{' '}
                           {item.minutes_price > 1 ? 'minutos' : 'minuto'}
