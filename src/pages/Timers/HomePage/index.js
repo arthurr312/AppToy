@@ -3,7 +3,6 @@
 import React, {useState} from 'react';
 import {
   View,
-  ScrollView,
   Text,
   useWindowDimensions,
   TouchableOpacity,
@@ -18,7 +17,6 @@ export default function Homepage({navigation}) {
   const [disableWarningMessage, setDisableWarningMessage] = useState(false);
   const [userName, setUserName] = useState();
   const [components, setComponents] = useState([]);
-  const [counter, setCounter] = useState(0);
   React.useEffect(() => {
     const reloadScreen = navigation.addListener('focus', () => {
       setDisableWarningMessage(false);
@@ -35,7 +33,6 @@ export default function Homepage({navigation}) {
   function addComponent() {
     setDisableWarningMessage(true);
     setComponents([...components, <TimerForm />]);
-    setCounter(prevState => prevState + 1);
   }
 
   return (

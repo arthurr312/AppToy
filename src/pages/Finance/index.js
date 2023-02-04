@@ -7,7 +7,7 @@ import {DateInput} from './DateInput';
 import {SelectInput} from './SelectInput';
 import {Table} from './Table';
 
-export default function Finance() {
+export default function Finance({navigation}) {
   const window = useWindowDimensions();
   const [data, setData] = useState([]);
   const [financeData, setFinanceData] = useState([]);
@@ -21,6 +21,13 @@ export default function Finance() {
   const [showWarningMessage, setShowWarningMessage] = useState(true);
   const [initialAmericanDateFormat, setInitialAmericanDateFormat] = useState();
   const [finalAmericanDateFormat, setFinalAmericanDateFormat] = useState();
+
+  React.useEffect(() => {
+    const reloadScreen = navigation.addListener('focus', () => {
+      setShowWarningMessage(true);
+    });
+    return reloadScreen;
+  }, [navigation]);
 
   const [items, setItems] = useState([
     {label: 'Mês', value: 'month'},
@@ -63,6 +70,7 @@ export default function Finance() {
       setInitialDate();
       setClusteringValue();
       setToyValue();
+      alert(JSON.stringify(response.data.timers));
       setFinanceData(response.data.timers);
       setOpenModal(false);
       setShowWarningMessage(false);
