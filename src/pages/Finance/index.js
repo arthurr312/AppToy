@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
 import * as S from './styles';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -6,6 +7,7 @@ import {View, ScrollView, useWindowDimensions, Text, Modal} from 'react-native';
 import {DateInput} from './DateInput';
 import {SelectInput} from './SelectInput';
 import {Table} from './Table';
+import {Snackbar} from 'react-native-paper';
 
 export default function Finance({navigation}) {
   const window = useWindowDimensions();
@@ -21,7 +23,10 @@ export default function Finance({navigation}) {
   const [showWarningMessage, setShowWarningMessage] = useState(true);
   const [initialAmericanDateFormat, setInitialAmericanDateFormat] = useState();
   const [finalAmericanDateFormat, setFinalAmericanDateFormat] = useState();
-
+  const [selectVisible, setSelectVisible] = useState(false);
+  const [selectMessage, setSelectMessage] = useState('');
+  const [dataVisible, setDataVisible] = useState(false);
+  const [dataMessage, setDataMessage] = useState('');
   React.useEffect(() => {
     const reloadScreen = navigation.addListener('focus', () => {
       setShowWarningMessage(true);
@@ -52,7 +57,7 @@ export default function Finance({navigation}) {
       }));
       setData(filterResponse);
     } catch (error) {
-      alert('Ocorreu um erro inesperado, tente novamente.');
+      setSelectMessage('Ops, ocorreu um erro inesperado, recarregue o app.');
     }
   }
 
@@ -70,14 +75,18 @@ export default function Finance({navigation}) {
       setInitialDate();
       setClusteringValue();
       setToyValue();
-      alert(JSON.stringify(response.data.timers));
       setFinanceData(response.data.timers);
       setOpenModal(false);
       setShowWarningMessage(false);
     } catch (error) {
-      alert(error);
+      setDataMessage('Ops, correu um erro inesperado, recarregue o app.');
     }
   }
+
+  const closeSnackbar = () => {
+    setSelectVisible(false);
+    setDataVisible(false);
+  };
 
   React.useEffect(() => {
     selectInputData();
@@ -166,6 +175,26 @@ export default function Finance({navigation}) {
           setShowWarningMessage={setShowWarningMessage}
         />
       </View>
+      <Snackbar
+        visible={selectVisible}
+        onDismiss={closeSnackbar}
+        action={{
+          label: <Icon name="ios-close-outline" color="#fff" size={25} />,
+        }}
+        style={{backgroundColor: '#010E3F'}}
+        duration={3000}>
+        {selectMessage}
+      </Snackbar>
+      <Snackbar
+        visible={dataVisible}
+        onDismiss={closeSnackbar}
+        action={{
+          label: <Icon name="ios-close-outline" color="#fff" size={25} />,
+        }}
+        style={{backgroundColor: '#010E3F'}}
+        duration={3000}>
+        {dataMessage}
+      </Snackbar>
     </ScrollView>
   );
 }

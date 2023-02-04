@@ -15,6 +15,7 @@ import PencilIcon from 'react-native-vector-icons/EvilIcons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {UserContext} from '../../../context/User';
+import {Snackbar} from 'react-native-paper';
 export default function ToyListing() {
   const {updateToyTable, setUpdateToyTable} = useContext(UserContext);
   const window = useWindowDimensions();
@@ -28,7 +29,10 @@ export default function ToyListing() {
   const [changeField, setChangeField] = useState(false);
   const [name, setName] = useState('');
   const [minutes, setMinutes] = useState('');
-
+  const [dataVisible, setDataVisible] = useState(false);
+  const [dataMessage, setDataMessage] = useState('');
+  const [removeMessage, setRemoveMessage] = useState('');
+  const [removeVisible, setRemoveVisible] = useState(false);
   const clearFields = () => {
     setPricePerMinute(`${0}, 00`);
     setName('');
@@ -47,7 +51,7 @@ export default function ToyListing() {
       );
       setData(response.data.brinquedos);
     } catch (error) {
-      alert(error);
+      setDataMessage('Ops, ocorreu um erro inesperado, recarregue o app.');
     }
     setLoading(prevState => !prevState);
   }
@@ -62,10 +66,11 @@ export default function ToyListing() {
           },
         },
       );
+      setRemoveMessage('Cronômetro removido com sucesso!');
       setUpdateToyTable(prevState => !prevState);
       setOpenModal(false);
     } catch (error) {
-      alert(error);
+      setRemoveMessage('Ocorreu um erro inesperado, tente novamente.');
     }
   }
 
@@ -85,9 +90,14 @@ export default function ToyListing() {
       setEnableEdition(false);
       setChangeField(false);
     } catch (error) {
-      alert('Ocorreu um erro inesperado, tente novamente.');
+      console.log('Ocorreu um erro inesperado, tente novamente.');
     }
   }
+
+  const closeSnackbar = () => {
+    setDataVisible(false);
+    setRemoveVisible(false);
+  };
 
   useEffect(() => {
     listagem();
@@ -283,6 +293,26 @@ export default function ToyListing() {
           </View>
         </Modal>
       </View>
+      <Snackbar
+        visible={dataVisible}
+        onDismiss={closeSnackbar}
+        action={{
+          label: <Icon name="ios-close-outline" color="#fff" size={25} />,
+        }}
+        style={{backgroundColor: '#010E3F'}}
+        duration={3000}>
+        {dataMessage}
+      </Snackbar>
+      <Snackbar
+        visible={removeVisible}
+        onDismiss={closeSnackbar}
+        action={{
+          label: <Icon name="ios-close-outline" color="#fff" size={25} />,
+        }}
+        style={{backgroundColor: '#010E3F'}}
+        duration={3000}>
+        {removeMessage}
+      </Snackbar>
     </ScrollView>
   );
 }

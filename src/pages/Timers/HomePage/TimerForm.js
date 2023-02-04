@@ -11,6 +11,8 @@ import {TouchableOpacity, View} from 'react-native';
 import * as S from './styles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import CloseIcon from 'react-native-vector-icons/Ionicons';
+import {Snackbar} from 'react-native-paper';
+import Icon from 'react-native-vector-icons/Ionicons';
 export const TimerForm = () => {
   const [value, setValue] = useState('');
   const [toyValue, setToyValue] = useState(null);
@@ -25,6 +27,10 @@ export const TimerForm = () => {
   const [enableResetButton, setEnableResetButton] = useState(false);
   const [showComponent, setShowComponent] = useState(true);
   const [openToyOptions, setOpenToyOptions] = useState(false);
+  const [postMessage, setPostMessage] = useState('');
+  const [postVisible, setPostVisible] = useState(false);
+  const [selectVisible, setSelectVisible] = useState(false);
+  const [selectMessage, setSelectMessage] = useState('');
   let changeMinutes = 0;
   async function registering() {
     try {
@@ -43,7 +49,7 @@ export const TimerForm = () => {
       );
       setShowComponent(false);
     } catch (error) {
-      alert(error);
+      setPostMessage('Ocorreu um erro inesperado, tente novamente.');
     }
   }
 
@@ -64,9 +70,13 @@ export const TimerForm = () => {
       }));
       setToyData(filterResponse);
     } catch (error) {
-      alert(error);
+      setSelectMessage('Ops, ocorreu um erro inesperado, recarregue o app.');
     }
   }
+  const closeSnackbar = () => {
+    setPostVisible(false);
+    setSelectVisible(false);
+  };
 
   const changeTime = () => {
     setSeconds(prevState => {
@@ -236,6 +246,26 @@ export const TimerForm = () => {
           </S.Button>
         </S.AlignIcons>
       </S.TimerContainer>
+      <Snackbar
+        visible={postVisible}
+        onDismiss={closeSnackbar}
+        action={{
+          label: <Icon name="ios-close-outline" color="#fff" size={25} />,
+        }}
+        style={{backgroundColor: '#010E3F'}}
+        duration={3000}>
+        {postMessage}
+      </Snackbar>
+      <Snackbar
+        visible={selectVisible}
+        onDismiss={closeSnackbar}
+        action={{
+          label: <Icon name="ios-close-outline" color="#fff" size={25} />,
+        }}
+        style={{backgroundColor: '#010E3F'}}
+        duration={3000}>
+        {selectMessage}
+      </Snackbar>
     </View>
   );
 };

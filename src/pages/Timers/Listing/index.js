@@ -25,6 +25,10 @@ export default function TimerListing() {
   const [visible, setVisible] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [id, setId] = useState();
+  const [snackbarResponse, setSnackbarResponse] = useState(false);
+  const [removeMessage, setRemoveMessage] = useState('');
+  const [selectVisible, setSelectVisible] = useState(false);
+  const [selectMessage, setSelectMessage] = useState('');
   async function listagem() {
     setLoading(prevState => !prevState);
     try {
@@ -38,7 +42,7 @@ export default function TimerListing() {
       );
       setData(response.data.timers);
     } catch (error) {
-      alert('Ocorreu um erro inesperado, tente novamente.');
+      setSelectMessage('Ops, ocorreu um erro inesperado, recarregue o app.');
     }
     setLoading(prevState => !prevState);
   }
@@ -50,16 +54,19 @@ export default function TimerListing() {
           Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
         },
       });
+      setSnackbarResponse(true);
       setUpdateTimerTable(prevState => !prevState);
       setOpenModal(false);
+      setRemoveMessage('Cronômetro removido com sucesso!');
       setVisible(true);
     } catch (error) {
-      alert(error);
+      setRemoveMessage('Ocorreu um erro inesperado, tente novamente.');
     }
   }
 
   const closeSnackbar = () => {
     setVisible(false);
+    setSelectVisible(false);
   };
 
   useEffect(() => {
@@ -195,9 +202,19 @@ export default function TimerListing() {
         action={{
           label: <Icon name="ios-close-outline" color="#fff" size={25} />,
         }}
-        style={{backgroundColor: '#04B01B'}}
+        style={{backgroundColor: snackbarResponse ? 'green' : 'red'}}
         duration={3000}>
-        Cronômetro removido com sucesso!
+        {removeMessage}
+      </Snackbar>
+      <Snackbar
+        visible={selectVisible}
+        onDismiss={closeSnackbar}
+        action={{
+          label: <Icon name="ios-close-outline" color="#fff" size={25} />,
+        }}
+        style={{backgroundColor: '#010E3F'}}
+        duration={3000}>
+        {selectMessage}
       </Snackbar>
     </ScrollView>
   );
