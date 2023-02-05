@@ -58,7 +58,7 @@ export default function ToyListing() {
 
   async function remocao(id) {
     try {
-      await axios.delete(
+      await axios.post(
         `https://apptoydev.000webhostapp.com/api/brinquedo/${id}`,
         {
           headers: {
@@ -70,7 +70,7 @@ export default function ToyListing() {
       setUpdateToyTable(prevState => !prevState);
       setOpenModal(false);
     } catch (error) {
-      setRemoveMessage('Ocorreu um erro inesperado, tente novamente.');
+      alert('Ocorreu um erro inesperado, tente novamente.');
     }
   }
 

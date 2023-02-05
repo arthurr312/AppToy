@@ -60,7 +60,7 @@ export default function TimerListing() {
       setRemoveMessage('Cronômetro removido com sucesso!');
       setVisible(true);
     } catch (error) {
-      setRemoveMessage('Ocorreu um erro inesperado, tente novamente.');
+      alert(error);
     }
   }
 
