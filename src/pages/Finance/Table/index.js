@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import * as S from './styles';
-import {ScrollView, useWindowDimensions, View} from 'react-native';
+import {ScrollView, Text, useWindowDimensions, View} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import {FilterNotFound} from '../FilterNotFound';
+import {UserContext} from '../../../context/User';
 
 export const Table = ({financeData, setOpenModal, setShowWarningMessage}) => {
+  const {toy} = useContext(UserContext);
   const window = useWindowDimensions();
   return (
     <ScrollView>
@@ -27,7 +29,10 @@ export const Table = ({financeData, setOpenModal, setShowWarningMessage}) => {
               </View>
               <View style={{width: '80%'}}>
                 <S.SecondaryText>
-                  Veja abaixo os dados referentes à sua pesquisa.{' '}
+                  Veja abaixo os dados referentes ao brinquedo{' '}
+                  <S.SecondaryText style={{fontWeight: 'bold'}}>
+                    {toy}
+                  </S.SecondaryText>
                 </S.SecondaryText>
               </View>
             </S.ImageContainer>

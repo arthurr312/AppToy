@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useContext, useState} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as S from './styles';
 import axios from 'axios';
@@ -8,8 +9,10 @@ import {DateInput} from './DateInput';
 import {SelectInput} from './SelectInput';
 import {Table} from './Table';
 import {Snackbar} from 'react-native-paper';
+import {UserContext} from '../../context/User';
 
 export default function Finance({navigation}) {
+  const {setToy} = useContext(UserContext);
   const window = useWindowDimensions();
   const [data, setData] = useState([]);
   const [financeData, setFinanceData] = useState([]);
@@ -75,6 +78,7 @@ export default function Finance({navigation}) {
       setInitialDate();
       setClusteringValue();
       setToyValue();
+      setToy(response.data.toy_name);
       setFinanceData(response.data.timers);
       setOpenModal(false);
       setShowWarningMessage(false);
