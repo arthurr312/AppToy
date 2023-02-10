@@ -31,7 +31,7 @@ export const SecondaryContainer = styled.View`
 export const ButtonText = styled.Text`
   font-size: 14px;
   text-align: center;
-  font-weight: bold; 
+  font-weight: bold;
   color: white;
 `;
 
