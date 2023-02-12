@@ -167,6 +167,8 @@ export const TimerForm = () => {
                 </TouchableOpacity>
               </View>
               <DropDownPicker
+                listMode="SCROLLVIEW"
+                loading={true}
                 placeholder="Selecione um brinquedo"
                 dropDownDirection="BOTTOM"
                 style={{
@@ -178,13 +180,13 @@ export const TimerForm = () => {
                   paddingTop: 7,
                 }}
                 open={openToyOptions}
-                setOpen={setOpenToyOptions}
                 dropDownContainerStyle={{
                   backgroundColor: 'white',
                   width: '70%',
                 }}
                 value={toyValue}
                 items={toyData}
+                setOpen={setOpenToyOptions}
                 setValue={setToyValue}
                 setItems={setToyData}
               />

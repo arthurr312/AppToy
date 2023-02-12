@@ -4,7 +4,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {Snackbar} from 'react-native-paper';
 import {
-  Text,
   useWindowDimensions,
   View,
   Keyboard,
