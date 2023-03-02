@@ -60,9 +60,10 @@ export default function ToyListing() {
     try {
       await axios.post(
         `https://apptoydev.000webhostapp.com/api/brinquedo/${toy_id}`,
+        toy_id,
         {
           headers: {
-            'Content-Type': 'application/json',
+            Accept: 'application/json',
             Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
           },
         },

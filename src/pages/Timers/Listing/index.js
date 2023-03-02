@@ -11,7 +11,6 @@ import {
   useWindowDimensions,
   ActivityIndicator,
 } from 'react-native';
-import {Snackbar} from 'react-native-paper';
 import * as S from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
@@ -22,13 +21,8 @@ export default function TimerListing() {
   const window = useWindowDimensions();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [visible, setVisible] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [id, setId] = useState();
-  const [snackbarResponse, setSnackbarResponse] = useState(false);
-  const [removeMessage, setRemoveMessage] = useState('');
-  const [selectVisible, setSelectVisible] = useState(false);
-  const [selectMessage, setSelectMessage] = useState('');
   async function listagem() {
     setLoading(prevState => !prevState);
     try {
@@ -42,7 +36,7 @@ export default function TimerListing() {
       );
       setData(response.data.timers);
     } catch (error) {
-      setSelectMessage('Ops, ocorreu um erro inesperado, recarregue o app.');
+      console.log('Ocorreu um erro inesperado, tente novamente.');
     }
     setLoading(prevState => !prevState);
   }
@@ -51,27 +45,20 @@ export default function TimerListing() {
     try {
       await axios.post(
         `https://apptoydev.000webhostapp.com/api/timer/${timer_id}`,
+        timer_id,
         {
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'bearer' + (await AsyncStorage.getItem('@token')),
+            Accept: 'application/json',
+            Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
           },
         },
       );
-      setSnackbarResponse(true);
       setUpdateTimerTable(prevState => !prevState);
       setOpenModal(false);
-      setRemoveMessage('Cronômetro removido com sucesso!');
-      setVisible(true);
     } catch (error) {
-      alert(error);
+      console.log('Ocorreu um erro inesperado, tente novamente.');
     }
   }
-
-  const closeSnackbar = () => {
-    setVisible(false);
-    setSelectVisible(false);
-  };
 
   useEffect(() => {
     listagem();
@@ -200,26 +187,6 @@ export default function TimerListing() {
           </View>
         </Modal>
       </View>
-      <Snackbar
-        visible={visible}
-        onDismiss={closeSnackbar}
-        action={{
-          label: <Icon name="ios-close-outline" color="#fff" size={25} />,
-        }}
-        style={{backgroundColor: snackbarResponse ? 'green' : 'red'}}
-        duration={3000}>
-        {removeMessage}
-      </Snackbar>
-      <Snackbar
-        visible={selectVisible}
-        onDismiss={closeSnackbar}
-        action={{
-          label: <Icon name="ios-close-outline" color="#fff" size={25} />,
-        }}
-        style={{backgroundColor: '#010E3F'}}
-        duration={3000}>
-        {selectMessage}
-      </Snackbar>
     </ScrollView>
   );
 }
