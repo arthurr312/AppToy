@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable no-alert */
 import React, {useState} from 'react';
@@ -11,13 +12,6 @@ export default function Homepage({navigation}) {
   const [userName, setUserName] = useState();
   const [components, setComponents] = useState([]);
   React.useEffect(() => {
-    const reloadScreen = navigation.addListener('focus', () => {
-      setDisableWarningMessage(false);
-      setComponents([]);
-    });
-    return reloadScreen;
-  }, [navigation]);
-  React.useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   }, []);
   async function getUsername() {
@@ -25,6 +19,14 @@ export default function Homepage({navigation}) {
   }
 
   getUsername();
+
+  React.useEffect(() => {
+    const reloadScreen = navigation.addListener('focus', () => {
+      setDisableWarningMessage(false);
+      setComponents([]);
+    });
+    return reloadScreen;
+  }, [navigation]);
 
   function addComponent() {
     setDisableWarningMessage(true);

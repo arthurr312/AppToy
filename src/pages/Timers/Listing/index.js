@@ -33,7 +33,7 @@ export default function TimerListing() {
     setLoading(prevState => !prevState);
     try {
       const response = await axios.get(
-        `https://apptoydev.000webhostapp.com/api/timer`,
+        'https://apptoydev.000webhostapp.com/api/timer',
         {
           headers: {
             Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
@@ -47,13 +47,17 @@ export default function TimerListing() {
     setLoading(prevState => !prevState);
   }
 
-  async function remocao(id) {
+  async function remocao(timer_id) {
     try {
-      await axios.post(`https://apptoydev.000webhostapp.com/api/timer/${id}`, {
-        headers: {
-          Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
+      await axios.post(
+        `https://apptoydev.000webhostapp.com/api/timer/${timer_id}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'bearer' + (await AsyncStorage.getItem('@token')),
+          },
         },
-      });
+      );
       setSnackbarResponse(true);
       setUpdateTimerTable(prevState => !prevState);
       setOpenModal(false);

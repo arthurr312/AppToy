@@ -42,7 +42,7 @@ export default function ToyListing() {
     setLoading(prevState => !prevState);
     try {
       const response = await axios.get(
-        `https://apptoydev.000webhostapp.com/api/brinquedo`,
+        'https://apptoydev.000webhostapp.com/api/brinquedo',
         {
           headers: {
             Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
@@ -56,12 +56,13 @@ export default function ToyListing() {
     setLoading(prevState => !prevState);
   }
 
-  async function remocao(id) {
+  async function remocao(toy_id) {
     try {
       await axios.post(
-        `https://apptoydev.000webhostapp.com/api/brinquedo/${id}`,
+        `https://apptoydev.000webhostapp.com/api/brinquedo/${toy_id}`,
         {
           headers: {
+            'Content-Type': 'application/json',
             Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
           },
         },
@@ -70,14 +71,14 @@ export default function ToyListing() {
       setUpdateToyTable(prevState => !prevState);
       setOpenModal(false);
     } catch (error) {
-      alert('Ocorreu um erro inesperado, tente novamente.');
+      alert(error);
     }
   }
 
-  async function edicao(id, values) {
+  async function edicao(edit_id, values) {
     try {
-      await axios.put(
-        `https://apptoydev.000webhostapp.com/api/update/brinquedo/${id}`,
+      await axios.post(
+        `https://apptoydev.000webhostapp.com/api/update/brinquedo/${edit_id}`,
         values,
         {
           headers: {

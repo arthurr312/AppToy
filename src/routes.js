@@ -10,29 +10,8 @@ import Registering from './pages/Toys/Registering';
 import ToyListing from './pages/Toys/Listing';
 import Finance from './pages/Finance';
 import {UserContext} from './context/User';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
 const Stack = createNativeStackNavigator();
 
-function HeaderTitle({navigation}) {
-  return (
-    <View style={{flexDirection: 'row', marginRight: 15}}>
-      <View style={{justifyContent: 'center'}}>
-        <Text style={{color: 'black'}}>oiiiiiiihhiii</Text>
-      </View>
-      <View style={{flex: 1}}>
-        <Image
-          source={{
-            uri: 'https://www.techup.co.in/wp-content/uploads/2020/03/techup_final_logo.png',
-          }}
-          style={{widith: 100, height: 60, resizeMode: 'contain'}}
-        />
-      </View>
-      <View style={{justifyContent: 'center', padding: 5}}>
-        <Text style={{color: 'black'}}>oiiiiiiiiiiiiii</Text>
-      </View>
-    </View>
-  );
-}
 function Routes() {
   const {isLogged} = useContext(UserContext);
 

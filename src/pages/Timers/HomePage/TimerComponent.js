@@ -22,7 +22,11 @@ export const TimerComponent = ({
         <S.AlignImageAndLabel>
           <S.Image source={require('../../../assets/timerIcon.png')} />
           <S.MainText>
-            Olá, {userName}, bem-vindo ao cadastro de cronômetros! :)
+            {userName ? (
+              `Olá, ${userName}, bem-vindo ao cadastro de cronômetros! :)`
+            ) : (
+              <>Você está deslogado, por favor, faça login para continuar</>
+            )}
           </S.MainText>
           <Text
             style={{

@@ -9,6 +9,8 @@ export const UserProvider = ({children}) => {
   const [updateToyTable, setUpdateToyTable] = useState(false);
   const [updateTimerTable, setUpdateTimerTable] = useState(false);
   const [toy, setToy] = useState(null);
+  const [token, setToken] = useState();
+
   function signIn(userName, passWord) {
     if (userName !== '' && passWord !== '') {
       setUser({username: userName, password: passWord});
@@ -29,6 +31,8 @@ export const UserProvider = ({children}) => {
           setUpdateTimerTable,
           toy,
           setToy,
+          token,
+          setToken,
         }}>
         {children}
       </UserContext.Provider>

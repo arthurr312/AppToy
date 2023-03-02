@@ -7,9 +7,7 @@ import {
 } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation} from '@react-navigation/native';
 const CustomDrawer = props => {
-  const navigation = useNavigation();
   const {setIsLogged} = useContext(UserContext);
   async function logout() {
     AsyncStorage.removeItem('@token');
