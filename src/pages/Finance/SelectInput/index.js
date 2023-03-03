@@ -16,6 +16,8 @@ export const SelectInput = ({
     <View style={{width: '100%'}}>
       <S.Label>{label}</S.Label>
       <DropDownPicker
+        listMode="SCROLLVIEW"
+        loading={true}
         dropDownDirection={dropDownDirection}
         placeholder=""
         style={{
