@@ -8,7 +8,6 @@ export const MainContainer = styled.View`
 export const Button = styled.TouchableOpacity`
   width: 100px;
   height: 40px;
-  margin-top: 5px;
   border-radius: 5px;
   background-color: #003e9b;
   align-items: center;
@@ -38,7 +37,6 @@ export const TimerTextTitle = styled.Text`
 export const TimerContainer = styled.View`
   margin: 0 auto;
   margin-top: 5%;
-  //margin-bottom: 5%;
   padding: 5px;
   min-height: 80px;
   width: 90%;
@@ -51,7 +49,7 @@ export const Timer = styled.Text`
   color: black;
   font-size: 25px;
   text-align: center;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 `;
 
 export const GenericText = styled.Text`
@@ -91,7 +89,6 @@ export const AlignIcons = styled.View`
   justify-content: space-around;
   width: 100%;
   margin: 0 auto;
-  padding-bottom: 20px;
 `;
 
 export const Field = styled.TextInput.attrs({

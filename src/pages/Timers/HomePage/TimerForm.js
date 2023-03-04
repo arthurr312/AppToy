@@ -149,18 +149,26 @@ export const TimerForm = () => {
           <>
             <View
               style={{
-                height: '100%',
-                width: '100%',
-                position: 'absolute',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
               }}>
-              <TouchableOpacity onPress={() => setShowTimer(false)}>
-                <BackIcon
-                  name="arrow-back"
-                  color="black"
-                  size={25}
-                  style={{alignSelf: 'flex-start', marginLeft: 3, marginTop: 2}}
-                />
-              </TouchableOpacity>
+              <BackIcon
+                name="arrow-back"
+                color="black"
+                size={25}
+                style={{
+                  marginLeft: 3,
+                  marginTop: 2,
+                }}
+                onPress={() => setShowTimer(false)}
+              />
+              <CloseIcon
+                onPress={() => setShowComponent(false)}
+                name="close"
+                color="black"
+                size={25}
+                style={{marginTop: 2}}
+              />
             </View>
             <S.Timer>
               {minutes < 10 ? '0' + minutes : minutes}:
@@ -222,14 +230,13 @@ export const TimerForm = () => {
                       width: '100%',
                       position: 'absolute',
                     }}>
-                    <TouchableOpacity onPress={() => setShowComponent(false)}>
-                      <CloseIcon
-                        name="close"
-                        color="black"
-                        size={25}
-                        style={{alignSelf: 'flex-end'}}
-                      />
-                    </TouchableOpacity>
+                    <CloseIcon
+                      onPress={() => setShowComponent(false)}
+                      name="close"
+                      color="black"
+                      size={25}
+                      style={{alignSelf: 'flex-end'}}
+                    />
                   </View>
                   <DropDownPicker
                     listMode="SCROLLVIEW"
