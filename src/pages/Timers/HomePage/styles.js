@@ -38,7 +38,7 @@ export const TimerTextTitle = styled.Text`
 export const TimerContainer = styled.View`
   margin: 0 auto;
   margin-top: 5%;
-  margin-bottom: 5%;
+  //margin-bottom: 5%;
   padding: 5px;
   min-height: 80px;
   width: 90%;
@@ -49,7 +49,9 @@ export const TimerContainer = styled.View`
 
 export const Timer = styled.Text`
   color: black;
-  font-size: 35px;
+  font-size: 25px;
+  text-align: center;
+  padding-bottom: 10px;
 `;
 
 export const GenericText = styled.Text`

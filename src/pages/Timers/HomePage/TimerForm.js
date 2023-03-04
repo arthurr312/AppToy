@@ -7,10 +7,11 @@ import React, {useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {useState} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import * as S from './styles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import CloseIcon from 'react-native-vector-icons/Ionicons';
+import BackIcon from 'react-native-vector-icons/Ionicons';
 import {Snackbar} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 export const TimerForm = () => {
@@ -31,6 +32,7 @@ export const TimerForm = () => {
   const [postVisible, setPostVisible] = useState(false);
   const [selectVisible, setSelectVisible] = useState(false);
   const [selectMessage, setSelectMessage] = useState('');
+  const [showTimer, setShowTimer] = useState(false);
   let changeMinutes = 0;
   async function registering() {
     try {
@@ -143,110 +145,132 @@ export const TimerForm = () => {
         display: showComponent ? 'flex' : 'none',
       }}>
       <S.TimerContainer>
-        <View style={{alignContent: 'center'}}>
-          <View
-            style={{
-              width: '100%',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <View
-                style={{
-                  height: '100%',
-                  width: '100%',
-                  position: 'absolute',
-                }}>
-                <TouchableOpacity onPress={() => setShowComponent(false)}>
-                  <CloseIcon
-                    name="close"
-                    color={'black'}
-                    size={25}
-                    style={{alignSelf: 'flex-end'}}
-                  />
-                </TouchableOpacity>
-              </View>
-              <DropDownPicker
-                listMode="SCROLLVIEW"
-                loading={true}
-                placeholder="Selecione um brinquedo"
-                dropDownDirection="BOTTOM"
-                style={{
-                  border: '2px solid gray',
-                  backgroundColor: 'transparent',
-                  borderRadius: 6,
-                  width: '70%',
-                  padding: 10,
-                  paddingTop: 7,
-                }}
-                open={openToyOptions}
-                dropDownContainerStyle={{
-                  backgroundColor: 'white',
-                  width: '70%',
-                }}
-                value={toyValue}
-                items={toyData}
-                setOpen={setOpenToyOptions}
-                setValue={setToyValue}
-                setItems={setToyData}
-              />
+        {showTimer ? (
+          <>
+            <View
+              style={{
+                height: '100%',
+                width: '100%',
+                position: 'absolute',
+              }}>
+              <TouchableOpacity onPress={() => setShowTimer(false)}>
+                <BackIcon
+                  name="arrow-back"
+                  color="black"
+                  size={25}
+                  style={{alignSelf: 'flex-start', marginLeft: 3, marginTop: 2}}
+                />
+              </TouchableOpacity>
             </View>
-            <S.Field
-              placeholder="Nome"
-              value={name}
-              onChangeText={event => setName(event)}
-            />
-          </View>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
             <S.Timer>
               {minutes < 10 ? '0' + minutes : minutes}:
-              {seconds < 10 ? '0' + seconds : seconds}
+              {seconds < 10 ? '0' + seconds : seconds} - {name}
             </S.Timer>
-          </View>
-        </View>
-        <S.AlignIcons>
-          {/* iniciar  */}
-          <S.Button
-            disabled={disableStartButton}
-            style={{
-              opacity: disableStartButton ? 0.5 : 1,
-            }}
-            onPress={startTimer}>
-            <S.ButtonsText>Iniciar</S.ButtonsText>
-          </S.Button>
-          {/* pausar  */}
-          {isPaused ? (
-            <S.Button
-              disabled={!enableResetButton}
-              style={{
-                opacity: enableResetButton === false ? 0.5 : 1,
-              }}
-              onPress={clear}>
-              <S.ButtonsText>Resetar</S.ButtonsText>
-            </S.Button>
-          ) : (
-            <S.Button
-              style={{
-                opacity: enablePauseButton === false ? 0.5 : 1,
-              }}
-              disabled={!enablePauseButton}
-              onPress={stopTimer}>
-              <S.ButtonsText>Pausar</S.ButtonsText>
-            </S.Button>
-          )}
-          <S.Button
-            disabled={!isPaused}
-            onPress={() => registering()}
-            style={{
-              opacity: isPaused ? 1 : 0.5,
-            }}>
-            <S.ButtonsText>Encerrar</S.ButtonsText>
-          </S.Button>
-        </S.AlignIcons>
+            <S.AlignIcons>
+              {/* iniciar  */}
+              <S.Button
+                disabled={disableStartButton}
+                style={{
+                  opacity: disableStartButton ? 0.5 : 1,
+                }}
+                onPress={startTimer}>
+                <S.ButtonsText>Iniciar</S.ButtonsText>
+              </S.Button>
+              {/* pausar  */}
+              {isPaused ? (
+                <S.Button
+                  disabled={!enableResetButton}
+                  style={{
+                    opacity: enableResetButton === false ? 0.5 : 1,
+                  }}
+                  onPress={clear}>
+                  <S.ButtonsText>Resetar</S.ButtonsText>
+                </S.Button>
+              ) : (
+                <S.Button
+                  style={{
+                    opacity: enablePauseButton === false ? 0.5 : 1,
+                  }}
+                  disabled={!enablePauseButton}
+                  onPress={stopTimer}>
+                  <S.ButtonsText>Pausar</S.ButtonsText>
+                </S.Button>
+              )}
+              <S.Button
+                disabled={!isPaused}
+                onPress={() => registering()}
+                style={{
+                  opacity: isPaused ? 1 : 0.5,
+                }}>
+                <S.ButtonsText>Encerrar</S.ButtonsText>
+              </S.Button>
+            </S.AlignIcons>
+          </>
+        ) : (
+          <>
+            <View style={{alignContent: 'center'}}>
+              <View
+                style={{
+                  width: '100%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <View
+                    style={{
+                      height: '100%',
+                      width: '100%',
+                      position: 'absolute',
+                    }}>
+                    <TouchableOpacity onPress={() => setShowComponent(false)}>
+                      <CloseIcon
+                        name="close"
+                        color="black"
+                        size={25}
+                        style={{alignSelf: 'flex-end'}}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <DropDownPicker
+                    listMode="SCROLLVIEW"
+                    loading={true}
+                    placeholder="Selecione um brinquedo"
+                    dropDownDirection="BOTTOM"
+                    style={{
+                      border: '2px solid gray',
+                      backgroundColor: 'transparent',
+                      borderRadius: 6,
+                      width: '70%',
+                      padding: 10,
+                      paddingTop: 7,
+                    }}
+                    open={openToyOptions}
+                    dropDownContainerStyle={{
+                      backgroundColor: 'white',
+                      width: '70%',
+                      height: '300%',
+                    }}
+                    value={toyValue}
+                    items={toyData}
+                    setOpen={setOpenToyOptions}
+                    setValue={setToyValue}
+                    setItems={setToyData}
+                  />
+                </View>
+                <S.Field
+                  placeholder="Nome"
+                  value={name}
+                  onChangeText={event => setName(event)}
+                />
+              </View>
+            </View>
+            <S.AlignIcons>
+              <S.Button onPress={() => setShowTimer(true)}>
+                <S.ButtonsText>Próximo</S.ButtonsText>
+              </S.Button>
+            </S.AlignIcons>
+          </>
+        )}
       </S.TimerContainer>
       <Snackbar
         visible={postVisible}
