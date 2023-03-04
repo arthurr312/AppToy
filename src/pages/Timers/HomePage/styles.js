@@ -91,6 +91,15 @@ export const AlignIcons = styled.View`
   margin: 0 auto;
 `;
 
+export const AlignButtons = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 10px;
+`;
+
 export const Field = styled.TextInput.attrs({
   placeholderTextColor: '#525252',
 })`

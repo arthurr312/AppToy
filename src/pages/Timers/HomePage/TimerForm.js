@@ -174,7 +174,7 @@ export const TimerForm = () => {
               {minutes < 10 ? '0' + minutes : minutes}:
               {seconds < 10 ? '0' + seconds : seconds} - {name}
             </S.Timer>
-            <S.AlignIcons>
+            <S.AlignButtons>
               {/* iniciar  */}
               <S.Button
                 disabled={disableStartButton}
@@ -212,7 +212,7 @@ export const TimerForm = () => {
                 }}>
                 <S.ButtonsText>Encerrar</S.ButtonsText>
               </S.Button>
-            </S.AlignIcons>
+            </S.AlignButtons>
           </>
         ) : (
           <>
