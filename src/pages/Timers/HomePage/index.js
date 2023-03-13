@@ -20,13 +20,13 @@ export default function Homepage({navigation}) {
 
   getUsername();
 
-  React.useEffect(() => {
-    const reloadScreen = navigation.addListener('focus', () => {
-      setDisableWarningMessage(false);
-      setComponents([]);
-    });
-    return reloadScreen;
-  }, [navigation]);
+  // React.useEffect(() => {
+  //   const reloadScreen = navigation.addListener('focus', () => {
+  //     setDisableWarningMessage(false);
+  //     setComponents([]);
+  //   });
+  //   return reloadScreen;
+  // }, [navigation]);
 
   function addComponent() {
     setDisableWarningMessage(true);

@@ -8,12 +8,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
+import BackgroundTimer from 'react-native-background-timer';
 import * as S from './styles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import CloseIcon from 'react-native-vector-icons/Ionicons';
 import BackIcon from 'react-native-vector-icons/Ionicons';
 import {Snackbar} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {LogBox} from 'react-native';
+LogBox.ignoreLogs(['new NativeEventEmitter']);
 export const TimerForm = () => {
   const [value, setValue] = useState('');
   const [toyValue, setToyValue] = useState(null);
@@ -97,7 +100,7 @@ export const TimerForm = () => {
     }
 
     setCustomInterval(
-      setInterval(() => {
+      BackgroundTimer.runBackgroundTimer(() => {
         changeTime();
       }, 1000),
     );
@@ -109,17 +112,17 @@ export const TimerForm = () => {
   };
 
   const stopTimer = () => {
-    if (customInterval) {
-      setIsPaused(true);
-      setValue(
-        `${minutes < 10 ? '0' + minutes : minutes}:${
-          seconds < 10 ? '0' + seconds : seconds
-        }:00`,
-      );
-      clearInterval(customInterval);
-    }
+    setIsPaused(true);
+    setValue(
+      `${minutes < 10 ? '0' + minutes : minutes}:${
+        seconds < 10 ? '0' + seconds : seconds
+      }:00`,
+    );
+    clearInterval(customInterval);
+
     setDisableStartButton(false);
     setEnablePauseButton(false);
+    BackgroundTimer.stopBackgroundTimer();
   };
 
   const clear = () => {
