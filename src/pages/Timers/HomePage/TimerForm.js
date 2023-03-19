@@ -1,9 +1,11 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable quotes */
 /* eslint-disable no-unused-vars */
 import React, {useEffect} from 'react';
+import {useIsFocused} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {useState} from 'react';
@@ -18,6 +20,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {LogBox} from 'react-native';
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 export const TimerForm = () => {
+  const isFocused = useIsFocused();
+
   const [value, setValue] = useState('');
   const [toyValue, setToyValue] = useState(null);
   const [name, setName] = useState('');
@@ -86,8 +90,8 @@ export const TimerForm = () => {
   const changeTime = () => {
     setSeconds(prevState => {
       if (prevState + 1 === 60) {
-        changeMinutes++;
-        setMinutes(changeMinutes);
+        let updatedMinutes = changeMinutes++;
+        setMinutes(updatedMinutes);
         return 0;
       }
       return prevState + 1;
@@ -100,9 +104,9 @@ export const TimerForm = () => {
     }
 
     setCustomInterval(
-      BackgroundTimer.runBackgroundTimer(() => {
+      BackgroundTimer.setInterval(() => {
         changeTime();
-      }, 1000),
+      }, 100),
     );
 
     setIsPaused(false);
@@ -122,7 +126,7 @@ export const TimerForm = () => {
 
     setDisableStartButton(false);
     setEnablePauseButton(false);
-    BackgroundTimer.stopBackgroundTimer();
+    BackgroundTimer.clearTimeout(customInterval);
   };
 
   const clear = () => {
