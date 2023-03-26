@@ -5,11 +5,10 @@
 /* eslint-disable quotes */
 /* eslint-disable no-unused-vars */
 import React, {useEffect} from 'react';
-import {useIsFocused} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {View} from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
 import * as S from './styles';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -20,8 +19,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {LogBox} from 'react-native';
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 export const TimerForm = () => {
-  const isFocused = useIsFocused();
-
   const [value, setValue] = useState('');
   const [toyValue, setToyValue] = useState(null);
   const [name, setName] = useState('');
@@ -40,7 +37,6 @@ export const TimerForm = () => {
   const [selectVisible, setSelectVisible] = useState(false);
   const [selectMessage, setSelectMessage] = useState('');
   const [showTimer, setShowTimer] = useState(false);
-  let changeMinutes = 0;
   async function registering() {
     try {
       await axios.post(
@@ -105,7 +101,7 @@ export const TimerForm = () => {
     setCustomInterval(
       BackgroundTimer.setInterval(() => {
         changeTime();
-      }, 100),
+      }, 1000),
     );
 
     setIsPaused(false);
