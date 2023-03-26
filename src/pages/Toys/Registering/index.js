@@ -2,29 +2,30 @@ import React, {useState} from 'react';
 import * as S from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {Snackbar} from 'react-native-paper';
 import {
   useWindowDimensions,
   View,
   Keyboard,
   TouchableWithoutFeedback,
+  ActivityIndicator,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import {ToyFormSchema} from '../../../utils/validations';
 import {Formik} from 'formik';
 export default function Registering() {
   const window = useWindowDimensions();
   const [price_per_minute, setPricePerMinute] = useState('');
-  const [messageType, setMessageType] = useState(false);
-  const [visible, setVisible] = useState(false);
-  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  // const [messageType, setMessageType] = useState(false);
+  // const [visible, setVisible] = useState(false);
+  // const [message, setMessage] = useState('');
   let formatted = price_per_minute.replace('R$', '');
   let formattedPrice = formatted.replace(',', '.');
   async function create(values) {
+    setLoading(prevState => !prevState);
     Keyboard.dismiss();
     try {
       await axios.post(
-        `https://apptoydev.000webhostapp.com/api/brinquedo`,
+        'https://apptoydev.000webhostapp.com/api/brinquedo',
         {...values, price_per_minute: formattedPrice},
         {
           headers: {
@@ -32,85 +33,106 @@ export default function Registering() {
           },
         },
       );
-      setVisible(true);
-      setMessageType(true);
-      setMessage('Brinquedo cadastrado com sucesso!');
+      // setVisible(true);
+      // setMessageType(true);
+      // setMessage('Brinquedo cadastrado com sucesso!');
     } catch (error) {
-      setMessage('Ocorreu um erro inesperado, tente novamente.');
+      console.log(error);
+      //setMessage('Ocorreu um erro inesperado, tente novamente.');
     }
+    setLoading(prevState => !prevState);
   }
 
-  const closeSnackbar = () => {
-    setVisible(false);
-  };
+  // const closeSnackbar = () => {
+  //   setVisible(false);
+  // };
 
   return (
     <View style={{height: window.height}}>
-      <S.Container style={{height: window.height / 1.25}}>
-        <Formik
-          initialValues={{
-            name: '',
-            minutes_price: '',
+      {loading ? (
+        <ActivityIndicator
+          size={'large'}
+          color="#003e9b"
+          style={{
+            height: window.height / 1.25,
+            transform: [{scaleX: 4}, {scaleY: 4}],
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
-          validationSchema={ToyFormSchema}
-          validateOnChange={false}
-          onSubmit={(values, {resetForm}) => {
-            setPricePerMinute('');
-            create(values);
-            resetForm({values: ''});
-          }}>
-          {({handleChange, handleBlur, handleSubmit, values, errors}) => (
-            <S.SecondaryContainer>
-              <S.MainText>Cadastro de brinquedos</S.MainText>
-              <S.AlignFields style={{paddingBottom: 10}}>
-                <S.Label>Nome</S.Label>
-                <S.Field
-                  value={values.name}
-                  onBlur={handleBlur('name')}
-                  onChangeText={handleChange('name')}
-                  blurOnSubmit={true}
-                />
-                <View style={{display: errors.name ? 'flex' : 'none'}}>
-                  <S.ErrorMessage>{errors.name}</S.ErrorMessage>
-                </View>
-              </S.AlignFields>
+        />
+      ) : (
+        <S.Container style={{height: window.height / 1.25}}>
+          <Formik
+            initialValues={{
+              name: '',
+              minutes_price: '',
+            }}
+            validationSchema={ToyFormSchema}
+            validateOnChange={false}
+            onSubmit={values => {
+              setPricePerMinute('');
+              create(values);
+            }}>
+            {({handleChange, handleBlur, handleSubmit, values, errors}) => (
+              <S.SecondaryContainer>
+                <S.MainText>Cadastro de brinquedos</S.MainText>
+                <S.AlignFields style={{paddingBottom: 10}}>
+                  <S.Label>Nome</S.Label>
+                  <S.Field
+                    value={values.name}
+                    onBlur={handleBlur('name')}
+                    onChangeText={handleChange('name')}
+                    blurOnSubmit={true}
+                  />
+                  <View style={{display: errors.name ? 'flex' : 'none'}}>
+                    {errors && <S.ErrorMessage>{errors.name}</S.ErrorMessage>}
+                  </View>
+                </S.AlignFields>
 
-              <S.AlignFields style={{paddingBottom: 10}}>
-                <S.Label>Preço</S.Label>
-                <S.PriceMaskField
-                  value={price_per_minute}
-                  onChangeText={e => setPricePerMinute(e)}
-                  blurOnSubmit={true}
-                />
-              </S.AlignFields>
-              <S.AlignFields style={{paddingBottom: 10}}>
-                <S.Label>Minutos</S.Label>
-                <S.MinutesMaskField
-                  value={values.minutes_price}
-                  onBlur={handleBlur('minutes_price')}
-                  onChangeText={handleChange('minutes_price')}
-                  blurOnSubmit={true}
-                />
-              </S.AlignFields>
+                <S.AlignFields style={{paddingBottom: 10}}>
+                  <S.Label>Preço</S.Label>
+                  <S.PriceMaskField
+                    value={price_per_minute}
+                    onChangeText={e => setPricePerMinute(e)}
+                    blurOnSubmit={true}
+                  />
+                </S.AlignFields>
+                <S.AlignFields style={{paddingBottom: 10}}>
+                  <S.Label>Minutos</S.Label>
+                  <S.MinutesMaskField
+                    value={values.minutes_price}
+                    onBlur={handleBlur('minutes_price')}
+                    onChangeText={handleChange('minutes_price')}
+                    blurOnSubmit={true}
+                  />
+                  <View
+                    style={{display: errors.minutes_price ? 'flex' : 'none'}}>
+                    {errors && (
+                      <S.ErrorMessage>{errors.minutes_price}</S.ErrorMessage>
+                    )}
+                  </View>
+                </S.AlignFields>
 
-              <S.AlignButtons>
                 <S.AlignButtons>
-                  <TouchableWithoutFeedback
-                    onPress={Keyboard.dismiss}
-                    accessible={false}>
-                    <View style={{width: '50%'}}>
-                      <S.Button onPress={handleSubmit}>
-                        <S.ButtonText>Cadastrar</S.ButtonText>
-                      </S.Button>
-                    </View>
-                  </TouchableWithoutFeedback>
+                  <S.AlignButtons>
+                    <TouchableWithoutFeedback
+                      onPress={Keyboard.dismiss}
+                      accessible={true}>
+                      <View style={{width: '50%'}}>
+                        <S.Button onPress={handleSubmit}>
+                          <S.ButtonText>Cadastrar</S.ButtonText>
+                        </S.Button>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </S.AlignButtons>
                 </S.AlignButtons>
-              </S.AlignButtons>
-            </S.SecondaryContainer>
-          )}
-        </Formik>
-      </S.Container>
-      <View style={{height: '8%'}}>
+              </S.SecondaryContainer>
+            )}
+          </Formik>
+        </S.Container>
+      )}
+
+      {/* <View style={{height: '8%'}}>
         <Snackbar
           visible={visible}
           onDismiss={closeSnackbar}
@@ -124,7 +146,7 @@ export default function Registering() {
           duration={3000}>
           {message}
         </Snackbar>
-      </View>
+      </View> */}
     </View>
   );
 }

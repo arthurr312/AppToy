@@ -141,9 +141,9 @@ export default function ToyListing() {
         data.map(item => {
           let formatted = price_per_minute.replace('R$', '');
           let formattedPrice = formatted.replace(',', '.');
-          let priceFixedDigits = item.price_per_minute.toFixed(2);
-          let convertedPrice = priceFixedDigits.replace('.', ',');
-          let finalValue = convertedPrice.replace(
+          let priceFixedDigits = item?.price_per_minute?.toFixed(2);
+          let convertedPrice = priceFixedDigits?.replace('.', ',');
+          let finalValue = convertedPrice?.replace(
             /(\d)(?=(\d{3})+(?!\d))/g,
             '$1.',
           );
@@ -196,7 +196,7 @@ export default function ToyListing() {
                     <>
                       <S.DataView>
                         <S.NameClient>{item.name}</S.NameClient>
-                        <S.ValueText>R$ {finalValue}</S.ValueText>
+                        <S.ValueText>R$ {finalValue ?? '-'}</S.ValueText>
                         <S.TimeValue>
                           {item.minutes_price}{' '}
                           {item.minutes_price > 1 ? 'minutos' : 'minuto'}
