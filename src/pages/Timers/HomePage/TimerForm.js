@@ -90,8 +90,7 @@ export const TimerForm = () => {
   const changeTime = () => {
     setSeconds(prevState => {
       if (prevState + 1 === 60) {
-        let updatedMinutes = changeMinutes++;
-        setMinutes(updatedMinutes);
+        setMinutes(prevState => prevState + 1);
         return 0;
       }
       return prevState + 1;

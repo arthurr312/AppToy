@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Text, TouchableOpacity, useWindowDimensions, View} from 'react-native';
 import * as S from './styles';
 import {TimerForm} from './TimerForm';
@@ -23,7 +23,7 @@ export const TimerComponent = ({
           <S.Image source={require('../../../assets/timerIcon.png')} />
           <S.MainText>
             {userName ? (
-              `Olá, ${userName}, bem-vindo ao cadastro de cronômetros! :)`
+              `Olá, ${userName.trim()}, bem-vindo ao cadastro de cronômetros! :)`
             ) : (
               <>Você está deslogado, por favor, faça login para continuar</>
             )}
@@ -55,9 +55,11 @@ export const TimerComponent = ({
         </TouchableOpacity>
       </S.AlignTitleAndIcon>
       <View style={{height: '100%', paddingBottom: '25%'}}>
-        {components.map((i, index) => {
-          return <TimerForm key={index + 1} />;
-        })}
+        {components.map((i, index) => (
+          <Fragment key={index}>
+            <TimerForm />
+          </Fragment>
+        ))}
       </View>
     </>
   );
