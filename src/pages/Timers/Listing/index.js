@@ -98,7 +98,6 @@ export default function TimerListing() {
         </View>
       ) : (
         data.map(item => {
-          let formattedTime = item.time.substring(0, 5);
           let priceFixedDigits = item.total_price.toFixed(2);
           let convertedPrice = priceFixedDigits.replace('.', ',');
           let finalValue = convertedPrice.replace(
@@ -111,7 +110,7 @@ export default function TimerListing() {
                 <S.MainView>
                   <S.DataView>
                     <S.NameClient>{item.name_client}</S.NameClient>
-                    <S.TimeValue>{formattedTime}</S.TimeValue>
+                    <S.TimeValue>{item.time}</S.TimeValue>
                     <S.ValueText>R$ {finalValue}</S.ValueText>
                   </S.DataView>
                   <TouchableOpacity

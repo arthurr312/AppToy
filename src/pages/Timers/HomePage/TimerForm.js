@@ -23,8 +23,9 @@ export const TimerForm = () => {
   const [toyValue, setToyValue] = useState(null);
   const [name, setName] = useState('');
   const [seconds, setSeconds] = useState(0);
-  const [toyData, setToyData] = useState([]);
   const [minutes, setMinutes] = useState(0);
+  const [hours, setHours] = useState(0);
+  const [toyData, setToyData] = useState([]);
   const [customInterval, setCustomInterval] = useState(null);
   const [isPaused, setIsPaused] = useState(true);
   const [enablePauseButton, setEnablePauseButton] = useState(false);
@@ -86,7 +87,14 @@ export const TimerForm = () => {
   const changeTime = () => {
     setSeconds(prevState => {
       if (prevState + 1 === 60) {
-        setMinutes(prevState => prevState + 1);
+        setMinutes(prevState => {
+          prevState => prevState + 1;
+          if (prevState + 1 === 60) {
+            setHours(prevState => prevState + 1);
+            return 0;
+          }
+          return prevState + 1;
+        });
         return 0;
       }
       return prevState + 1;
@@ -113,9 +121,9 @@ export const TimerForm = () => {
   const stopTimer = () => {
     setIsPaused(true);
     setValue(
-      `${minutes < 10 ? '0' + minutes : minutes}:${
-        seconds < 10 ? '0' + seconds : seconds
-      }:00`,
+      `${hours < 10 ? '0' + hours : hours}:${
+        minutes < 10 ? '0' + minutes : minutes
+      }:${seconds < 10 ? '0' + seconds : seconds}`,
     );
     clearInterval(customInterval);
 
@@ -173,6 +181,7 @@ export const TimerForm = () => {
               />
             </View>
             <S.Timer>
+              {hours < 10 ? '0' + hours : hours}:
               {minutes < 10 ? '0' + minutes : minutes}:
               {seconds < 10 ? '0' + seconds : seconds} - {name}
             </S.Timer>
