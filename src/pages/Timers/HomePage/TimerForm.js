@@ -8,7 +8,7 @@ import React, {useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {useState} from 'react';
-import {View} from 'react-native';
+import {ActivityIndicator, Modal, Text, View} from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
 import * as S from './styles';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -17,6 +17,7 @@ import BackIcon from 'react-native-vector-icons/Ionicons';
 import {Snackbar} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {LogBox} from 'react-native';
+import {TimerModal} from './TimerModal';
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 export const TimerForm = () => {
   const [value, setValue] = useState('');
@@ -38,9 +39,13 @@ export const TimerForm = () => {
   const [selectVisible, setSelectVisible] = useState(false);
   const [selectMessage, setSelectMessage] = useState('');
   const [showTimer, setShowTimer] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [timerData, setTimerData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   async function registering() {
     try {
-      await axios.post(
+      setIsLoading(true);
+      const response = await axios.post(
         `https://apptoydev.000webhostapp.com/api/timer`,
         {
           service_toy: toyValue,
@@ -53,7 +58,8 @@ export const TimerForm = () => {
           },
         },
       );
-      setShowComponent(false);
+      setTimerData(response.data.timer);
+      setOpenModal(true);
     } catch (error) {
       setPostMessage('Ocorreu um erro inesperado, tente novamente.');
     }
@@ -185,45 +191,61 @@ export const TimerForm = () => {
               {minutes < 10 ? '0' + minutes : minutes}:
               {seconds < 10 ? '0' + seconds : seconds} - {name}
             </S.Timer>
-            <S.AlignButtons>
-              {/* iniciar  */}
-              <S.Button
-                disabled={disableStartButton}
-                style={{
-                  opacity: disableStartButton ? 0.5 : 1,
-                }}
-                onPress={startTimer}>
-                <S.ButtonsText>Iniciar</S.ButtonsText>
-              </S.Button>
-              {/* pausar  */}
-              {isPaused ? (
-                <S.Button
-                  disabled={!enableResetButton}
+            {isLoading ? (
+              <>
+                <ActivityIndicator
+                  size="small"
+                  color="#003e9b"
                   style={{
-                    opacity: enableResetButton === false ? 0.5 : 1,
+                    transform: [{scaleX: 1.5}, {scaleY: 1.5}],
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}
-                  onPress={clear}>
-                  <S.ButtonsText>Resetar</S.ButtonsText>
-                </S.Button>
-              ) : (
-                <S.Button
-                  style={{
-                    opacity: enablePauseButton === false ? 0.5 : 1,
-                  }}
-                  disabled={!enablePauseButton}
-                  onPress={stopTimer}>
-                  <S.ButtonsText>Pausar</S.ButtonsText>
-                </S.Button>
-              )}
-              <S.Button
-                disabled={!isPaused}
-                onPress={() => registering()}
-                style={{
-                  opacity: isPaused ? 1 : 0.5,
-                }}>
-                <S.ButtonsText>Encerrar</S.ButtonsText>
-              </S.Button>
-            </S.AlignButtons>
+                />
+              </>
+            ) : (
+              <>
+                <S.AlignButtons>
+                  {/* iniciar  */}
+                  <S.Button
+                    disabled={disableStartButton}
+                    style={{
+                      opacity: disableStartButton ? 0.5 : 1,
+                    }}
+                    onPress={startTimer}>
+                    <S.ButtonsText>Iniciar</S.ButtonsText>
+                  </S.Button>
+                  {/* pausar  */}
+                  {isPaused ? (
+                    <S.Button
+                      disabled={!enableResetButton}
+                      style={{
+                        opacity: enableResetButton === false ? 0.5 : 1,
+                      }}
+                      onPress={clear}>
+                      <S.ButtonsText>Resetar</S.ButtonsText>
+                    </S.Button>
+                  ) : (
+                    <S.Button
+                      style={{
+                        opacity: enablePauseButton === false ? 0.5 : 1,
+                      }}
+                      disabled={!enablePauseButton}
+                      onPress={stopTimer}>
+                      <S.ButtonsText>Pausar</S.ButtonsText>
+                    </S.Button>
+                  )}
+                  <S.Button
+                    disabled={!isPaused}
+                    onPress={() => registering()}
+                    style={{
+                      opacity: isPaused ? 1 : 0.5,
+                    }}>
+                    <S.ButtonsText>Encerrar</S.ButtonsText>
+                  </S.Button>
+                </S.AlignButtons>
+              </>
+            )}
           </>
         ) : (
           <>
@@ -290,6 +312,13 @@ export const TimerForm = () => {
           </>
         )}
       </S.TimerContainer>
+      <TimerModal
+        setOpenModal={setOpenModal}
+        openModal={openModal}
+        timerData={timerData}
+        setShowComponent={setShowComponent}
+        setIsLoading={setIsLoading}
+      />
       <Snackbar
         visible={postVisible}
         onDismiss={closeSnackbar}
