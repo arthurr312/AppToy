@@ -111,6 +111,7 @@ export default function TimerListing() {
                   <S.DataView>
                     <S.NameClient>{item.name_client}</S.NameClient>
                     <S.TimeValue>{item.time}</S.TimeValue>
+                    <S.NameClient>{item.toy.name}</S.NameClient>
                     <S.ValueText>R$ {finalValue}</S.ValueText>
                   </S.DataView>
                   <TouchableOpacity
