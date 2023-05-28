@@ -67,7 +67,7 @@ export default function Finance({navigation}) {
   async function getFinanceData() {
     try {
       const response = await axios.get(
-        `https://apptoydev.000webhostapp.com/api/financas/${initialAmericanDateFormat}/${finalAmericanDateFormat}/${toyValue}`,
+        `https://apptoydev.000webhostapp.com/api/financas/${initialAmericanDateFormat}/${finalAmericanDateFormat}/${toyValue}/${clusteringValue}`,
         {
           headers: {
             Authorization: 'Bearer' + (await AsyncStorage.getItem('@token')),
