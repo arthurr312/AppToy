@@ -13,14 +13,19 @@ import BackgroundTimer from 'react-native-background-timer';
 import * as S from './styles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import CloseIcon from 'react-native-vector-icons/Ionicons';
+import ClockIcon from 'react-native-vector-icons/Feather';
 import BackIcon from 'react-native-vector-icons/Ionicons';
 import {Snackbar} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {LogBox} from 'react-native';
 import {TimerModal} from './TimerModal';
+import AddTimeModal from '../AddTimeModal';
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 export const TimerForm = () => {
   const [value, setValue] = useState('');
+  const [openAddTimeModal, setOpenAddTimeModal] = useState(false);
+  const [hoursToAdd, setHoursToAdd] = useState(0);
+  const [minutesToAdd, setMinutesToAdd] = useState(0);
   const [toyValue, setToyValue] = useState(null);
   const [name, setName] = useState('');
   const [seconds, setSeconds] = useState(0);
@@ -150,6 +155,14 @@ export const TimerForm = () => {
     setDisableStartButton(false);
   };
 
+  const handleAddTime = (hoursToAdd, minutes) => {
+    setHours(prevState => parseInt(prevState) + parseInt(hoursToAdd));
+    setMinutes(prevState => parseInt(prevState) + parseInt(minutes));
+    setOpenAddTimeModal(false);
+    setHoursToAdd(0);
+    setMinutesToAdd(0);
+  };
+
   useEffect(() => {
     selectInputData();
   }, []);
@@ -178,13 +191,22 @@ export const TimerForm = () => {
                 }}
                 onPress={() => setShowTimer(false)}
               />
-              <CloseIcon
-                onPress={() => setShowComponent(false)}
-                name="close"
-                color="black"
-                size={25}
-                style={{marginTop: 2}}
-              />
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <ClockIcon
+                  onPress={() => setOpenAddTimeModal(true)}
+                  name="clock"
+                  color="black"
+                  size={20}
+                  style={{marginTop: 2, marginRight: 2}}
+                />
+                <CloseIcon
+                  onPress={() => setShowComponent(false)}
+                  name="close"
+                  color="black"
+                  size={25}
+                  style={{marginTop: 2}}
+                />
+              </View>
             </View>
             <S.Timer>
               {hours < 10 ? '0' + hours : hours}:
@@ -318,6 +340,15 @@ export const TimerForm = () => {
         timerData={timerData}
         setShowComponent={setShowComponent}
         setIsLoading={setIsLoading}
+      />
+      <AddTimeModal
+        openModal={openAddTimeModal}
+        setOpenModal={setOpenAddTimeModal}
+        handleAddTime={handleAddTime}
+        hoursToAdd={hoursToAdd}
+        setHoursToAdd={setHoursToAdd}
+        minutesToAdd={minutesToAdd}
+        setMinutesToAdd={setMinutesToAdd}
       />
       <Snackbar
         visible={postVisible}
