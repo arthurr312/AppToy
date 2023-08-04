@@ -31,6 +31,7 @@ export const CancelButton = styled(Button)`
 export const NameClient = styled.Text`
   color: black;
   font-size: 20px;
+  padding: 2px 0px;
 `;
 
 export const TimeValue = styled(NameClient)`

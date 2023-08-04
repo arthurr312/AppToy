@@ -8,7 +8,7 @@ import React, {useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {useState} from 'react';
-import {ActivityIndicator, Modal, Text, View} from 'react-native';
+import {ActivityIndicator, View} from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
 import * as S from './styles';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -20,8 +20,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {LogBox} from 'react-native';
 import {TimerModal} from './TimerModal';
 import AddTimeModal from '../AddTimeModal';
+import notifee, {AndroidImportance, EventType} from '@notifee/react-native';
+import {useNavigation} from '@react-navigation/native';
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 export const TimerForm = () => {
+  const navigation = useNavigation();
   const [value, setValue] = useState('');
   const [openAddTimeModal, setOpenAddTimeModal] = useState(false);
   const [hoursToAdd, setHoursToAdd] = useState(0);
@@ -90,6 +93,42 @@ export const TimerForm = () => {
       setSelectMessage('Ops, ocorreu um erro inesperado, recarregue o app.');
     }
   }
+  async function onDisplayNotification() {
+    try {
+      await notifee.requestPermission();
+      const channelId = await notifee.createChannel({
+        id: `${name} - notification`,
+        name: `${name} - notification`,
+        vibration: true,
+        importance: AndroidImportance.DEFAULT,
+      });
+
+      await notifee.displayNotification({
+        id: `${name} - notification`,
+        title: `Cliente - ${name}`,
+        body: 'Clique aqui para exibir os detalhes.',
+        android: {
+          channelId,
+          smallIcon: 'icon',
+          autoCancel: false,
+          pressAction: {
+            id: 'default',
+            mainComponent: 'homepage',
+          },
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function onCancelNotification() {
+    try {
+      await notifee.cancelNotification(`${name} - notification`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const closeSnackbar = () => {
     setPostVisible(false);
     setSelectVisible(false);
@@ -127,6 +166,7 @@ export const TimerForm = () => {
     setEnablePauseButton(true);
     setDisableStartButton(true);
     setEnableResetButton(true);
+    onDisplayNotification();
   };
 
   const stopTimer = () => {
@@ -137,9 +177,9 @@ export const TimerForm = () => {
       }:${seconds < 10 ? '0' + seconds : seconds}`,
     );
     clearInterval(customInterval);
-
     setDisableStartButton(false);
     setEnablePauseButton(false);
+    onCancelNotification();
     BackgroundTimer.clearTimeout(customInterval);
   };
 
@@ -155,17 +195,25 @@ export const TimerForm = () => {
     setDisableStartButton(false);
   };
 
-  const handleAddTime = (hoursToAdd, minutes) => {
+  const handleAddTime = (hoursToAdd, minutesToAdd) => {
     setHours(prevState => parseInt(prevState) + parseInt(hoursToAdd));
-    setMinutes(prevState => parseInt(prevState) + parseInt(minutes));
+    setMinutes(prevState => parseInt(prevState) + parseInt(minutesToAdd));
     setOpenAddTimeModal(false);
     setHoursToAdd(0);
     setMinutesToAdd(0);
+    startTimer();
   };
 
   useEffect(() => {
     selectInputData();
   }, []);
+
+  useEffect(() => {
+    return notifee.onBackgroundEvent(async () => {
+      console.log('entrou');
+    });
+  }, []);
+
   return (
     <View
       style={{
