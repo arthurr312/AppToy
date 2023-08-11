@@ -18,7 +18,11 @@
 
 - <img height="30" src="https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white" />
 
+- <img height="30" src=" 	https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" />
+
 - <img height="30" src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" />
+
+- <img height="30" src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white" />
 
 ## 📲 Funcionalidades
 
@@ -45,3 +49,31 @@
 <img height="250" src="./src/assets/readme_images/finanças.png"/>
 <img height="250" src="./src/assets/readme_images/password.png"/>
 </div>
+
+## 🤝 Colaboradores
+
+### Responsáveis pelo desenvolvimento do projeto:
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="#">
+        <img src="https://avatars.githubusercontent.com/u/83527786?v=4" width="100px;" alt="Foto do Arthur Silva no GitHub"/>
+        <br>
+        <sub>
+          <b>Desenvolvedor Front-end: Arthur Silva</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="#">
+        <img src="https://avatars.githubusercontent.com/u/84305713?v=4" width="100px;" alt="Foto do Steve Jobs"/><br>
+        <sub>
+          <b>Desenvolvedor Back-end:  André Vinicius </b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
+##
