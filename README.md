@@ -52,7 +52,7 @@
 
 ## 🤝 Colaboradores
 
-### Responsáveis pelo desenvolvimento do projeto:
+### Responsável pelo desenvolvimento do projeto:
 
 <table>
   <tr>
@@ -62,14 +62,6 @@
         <br>
         <sub>
           <b>Desenvolvedor Front-end: Arthur Silva</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="#">
-        <img src="https://avatars.githubusercontent.com/u/84305713?v=4" width="100px;" alt="Foto do Steve Jobs"/><br>
-        <sub>
-          <b>Desenvolvedor Back-end:  André Vinicius </b>
         </sub>
       </a>
     </td>
